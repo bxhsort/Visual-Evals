@@ -156,14 +156,20 @@ def check_wrapper_paths():
                     assert p.returncode==0,(bench,'lower scoring control flow failed',p.stdout[-1200:],p.stderr[-1200:])
                     child_calls=[json.loads(line) for line in log.read_text().splitlines()] if log.exists() else []
                     calls=calls+child_calls
+            expected_env='textcrafter_eval' if bench=='cvtg_2k' else 'geneval'
             activations=[call['name'] for call in calls if call['tool']=='activate']
-            assert activations and set(activations)=={'geneval'},(bench,'eval-only activation mismatch',activations)
+            assert activations and set(activations)=={expected_env},(bench,'eval-only activation mismatch',activations)
             scorers=[call for call in calls if call['tool'] in {'python','python3','torchrun','accelerate','env'}
                      and not any(Path(arg).name=='coverage_audit.py' for arg in call['args'])]
             assert scorers,(bench,'no actual scoring invocation captured',calls)
             for call in scorers:
-                assert call['env']['DG2_STUB_ACTIVE_ENV']=='geneval',(bench,'scorer used wrong active environment',call)
-                assert call['env']['PATH'].split(':')[0]=='/opt/conda/envs/geneval/bin',(bench,'missing fixed geneval PATH',call)
+                assert call['env']['DG2_STUB_ACTIVE_ENV']==expected_env,(bench,'scorer used wrong active environment',call)
+                assert call['env']['PATH'].split(':')[0]=='/opt/conda/envs/'+expected_env+'/bin',(bench,'missing fixed evaluation PATH',call)
+            if bench=='cvtg_2k':
+                for call in scorers:
+                    if any(Path(arg).name=='local_metrics_eval.py' for arg in call['args']):
+                        assert call['args'][call['args'].index('--vqa_model_path')+1]==forwarded['CVTG_VQA_MODEL_PATH'],call
+                        assert call['args'][call['args'].index('--vqa_vision_model_path')+1]==forwarded['CVTG_VQA_VISION_MODEL_PATH'],call
             return calls
         cases=[('run_t2i_accelerate.sh',bench) for bench in ('geneval','dpgbench','longtextbench','cvtg_2k','tiifbench','oneigbench','wise','bizgeneval','qwenimagebench')]
         cases += [('run_imgedit_accelerate.sh','imgedit'),('run_gedit_accelerate.sh','geditbench'),('run_rise_accelerate.sh','rise'),('run_edit_compass_accelerate.sh','editcompass')]
@@ -327,7 +333,7 @@ def check_wrapper_paths():
             'Visual top-level RISE lost subset/memory forwarding',delegated[0])
         changed,_=run('run_t2i_accelerate.sh',{'BENCHMARK':'geneval','GENEVAL_PROMPT_MODE':'short','RUN_GENERATION':'1','RUN_EVAL':'0','NUM_STEPS':'100'})
         assert changed!=short,'steps change reused generation cache root'
-        print('PASS: 13 benchmark generation/scoring roots match; generation activates bagel and every actual scoring stage activates geneval with fixed PATH; delegated lower scorers execute offline; disabled/top-level stages never activate; retired environments/config are ignored; equal settings group benchmark leaves; changed data/scope/judge refuse old cache; thinking and GenEval prompt variants remain isolated.')
+        print('PASS: 13 benchmark generation/scoring roots match; generation activates bagel and CVTG scoring activates textcrafter_eval and other scoring stages activate geneval with fixed PATH; delegated lower scorers execute offline; disabled/top-level stages never activate; retired environments/config are ignored; equal settings group benchmark leaves; changed data/scope/judge refuse old cache; thinking and GenEval prompt variants remain isolated.')
 
 
 class WrapperLayoutTests(unittest.TestCase):

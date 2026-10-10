@@ -18,6 +18,8 @@ BENCHMARK_ROOT="${BENCHMARK_ROOT:-${BENCH_DIR}/eval/CVTG-2K}"
 TEXTCRAFTER_ROOT="${TEXTCRAFTER_ROOT:-${BENCH_DIR}/eval/TextCrafter_Eval}"
 CVTG_CLIP_MODEL_PATH="${CVTG_CLIP_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/ViT-L-14.pt}"
 CVTG_AESTHETIC_MODEL_PATH="${CVTG_AESTHETIC_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/sa_0_4_vit_l_14_linear.pth}"
+CVTG_VQA_MODEL_PATH="${CVTG_VQA_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-flant5-xxl}"
+CVTG_VQA_VISION_MODEL_PATH="${CVTG_VQA_VISION_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-vit-large-patch14-336}"
 PADDLEOCR_SOURCE_DIR="${PADDLEOCR_SOURCE_DIR:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt}"
 HF_CACHE_DIR="${HF_CACHE_DIR:-${HF_HOME:-${REPO_ROOT}/../../../.cache/huggingface}}"
 LAUNCH_MODE="${LAUNCH_MODE:-device_map_multi}"
@@ -223,13 +225,15 @@ if (( RUN_EVAL != 0 )); then
   fi
 
   EVAL_GPUS="${EVAL_GPUS:-$(count_visible_gpus "$CUDA_VISIBLE_DEVICES")}"
-  source activate geneval
-  export PATH=/opt/conda/envs/geneval/bin:$PATH
+  source activate textcrafter_eval
+  export PATH=/opt/conda/envs/textcrafter_eval/bin:$PATH
   cd "$TEXTCRAFTER_ROOT"
   TRANSFORMERS_VERBOSITY=error torchrun --nproc_per_node="$EVAL_GPUS" "${BENCH_DIR}/local_metrics_eval.py" \
     --textcrafter_root "$TEXTCRAFTER_ROOT" \
     --clip_model_path "$CVTG_CLIP_MODEL_PATH" \
     --aesthetic_model_path "$CVTG_AESTHETIC_MODEL_PATH" \
+    --vqa_model_path "$CVTG_VQA_MODEL_PATH" \
+    --vqa_vision_model_path "$CVTG_VQA_VISION_MODEL_PATH" \
     --benchmark_dir "$BENCHMARK_ROOT" \
     --result_dir "$RESULT_DIR" \
     --output_file "$RESULT_FILE" \

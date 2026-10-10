@@ -142,7 +142,7 @@ class ExperimentLayoutTests(unittest.TestCase):
         self.assertNotEqual(changed_weights["results_root"], baseline["results_root"])
 
     def test_cvtg_scorer_weight_changes_reject_old_scores(self):
-        for key in ("CVTG_CLIP_MODEL_PATH", "CVTG_AESTHETIC_MODEL_PATH"):
+        for key in ("CVTG_CLIP_MODEL_PATH", "CVTG_AESTHETIC_MODEL_PATH", "CVTG_VQA_MODEL_PATH", "CVTG_VQA_VISION_MODEL_PATH"):
             with self.subTest(key=key):
                 weights = self.base / (key + ".pt")
                 weights.write_bytes(b"original scorer weights")
