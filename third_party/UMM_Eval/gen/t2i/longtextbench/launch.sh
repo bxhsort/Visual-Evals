@@ -151,9 +151,12 @@ if [[ -z "$RESULT_ROOT_DIR" ]]; then
 fi
 LONGTEXT_OUTPUT_DIR="${RESULT_ROOT_DIR}/${OUTPUT_SUBDIR}"
 
-if (( RUN_GENERATION != 0 )); then
+if (( RUN_GENERATION != 0 || RUN_EVAL != 0 )); then
   source activate bagel
   export PATH=/opt/conda/envs/bagel/bin:$PATH
+fi
+
+if (( RUN_GENERATION != 0 )); then
   if [[ "$LAUNCH_MODE" == "device_map" ]]; then
     export CUDA_VISIBLE_DEVICES
     unset RANK WORLD_SIZE LOCAL_RANK LOCAL_WORLD_SIZE MASTER_ADDR MASTER_PORT GROUP_RANK ROLE_RANK
@@ -219,8 +222,6 @@ if [[ -n "$RESIZE_TO" ]]; then
 fi
 
 if (( RUN_EVAL != 0 )); then
-  source activate geneval
-  export PATH=/opt/conda/envs/geneval/bin:$PATH
   SAMPLE_DIR="${LONGTEXT_OUTPUT_DIR}/samples"
   EVAL_OUTPUT_DIR="${LONGTEXT_OUTPUT_DIR}/eval"
   RAW_RESULTS_PATH="${EVAL_OUTPUT_DIR}/results_raw.jsonl"

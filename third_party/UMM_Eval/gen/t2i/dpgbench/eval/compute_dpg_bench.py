@@ -12,6 +12,8 @@ from accelerate.utils import gather_object
 from PIL import Image
 from tqdm import tqdm
 
+from modelscope_ast_compat import modelscope_ast_compat
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="DPG-Bench evaluation.")
@@ -53,9 +55,10 @@ def parse_args():
 class MPLUG(torch.nn.Module):
     def __init__(self, ckpt='/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/hdd/data_zoo/data_annotaion/mplug_visual-question-answering_coco_large_en', device='gpu'):
         super().__init__()
-        from modelscope.pipelines import pipeline
-        from modelscope.utils.constant import Tasks
-        self.pipeline_vqa = pipeline(Tasks.visual_question_answering, model=ckpt, device=device)
+        with modelscope_ast_compat():
+            from modelscope.pipelines import pipeline
+            from modelscope.utils.constant import Tasks
+            self.pipeline_vqa = pipeline(Tasks.visual_question_answering, model=ckpt, device=device)
 
     def vqa(self, image, question):
         input_vqa = {'image': image, 'question': question}

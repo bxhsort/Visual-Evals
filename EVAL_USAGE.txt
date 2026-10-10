@@ -61,14 +61,15 @@ EXPERIMENT_NAME=editing_baseline TASK=imgedit bash eval_go.sh
 source activate bagel
 export PATH=/opt/conda/envs/bagel/bin:$PATH
 
-各 benchmark 评分阶段默认执行：
+除下列单独指定的 benchmark 外，评分阶段默认执行：
 source activate geneval
 export PATH=/opt/conda/envs/geneval/bin:$PATH
 
 CVTG 评分使用 source activate textcrafter_eval，并设置 export PATH=/opt/conda/envs/textcrafter_eval/bin:$PATH。
+LongTextBench 生图和评分共用 bagel，进入 benchmark 脚本时统一激活一次，评分阶段不再切换环境；仅评分时也使用 bagel。
 其他 benchmark 评分默认使用 geneval；后续可按你提供的名称单独调整。
 已移除从 UMM_ENV_CONFIG、conda_envs.env、BAGEL_ENV、GEN_ENV 或 *_EVAL_ENV 提取及激活环境的逻辑。
-只评分时不再先激活生图环境。
+除 LongTextBench 共用 bagel 外，只评分时不再先激活生图环境。
 API key 继续由 shell 或任务平台提供。
 
 现有 ImgEdit、GEdit、RISE、EditCompass 支持真实 thinking，THINK_MODE=1 时使用 _thinking 后缀。
@@ -83,6 +84,11 @@ ImgEdit、GEdit、RISE 保留统一编辑生成器和 TARGET_INDICES 样本筛�
 手动收集结果时使用入口打印的完整 --results-root，或指定 --output-base、--experiment-name、--setting-name；thinking 结果追加 --thinking。
 读历史 model/step 布局需要显式 --legacy-layout。
 官方评分算法未改。
+
+DPG-Bench 在 mPLUG 初始化期间兼容旧版 ModelScope/gast 的可选 AST 字段：
+仅将声明了但未赋值的 type_params 补为空列表，保留已有字段和 Python 3.12 的泛型信息。
+不改变模型权重、图片预处理、VQA 问题、推理参数和评分公式；初始化结束后恢复 gast.parse。
+此处理针对 AST 导入报错，完整评测仍要求环境中的 ModelScope/mPLUG 依赖兼容。
 
 6. CVTG 本地权重
 
