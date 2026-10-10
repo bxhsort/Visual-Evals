@@ -1,7 +1,7 @@
-"""Run the official TextCrafter scorer with explicit local CLIP/head weights.
+"""Run the official TextCrafter scorer with explicit local model weights.
 
 The external scorer remains responsible for OCR, VQA, preprocessing and scoring.
-Local CLIP, aesthetic head and VQA main weights are routed without changing metrics.
+Local OCR, CLIP, aesthetic head and VQA weights are routed without changing metrics.
 """
 from __future__ import annotations
 
@@ -40,8 +40,22 @@ def require_vqa_model(value: str, label: str = "CVTG VQA") -> Path:
     return root
 
 
+def require_ocr_models(value: str) -> dict:
+    root = Path(value).expanduser().resolve()
+    directories = {
+        "det_model_dir": root / "whl/det/en/en_PP-OCRv3_det_infer",
+        "rec_model_dir": root / "whl/rec/en/en_PP-OCRv4_rec_infer",
+        "cls_model_dir": root / "whl/cls/ch/ch_ppocr_mobile_v2.0_cls_infer",
+    }
+    for name, directory in directories.items():
+        for filename in ("inference.pdmodel", "inference.pdiparams"):
+            require_file(str(directory / filename), f"CVTG OCR {name}")
+    return {name: str(directory) for name, directory in directories.items()}
+
+
 def run_local_scorer(scorer, clip_path: Path, head_path: Path, scorer_args: list[str],
-                     vqa_path: Path = None, vision_path: Path = None):
+                     vqa_path: Path = None, vision_path: Path = None,
+                     ocr_model_dirs: dict = None):
     import clip
     import open_clip.factory as factory
     import torch
@@ -74,6 +88,19 @@ def run_local_scorer(scorer, clip_path: Path, head_path: Path, scorer_args: list
     print(f"CVTG CLIP weights: {clip_path}", flush=True)
     print(f"CVTG aesthetic head: {head_path}", flush=True)
     with ExitStack() as patches:
+        if ocr_model_dirs is not None:
+            import paddleocr
+            original_paddle_ocr = paddleocr.PaddleOCR
+
+            def local_paddle_ocr(*args, **kwargs):
+                # Explicit model dirs bypass PaddleOCR's cache lookup. Keep
+                # official language, angle classifier and OCR preprocessing.
+                kwargs.update(ocr_model_dirs)
+                return original_paddle_ocr(*args, **kwargs)
+
+            patches.enter_context(patch.object(paddleocr, "PaddleOCR", local_paddle_ocr))
+            for name, directory in ocr_model_dirs.items():
+                print(f"CVTG OCR {name}: {directory}", flush=True)
         if vqa_path is not None:
             # t2v_metrics reads this registry during VQAScore construction.
             # Preserve its tokenizer, conversation and separate vision model.
@@ -108,6 +135,7 @@ def main(argv=None):
     parser.add_argument("--aesthetic_model_path", required=True)
     parser.add_argument("--vqa_model_path")
     parser.add_argument("--vqa_vision_model_path")
+    parser.add_argument("--ocr_model_root")
     args, scorer_args = parser.parse_known_args(argv)
     # Validate before importing model libraries so missing local files cannot
     # silently fall back to online downloads or a zero aesthetic score.
@@ -118,13 +146,15 @@ def main(argv=None):
     if args.vqa_vision_model_path:
         vision_path = require_vqa_model(args.vqa_vision_model_path, "CVTG VQA vision")
         require_file(str(vision_path / "preprocessor_config.json"), "CVTG VQA vision preprocessor")
+    ocr_model_dirs = require_ocr_models(args.ocr_model_root) if args.ocr_model_root else None
     source = require_file(str(Path(args.textcrafter_root) / "unified_metrics_eval.py"), "TextCrafter scorer")
     sys.path.insert(0, str(source.parent))
     spec = importlib.util.spec_from_file_location("cvtg_official_metrics", source)
     scorer = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(scorer)
     run_local_scorer(scorer, clip_path, head_path, scorer_args,
-                     vqa_path=vqa_path, vision_path=vision_path)
+                     vqa_path=vqa_path, vision_path=vision_path,
+                     ocr_model_dirs=ocr_model_dirs)
 
 
 if __name__ == "__main__":

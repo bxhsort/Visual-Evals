@@ -8,7 +8,7 @@ import types
 import unittest
 from unittest.mock import Mock, patch
 
-from local_metrics_eval import main, require_vqa_model, run_local_scorer
+from local_metrics_eval import main, require_ocr_models, require_vqa_model, run_local_scorer
 
 
 class LocalWeightTests(unittest.TestCase):
@@ -41,6 +41,12 @@ class LocalWeightTests(unittest.TestCase):
 
         original_vision_init = VisionTower.__init__
         vision_module.CLIPVisionTower = VisionTower
+        paddleocr = types.ModuleType("paddleocr")
+        original_paddle_ocr = Mock(return_value="local-ocr")
+        paddleocr.PaddleOCR = original_paddle_ocr
+        ocr_dirs = {"det_model_dir": "/downloaded/ocr/det",
+                    "rec_model_dir": "/downloaded/ocr/rec",
+                    "cls_model_dir": "/downloaded/ocr/cls"}
 
         class Evaluator:
             device = "cuda"
@@ -58,6 +64,8 @@ class LocalWeightTests(unittest.TestCase):
                        "--output_file", "/scores.json", "--cache_dir", "/vqa-cache"]
 
         def official_main():
+            self.assertEqual(paddleocr.PaddleOCR(use_angle_cls=True, lang="en", show_log=False,
+                                               det_model_dir="/wrong/cache"), "local-ocr")
             self.assertEqual(vqa_config["model"]["path"], str(vqa_path))
             self.assertEqual(vqa_config["model"]["conversation"], "t5_chat")
             self.assertEqual(vqa_config["tokenizer"]["path"], "google/flan-t5-xxl")
@@ -79,15 +87,18 @@ class LocalWeightTests(unittest.TestCase):
         with patch.dict(sys.modules, {"clip": clip, "open_clip": open_clip,
                                       "open_clip.factory": factory, "torch": torch,
                                       vqa_module.__name__: vqa_module,
-                                      vision_module.__name__: vision_module}):
+                                      vision_module.__name__: vision_module,
+                                      "paddleocr": paddleocr}):
             run_local_scorer(scorer, clip_path, head_path, scorer_args,
-                             vqa_path=vqa_path, vision_path=vision_path)
+                             vqa_path=vqa_path, vision_path=vision_path, ocr_model_dirs=ocr_dirs)
+            self.assertIs(paddleocr.PaddleOCR, original_paddle_ocr)
             self.assertEqual(vqa_config["model"]["path"], "zhiqiulin/clip-flant5-xxl")
             self.assertIs(VisionTower.__init__, original_vision_init)
             scorer.main = Mock(side_effect=RuntimeError("scorer failed"))
             with self.assertRaisesRegex(RuntimeError, "scorer failed"):
                 run_local_scorer(scorer, clip_path, head_path, scorer_args,
-                                 vqa_path=vqa_path, vision_path=vision_path)
+                                 vqa_path=vqa_path, vision_path=vision_path, ocr_model_dirs=ocr_dirs)
+            self.assertIs(paddleocr.PaddleOCR, original_paddle_ocr)
             self.assertEqual(vqa_config["model"]["path"], "zhiqiulin/clip-flant5-xxl")
             self.assertIs(VisionTower.__init__, original_vision_init)
         self.assertIs(clip.load, original_clip_load)
@@ -102,6 +113,36 @@ class LocalWeightTests(unittest.TestCase):
         linear.load_state_dict.assert_called_once_with("local-head-state")
         linear.eval.assert_called_once_with()
         linear.to.assert_called_once_with("cuda")
+        original_paddle_ocr.assert_called_once_with(use_angle_cls=True, lang="en", show_log=False,
+                                                   **ocr_dirs)
+
+    def test_all_ocr_files_required_before_importing_scorer(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = [root / relative / name for relative in (
+                "whl/det/en/en_PP-OCRv3_det_infer", "whl/rec/en/en_PP-OCRv4_rec_infer",
+                "whl/cls/ch/ch_ppocr_mobile_v2.0_cls_infer")
+                for name in ("inference.pdmodel", "inference.pdiparams")]
+            for path in paths:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.touch()
+            dirs = require_ocr_models(str(root))
+            self.assertEqual(dirs["det_model_dir"], str(paths[0].parent.resolve()))
+            self.assertEqual(dirs["rec_model_dir"], str(paths[2].parent.resolve()))
+            self.assertEqual(dirs["cls_model_dir"], str(paths[4].parent.resolve()))
+            clip_path = root / "clip.pt"
+            head_path = root / "head.pth"
+            clip_path.touch()
+            head_path.touch()
+            for path in paths:
+                with self.subTest(missing=path.name, model=path.parent.name):
+                    path.unlink()
+                    with patch.object(importlib.util, "spec_from_file_location") as load_source:
+                        with self.assertRaisesRegex(FileNotFoundError, "CVTG OCR"):
+                            main(["--textcrafter_root", str(root), "--clip_model_path", str(clip_path),
+                                  "--aesthetic_model_path", str(head_path), "--ocr_model_root", str(root)])
+                        load_source.assert_not_called()
+                    path.touch()
 
     def test_missing_vqa_shard_fails_before_importing_scorer(self):
         with tempfile.TemporaryDirectory() as directory:

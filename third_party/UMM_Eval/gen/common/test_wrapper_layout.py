@@ -104,7 +104,7 @@ def check_wrapper_paths():
             API_KEY='offline-synthetic-key',INSTRUCTION_LANGUAGES='en',ONEIGBENCH_LANGS='en',LONGTEXTBENCH_LANGS='en',QIB_LANGS='en',
             BATCH_SIZE='1',THINK_MODE='0',QIB_METADATA_FILE_EN=str(data),LONGTEXTBENCH_METADATA_FILE_EN=str(data))
         env.update(TEXTBENCH_ROOT=str(dataset),TEXTCRAFTER_ROOT=str(evaluator),
-                   PADDLEOCR_SOURCE_DIR=str(fixture/'missing-paddleocr'),HF_CACHE_DIR=str(fixture/'cache'),
+                   CVTG_OCR_MODEL_ROOT=str(fixture/'local-paddleocr'),HF_CACHE_DIR=str(fixture/'cache'),
                    RISE_INPUT_ROOT=str(dataset))
         # Retired variables and missing files are intentional poison values:
         # the new fixed activation scheme must ignore them entirely.
@@ -170,6 +170,7 @@ def check_wrapper_paths():
                     if any(Path(arg).name=='local_metrics_eval.py' for arg in call['args']):
                         assert call['args'][call['args'].index('--vqa_model_path')+1]==forwarded['CVTG_VQA_MODEL_PATH'],call
                         assert call['args'][call['args'].index('--vqa_vision_model_path')+1]==forwarded['CVTG_VQA_VISION_MODEL_PATH'],call
+                        assert call['args'][call['args'].index('--ocr_model_root')+1]==str(fixture/'local-paddleocr'),call
             return calls
         cases=[('run_t2i_accelerate.sh',bench) for bench in ('geneval','dpgbench','longtextbench','cvtg_2k','tiifbench','oneigbench','wise','bizgeneval','qwenimagebench')]
         cases += [('run_imgedit_accelerate.sh','imgedit'),('run_gedit_accelerate.sh','geditbench'),('run_rise_accelerate.sh','rise'),('run_edit_compass_accelerate.sh','editcompass')]

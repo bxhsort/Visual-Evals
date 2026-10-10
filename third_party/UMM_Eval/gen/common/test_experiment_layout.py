@@ -156,6 +156,20 @@ class ExperimentLayoutTests(unittest.TestCase):
                     self.prepare(config, benchmark="cvtg_2k", experiment=key)
                 self.assertEqual(manifest.read_bytes(), original)
 
+    def test_cvtg_local_ocr_native_weights_invalidate_cached_scores(self):
+        root = self.base / "paddleocr"
+        directory = root / "whl/det/en/en_PP-OCRv3_det_infer"
+        directory.mkdir(parents=True)
+        weights = directory / "inference.pdiparams"
+        weights.write_bytes(b"original native Paddle weights")
+        config = dict(self.config, CVTG_OCR_MODEL_ROOT=str(root))
+        first = self.prepare(config, benchmark="cvtg_2k")
+        identity = first["identity"]["inputs"]["CVTG_OCR_MODEL_ROOT"]
+        self.assertIn("whl/det/en/en_PP-OCRv3_det_infer/inference.pdiparams", identity["files"])
+        weights.write_bytes(b"modified native Paddle weights, larger than before")
+        with self.assertRaises(ValueError):
+            self.prepare(config, benchmark="cvtg_2k")
+
     def test_edit_source_image_identity_invalidates_unchanged_metadata_cache(self):
         sources = self.base / "source_images"
         sources.mkdir()

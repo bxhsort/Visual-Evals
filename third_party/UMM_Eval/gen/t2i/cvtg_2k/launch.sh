@@ -20,7 +20,7 @@ CVTG_CLIP_MODEL_PATH="${CVTG_CLIP_MODEL_PATH:-/inspire/hdd3/project/agent-driven
 CVTG_AESTHETIC_MODEL_PATH="${CVTG_AESTHETIC_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/sa_0_4_vit_l_14_linear.pth}"
 CVTG_VQA_MODEL_PATH="${CVTG_VQA_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-flant5-xxl}"
 CVTG_VQA_VISION_MODEL_PATH="${CVTG_VQA_VISION_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-vit-large-patch14-336}"
-PADDLEOCR_SOURCE_DIR="${PADDLEOCR_SOURCE_DIR:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt}"
+CVTG_OCR_MODEL_ROOT="${CVTG_OCR_MODEL_ROOT:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/paddleocr}"
 HF_CACHE_DIR="${HF_CACHE_DIR:-${HF_HOME:-${REPO_ROOT}/../../../.cache/huggingface}}"
 LAUNCH_MODE="${LAUNCH_MODE:-device_map_multi}"
 NUM_NODES="${NUM_NODES:-1}"
@@ -216,14 +216,6 @@ if (( RUN_EVAL != 0 )); then
     echo "TEXTCRAFTER_ROOT does not exist: $TEXTCRAFTER_ROOT (see docs/data_setup.md)"
     exit 1
   fi
-  if [[ ! -d "$HOME/.paddleocr" ]]; then
-    if [[ -d "$PADDLEOCR_SOURCE_DIR" ]]; then
-      cp -r "$PADDLEOCR_SOURCE_DIR" "$HOME/.paddleocr"
-    else
-      echo "PaddleOCR cache is absent; PaddleOCR will download its public models on first use."
-    fi
-  fi
-
   EVAL_GPUS="${EVAL_GPUS:-$(count_visible_gpus "$CUDA_VISIBLE_DEVICES")}"
   source activate textcrafter_eval
   export PATH=/opt/conda/envs/textcrafter_eval/bin:$PATH
@@ -234,6 +226,7 @@ if (( RUN_EVAL != 0 )); then
     --aesthetic_model_path "$CVTG_AESTHETIC_MODEL_PATH" \
     --vqa_model_path "$CVTG_VQA_MODEL_PATH" \
     --vqa_vision_model_path "$CVTG_VQA_VISION_MODEL_PATH" \
+    --ocr_model_root "$CVTG_OCR_MODEL_ROOT" \
     --benchmark_dir "$BENCHMARK_ROOT" \
     --result_dir "$RESULT_DIR" \
     --output_file "$RESULT_FILE" \
