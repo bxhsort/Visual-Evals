@@ -65,7 +65,8 @@ class LocalWeightTests(unittest.TestCase):
 
         def official_main():
             self.assertEqual(paddleocr.PaddleOCR(use_angle_cls=True, lang="en", show_log=False,
-                                               det_model_dir="/wrong/cache"), "local-ocr")
+                                               det_model_dir="/wrong/cache", use_gpu=True,
+                                               enable_mkldnn=True), "local-ocr")
             self.assertEqual(vqa_config["model"]["path"], str(vqa_path))
             self.assertEqual(vqa_config["model"]["conversation"], "t5_chat")
             self.assertEqual(vqa_config["tokenizer"]["path"], str(vqa_path))
@@ -119,7 +120,7 @@ class LocalWeightTests(unittest.TestCase):
         linear.eval.assert_called_once_with()
         linear.to.assert_called_once_with("cuda")
         original_paddle_ocr.assert_called_once_with(use_angle_cls=True, lang="en", show_log=False,
-                                                   **ocr_dirs)
+                                                   use_gpu=False, enable_mkldnn=False, **ocr_dirs)
 
     def test_all_ocr_files_required_before_importing_scorer(self):
         with tempfile.TemporaryDirectory() as directory:

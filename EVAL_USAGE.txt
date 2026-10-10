@@ -95,7 +95,7 @@ VQAScore 主模型默认读取：
 目录需直接包含 config.json、pytorch_model.bin 或 model.safetensors；分片模型需索引及完整分片。
 可分别用 CVTG_CLIP_MODEL_PATH、CVTG_AESTHETIC_MODEL_PATH、CVTG_VQA_MODEL_PATH、CVTG_VQA_VISION_MODEL_PATH、CVTG_OCR_MODEL_ROOT、CVTG_VQA_TOKENIZER_PATH 覆盖；路径与权重身份记录到实验清单。
 指定权重不存在时明确报错，不为上述本地权重回退到自动下载。
-仍需官方 TextCrafter_Eval/unified_metrics_eval.py；本地适配入口只重定向权重读取，保留官方预处理与评分。
+仍需官方 TextCrafter_Eval/unified_metrics_eval.py；本地适配入口配置权重路径与 OCR 设备，保留官方预处理与评分。
 VQA 的 336 视觉编码器默认读取：
 /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-vit-large-patch14-336
 需包含 config.json、preprocessor_config.json 及权重文件（分片需完整索引）。
@@ -109,3 +109,6 @@ PaddleOCR 2.10 的三个模型直接从以下默认目录加载：
 每个目录须直接包含 inference.pdmodel 和 inference.pdiparams。
 无需设置 PADDLE_OCR_BASE_DIR、PADDLEOCR_SOURCE_DIR；不查找或复制到 ~/.paddleocr，不为缺失的 OCR 权重自动下载。
 保留官方英文识别、方向分类与评分公式；不会自动安装依赖。
+PaddleOCR 固定使用 CPU（use_gpu=False、enable_mkldnn=False），规避当前环境中 GPU 检测器返回空结果的问题。
+CLIPScore、VQAScore 和美学评分继续使用原有 GPU 设置；CUDA_VISIBLE_DEVICES=0 不会强制 OCR 使用 GPU。
+修改前生成的 OCR 零分需要重新评估；官方评分入口每次重新计算指标并覆盖 CVTG_results.json。

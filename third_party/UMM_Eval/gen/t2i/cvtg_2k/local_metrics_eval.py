@@ -1,7 +1,7 @@
 """Run the official TextCrafter scorer with explicit local model weights.
 
 The external scorer remains responsible for OCR, VQA, preprocessing and scoring.
-Local OCR, CLIP, aesthetic head and VQA weights are routed without changing metrics.
+Local weights are routed without changing metrics; PaddleOCR runs on CPU.
 """
 from __future__ import annotations
 
@@ -102,10 +102,12 @@ def run_local_scorer(scorer, clip_path: Path, head_path: Path, scorer_args: list
             def local_paddle_ocr(*args, **kwargs):
                 # Explicit model dirs bypass PaddleOCR's cache lookup. Keep
                 # official language, angle classifier and OCR preprocessing.
-                kwargs.update(ocr_model_dirs)
+                # CPU avoids silent empty detections observed on the GPU backend.
+                kwargs.update(ocr_model_dirs, use_gpu=False, enable_mkldnn=False)
                 return original_paddle_ocr(*args, **kwargs)
 
             patches.enter_context(patch.object(paddleocr, "PaddleOCR", local_paddle_ocr))
+            print("CVTG OCR device: cpu (use_gpu=False, enable_mkldnn=False)", flush=True)
             for name, directory in ocr_model_dirs.items():
                 print(f"CVTG OCR {name}: {directory}", flush=True)
         if vqa_path is not None or tokenizer_path is not None:
