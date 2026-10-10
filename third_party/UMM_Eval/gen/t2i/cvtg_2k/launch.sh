@@ -83,15 +83,6 @@ count_visible_gpus() {
   echo "${#_VISIBLE_DEVICES[@]}"
 }
 
-ensure_libgl1() {
-  if ldconfig -p 2>/dev/null | grep -q 'libGL\.so\.1'; then
-    return 0
-  fi
-
-  echo "libGL.so.1 not found. Installing libgl1 for CVTG evaluation..."
-  yes | apt-get install libgl1
-}
-
 build_device_groups() {
   local devices_csv="$1"
   local per_worker="$2"
@@ -213,7 +204,6 @@ if [[ -n "$RESIZE_TO" ]]; then
 fi
 
 if (( RUN_EVAL != 0 )); then
-  ensure_libgl1
   if [[ ! -d "$BENCHMARK_ROOT" ]]; then
     echo "BENCHMARK_ROOT does not exist: $BENCHMARK_ROOT (see docs/data_setup.md)"
     exit 1
