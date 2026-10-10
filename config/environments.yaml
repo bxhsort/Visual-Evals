@@ -1,0 +1,65 @@
+# DG2评测框架环境配置
+# 所有路径相对于 DG2_ROOT，默认为 DG2/.conda
+
+# 第一部分：生成环境 (所有benchmark共用)
+generation:
+  env_name: common
+  env_path: ${DG2_CONDA_ROOT}/common
+  description: 图片生成环境，所有benchmark生成阶段共用
+  source: /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/hdd/Bagel-Zebra-CoT/requirements.txt
+
+# 第二部分：评估环境 (每个benchmark的评测阶段)
+evaluation:
+  # T2I benchmarks
+  geneval:
+    env_name: geneval
+    env_path: ${DG2_CONDA_ROOT}/geneval
+    source: /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/hdd/geneval/environment.yml
+
+  dpgbench:
+    envs: /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/pengbo/genrouter-eval/envs/dpg-mplug
+
+  wise:
+    envs: /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/pengbo/genrouter-eval/envs/wise-verified-judge
+
+  qwenimagebench:
+    envs: /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/pengbo/genrouter-eval/envs/qwen-image-judge
+
+  oneigbench:
+    env_name: oneig
+    env_path: ${DG2_CONDA_ROOT}/oneig
+
+  longtextbench:
+    env_name: oneig
+    env_path: ${DG2_CONDA_ROOT}/oneig
+    description: 与OneIG共用环境
+
+  tiifbench:
+    env_name: common
+    env_path: ${GEN_ENV}
+    description: API评测，复用生成环境
+
+  cvtg_2k:
+    env_name: cvtg
+    env_path: ${DG2_CONDA_ROOT}/cvtg
+
+  bizgeneval:
+    env_name: common
+    env_path: ${GEN_ENV}
+    description: API评测，复用生成环境
+
+  # IT2I benchmarks
+  geditbench:
+    env_name: common
+    env_path: ${GEN_ENV}
+    description: API评测，复用生成环境
+
+  imgedit:
+    env_name: common
+    env_path: ${GEN_ENV}
+    description: API评测，复用生成环境
+
+  rise:
+    env_name: common
+    env_path: ${GEN_ENV}
+    description: API评测，复用生成环境

@@ -1,0 +1,3032 @@
+[
+    {
+        "task_type": "background_change",
+        "key": "4a7d36259ad94d238a6e7e7e0bd6b643",
+        "instruction": "Change the background to a city street."
+    },
+    {
+        "task_type": "background_change",
+        "key": "05040717fb0f2ac80083ef81ee206ace",
+        "instruction": "Change the background to a forest."
+    },
+    {
+        "task_type": "background_change",
+        "key": "a76982639289faf26edf18a86d68ebf8",
+        "instruction": "Change the background to a green grassland."
+    },
+    {
+        "task_type": "background_change",
+        "key": "57288ae252f43831390e2121a84b1780",
+        "instruction": "Adjust the background to a beach."
+    },
+    {
+        "task_type": "background_change",
+        "key": "bf2905a10d5da2ad897ef159eadc1821",
+        "instruction": "Change the background to a forest."
+    },
+    {
+        "task_type": "background_change",
+        "key": "9b1b4768e51e99840785cc5b0f05ce8f",
+        "instruction": "Adjust the background to a garden."
+    },
+    {
+        "task_type": "background_change",
+        "key": "2154828b5213504b358697eac664f3c0",
+        "instruction": "Adjust the background to a forest."
+    },
+    {
+        "task_type": "background_change",
+        "key": "544c9de690f114560ab4e28f6c6bbf44",
+        "instruction": "Adjust the background to a concrete ground."
+    },
+    {
+        "task_type": "background_change",
+        "key": "c44b1ef6dd9d2d1f0e1168b848af3ca6",
+        "instruction": "Adjust the background to a snowy field."
+    },
+    {
+        "task_type": "background_change",
+        "key": "ce13a98a496fe366099ea1d9894bd1a8",
+        "instruction": "Change the background to high mountains."
+    },
+    {
+        "task_type": "background_change",
+        "key": "ba8c75293f0f60353f6afb4b76e7eda0",
+        "instruction": "Adjust the background to the ocean."
+    },
+    {
+        "task_type": "background_change",
+        "key": "f17eaba1650c7320694dd8a5493361b8",
+        "instruction": "Adjust the background to a glass wall."
+    },
+    {
+        "task_type": "background_change",
+        "key": "b53d1d3a0534e61965bfa36b30cf1fb8",
+        "instruction": "Change the background to a city street."
+    },
+    {
+        "task_type": "background_change",
+        "key": "5879c4a5f276467de24f47fc927d482f",
+        "instruction": "Adjust the background to a desert."
+    },
+    {
+        "task_type": "background_change",
+        "key": "e88625bb04f622bf73a13e76e47c405b",
+        "instruction": "Adjust the background to a city."
+    },
+    {
+        "task_type": "background_change",
+        "key": "c29e28b92d10e4b4beb0a6b9517c215a",
+        "instruction": "Change the background to the entrance of a Japanese shrine."
+    },
+    {
+        "task_type": "background_change",
+        "key": "9077c3f99adb28dcdea8c9b877662e5e",
+        "instruction": "Change the background to an indoor setting."
+    },
+    {
+        "task_type": "background_change",
+        "key": "2c1d322cb7c60b1de8d0a17cc97b7c1b",
+        "instruction": "Please generate an ID photo of me based on this picture."
+    },
+    {
+        "task_type": "background_change",
+        "key": "0f385bcff859231789a9c978cafecc2a",
+        "instruction": "Change the background to a starry sky."
+    },
+    {
+        "task_type": "background_change",
+        "key": "f7d391ffa970e18fc8393888295899f8",
+        "instruction": "Change the background to the ocean."
+    },
+    {
+        "task_type": "background_change",
+        "key": "99fd6314476a4af7cd75dd0a377f1ae5",
+        "instruction": "Modify this photo to be set in a desert."
+    },
+    {
+        "task_type": "background_change",
+        "key": "641cffb62276b86f154dfe64704b0411",
+        "instruction": "Change the background to a lingerie store, in a panoramic view, keeping the person in the original image unchanged."
+    },
+    {
+        "task_type": "background_change",
+        "key": "42072aa83c4cbeed62276c45e61f42a2",
+        "instruction": "Change the background to a spring park while keeping the person unchanged."
+    },
+    {
+        "task_type": "background_change",
+        "key": "806f4a1d864636f48a994032447bb5a8",
+        "instruction": "Remove the background for me."
+    },
+    {
+        "task_type": "background_change",
+        "key": "165533290b7c205b0dd34d1053716dcb",
+        "instruction": "Replace the sky in this image with blue skies and white clouds."
+    },
+    {
+        "task_type": "background_change",
+        "key": "da491710942a88d0dd2059ec7d7e9ee6",
+        "instruction": "Change the background of this image to Tiananmen Square."
+    },
+    {
+        "task_type": "background_change",
+        "key": "6357040e1522d2a852370b22e2b95300",
+        "instruction": "Change the background to Mount Everest."
+    },
+    {
+        "task_type": "background_change",
+        "key": "05f80c40aa6ffd99a171a49fa43f7472",
+        "instruction": "Edit the background to be Shanghai's Bund."
+    },
+    {
+        "task_type": "background_change",
+        "key": "d5ca6ec7c3a7e2091afdbb852beb67a0",
+        "instruction": "Change the background to a cartoon park."
+    },
+    {
+        "task_type": "background_change",
+        "key": "8ba1bc01568c11eb76e62b73a24b337f",
+        "instruction": "Change the background to the sea."
+    },
+    {
+        "task_type": "background_change",
+        "key": "dae31be23abd02a042bbf9c3a0a2ed80",
+        "instruction": "Replace the background with a sunny landscape, ensuring the person's appearance and posture remain unchanged, with golden sunlight shining on trees and grass."
+    },
+    {
+        "task_type": "background_change",
+        "key": "218747d7f3c9ce2eaef0ea3083362626",
+        "instruction": "Change the background to a nighttime cityscape."
+    },
+    {
+        "task_type": "background_change",
+        "key": "fe6029dda8b7663108393a7fbd5a7a48",
+        "instruction": "Modify the background to be filled with blooming flowers."
+    },
+    {
+        "task_type": "background_change",
+        "key": "5f04fd7528d090db1347c36c9e1ca89f",
+        "instruction": "Please change the background wall to a green forest with high mountains, bright sunlight, and distant flying birds."
+    },
+    {
+        "task_type": "background_change",
+        "key": "267512f5681adb18375d3efad1f10228",
+        "instruction": "Can you remove the background from this image? Only keep the Superman figure."
+    },
+    {
+        "task_type": "background_change",
+        "key": "1e6d1fa7e02689ee2409aa686132cab1",
+        "instruction": "Change to a sorrowful background."
+    },
+    {
+        "task_type": "background_change",
+        "key": "1008256303fc5fc6ef56efccf12da5da",
+        "instruction": "Replace the background with a soccer field."
+    },
+    {
+        "task_type": "background_change",
+        "key": "23e79f182ac8892ca79e343e987f147c",
+        "instruction": "Change the background to the interior of a spaceship."
+    },
+    {
+        "task_type": "background_change",
+        "key": "09e1f235d3d395c3aff0fd36ec3dd034",
+        "instruction": "Add some snow to the background."
+    },
+    {
+        "task_type": "background_change",
+        "key": "214f8945db17cd0bf5c4b043408de0d0",
+        "instruction": "Change the background of this photo to a traditional Chinese landscape painting."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "0d6038e1736440c2fb8384b4bf495e13",
+        "instruction": "change the color of umbrellas to brown"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "981afb942cdf3cbacf7614f47ff21b2d",
+        "instruction": "change the color of goat to yellow"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "61c156a2c97fee9424bbb0f13fa2c5f8",
+        "instruction": "change the color of fire hydrant to lavender"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "174b49f45ca4ff5d1d3ea06096b78e57",
+        "instruction": "change the color of elephant to pink"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "f437c7392b76ded921a0abc243f81290",
+        "instruction": "change the color of couch to yellow"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "fe29684864bbb7bd408bf2235acdfa4a",
+        "instruction": "change the color of horses to violet"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "a4ca581574347248e1762c4987c931aa",
+        "instruction": "Alter the color of bus to lime"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "00644e09e285f614bbfae5883328b4df",
+        "instruction": "alter the color of the mirror frame to orange."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "fb71870e760822d8674699ceb7034449",
+        "instruction": "alter the color of plane to pink"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "4e80301c1139c647487f06abf0596e0d",
+        "instruction": "change the color of bear to black"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "f32d0e13e862622da612225a17b9db2c",
+        "instruction": "change the color of jacket to purple"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "de24af54e090d3a53ca853945816f0eb",
+        "instruction": "change the color of sheep to purple"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "c66920936a630590e1328a56b2d6f08c",
+        "instruction": "change the color of man to pink"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "eaec3869433bbce38928002406a3580e",
+        "instruction": "alter the color of clocks to brown"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "bfdbf8372bc32e04bf6d6d0e692fdbf4",
+        "instruction": "change the color of bird to tan"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "41fbe7550d337d07d030b308f2099d1f",
+        "instruction": "alter the color of doughnut to silver"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "f75869d17b9c7a8770ad0658843bed85",
+        "instruction": "change the color of suit cases to silver"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "aa027d2c15403d4027f71ea4da0a93f1",
+        "instruction": "turn the color of dog to pink"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "b94ccee6f986cf0fddb523eaae04bdfa",
+        "instruction": "change the color of shirt to gray"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "3b496f697bda6811d4e0d1c5d618d6b8",
+        "instruction": "change the color of cake to green"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "3213cacb8b48889d0b13a019248528f5",
+        "instruction": "Change the tie to black."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "875cd6dbdbcc7a153cf1f62bb101a9e0",
+        "instruction": "Change the car body to a sports car style, and make it purple."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "60f8efd12b9e6e1db076d0ce71592eed",
+        "instruction": "Change this image to a white background."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "43bcfbd5afb5d12f74b43e33f13559f8",
+        "instruction": "Change the car body color to blue."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "69d1ef2ac7a987ce31e0aa2d9e96beea",
+        "instruction": "Change the tablecloth color to bright red."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "a70494ecea4bb3610fe41e5e5efe1033",
+        "instruction": "Modify this image, changing the wall color to dark gray."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "bc659e44391c92449841e3cd72dcd17b",
+        "instruction": "Make her hair shorter and darker, black."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "37c16adc232e505fc6f0d6747d10e8f1",
+        "instruction": "Change the color of the stockings."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "d0f17abfafec6172c241aa7ef30278a0",
+        "instruction": "Change the bed curtain color to dark gray."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "8c541c8aaed6d5a8eb2d86162d39d01b",
+        "instruction": "Change the background of the image to light sea color, with a gold border."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "104b3d9a195e2d012f07aa18a286c487",
+        "instruction": "Invert the colors of the image."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "65e5510e9ed8036376e16afe77f8860e",
+        "instruction": "Change the hair of the person in the photo to yellow."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "87e9e81f29177023a7b988b5557d5d3d",
+        "instruction": "Change this bag to red."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "90c511de3025169322c026d5f7ed209b",
+        "instruction": "Adjust this to a white background ID photo."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "d87fe55d649a02fa15881364ab671351",
+        "instruction": "Retouch this photo, making the hair platinum blonde, improving the hairstyle at the ends, and making the fireworks more brilliant and colorful."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "4023c8e2e8a992a6768b47f1946d0027",
+        "instruction": "Can you change the wall color to yellow?"
+    },
+    {
+        "task_type": "color_alter",
+        "key": "939aadbf02607ea772e7c214d0cbc0e1",
+        "instruction": "Change the clothing to pink."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "e153b93ffb578c1939739628bad3c7a9",
+        "instruction": "Change this avatar to a blue color tone while keeping the content the same."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "eeab5f9b2f3a62deb674c7bc6af021fb",
+        "instruction": "Change the car body color to gray."
+    },
+    {
+        "task_type": "color_alter",
+        "key": "1711b0f26ae0d35b6b33b0cd8fd2a6dc",
+        "instruction": "Change the bed sheet color to sky blue."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "f521449fb89e5ded1f4ff725785d01b8",
+        "instruction": "Change the hat\u2019s material to foam plastic."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "da8a0c7926b0c53a2c01c3a28e79a2ef",
+        "instruction": "Replace the bench\u2019s material with marble."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "3df4fa90ddbeb16bfac10ede96f31262",
+        "instruction": "Craft the ram with fine ceramic."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "c18278ee2b0b3d8bd18c5279f4a8c636",
+        "instruction": "Change the hat\u2019s material to paper."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "cc99cdd8f171dfacc44cddb50b690743",
+        "instruction": "Reshape the kitten using clay."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "611ae6fbc57a2b364325650954b21510",
+        "instruction": "Replace the computer's casing with bamboo fiber composite."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "0f6baa8d76c35f11200abb099692ed18",
+        "instruction": "Change the bear\u2019s material to glass."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "9d76287b0d48bcff3cdff69b198f569e",
+        "instruction": "Reconstruct the bus body with solid wood panels."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "b83c07d09b8a5e602e152dbb6f0271d1",
+        "instruction": "Change the plane's material to feathers."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "625a9a448c17aecb16dce5b0da3075a6",
+        "instruction": "Transform the donut\u2019s material into aluminum foil."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "ca3b53a53971b0ad08476eeb10803df0",
+        "instruction": "Make the chair entirely from bone china."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "5098e702ebab84dc41c1ec86a937bfb2",
+        "instruction": "Change the zebra\u2019s material to concrete."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "d2a394c05802831288e0a592d3e28169",
+        "instruction": "Build the horse using red bricks."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "59c7d7b4c69afb3117e9b53eb4893c4d",
+        "instruction": "Change the doll\u2019s material to cotton fabric."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "46090cab325a6d4ac10ced9b95dbcad7",
+        "instruction": "Make the sheep from jade."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "5dbff1a3b7d1fb890b72cef2f711a2ac",
+        "instruction": "Craft the cat using cloisonn\u00e9 enamel."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "9612c74ec7892a39867e992d0d806314",
+        "instruction": "Change the toilet\u2019s material to aluminum foil."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "522ca43195a09cb195944e4154fb3286",
+        "instruction": "Make the seagull from resin."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "c0b82d5df485c7cbec00d9190adf0f55",
+        "instruction": "Mold the bed frame from high-strength plaster."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "a1e647285bd94edb240a412737354b02",
+        "instruction": "Construct the elephant from bricks."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "f93b1dd57b6a8791c872be6221c66dd0",
+        "instruction": "Replace the sword in the image with a diamond sword."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "95368925f9384e28535aea893b6add55",
+        "instruction": "Turn the bag stand into a glass counter."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "6dc67bf92a79edb4f966836df4252145",
+        "instruction": "Sculpt the ice cream from jade."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "df4b227669a0c09e007e063781385cc5",
+        "instruction": "Change the hat\u2019s material to wood."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "db87dca6363b0c1afd3246ab8fcfe5d7",
+        "instruction": "Replace the doctor's coat with a Merino wool sweater."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "7078f382f1fc25aeb48cbcd6dddd9c78",
+        "instruction": "Reconstruct the tower structure using a cast iron framework."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "6db0677c1fa5b1a266e9c078d5cb175d",
+        "instruction": "Make the clothing fabric from premium linen."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "66fbc2d25acbb4b6542ba627c365bd4f",
+        "instruction": "Craft the outerwear from full-grain calfskin leather."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "1e863624d729f3c358964626ad4612bc",
+        "instruction": "Upgrade the necklace\u2019s material to 999 pure gold."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "ac38191337c2f53c46b131624c789abc",
+        "instruction": "Replace the tabletop with imported Italian marble."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "73875335f42e4154ece47b4a4fafd83e",
+        "instruction": "Swap the background plants for woven rattan."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "43e8fede0b26141d75c64c1f03bfc96e",
+        "instruction": "Change the clothing\u2019s material to foam."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "d7380515285d80a58ff567863809c8f4",
+        "instruction": "Replace with jade."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "19e8dce7f4aa1758502870d9ae8a919b",
+        "instruction": "Change the stone platform to rubber."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "5b3a45f95245e83201a46866e71df0c9",
+        "instruction": "Turn the puppy into clay."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "dd0e86152b637efa3cc71b41fb8aaddc",
+        "instruction": "Create a rubber-textured turtle identical to this one."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "db8e18433b727737610cb3d8b71f4690",
+        "instruction": "Cutlery is made of food-grade stainless steel."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "0cf6ae6de96b2d07c717f8c3bf9517fa",
+        "instruction": "Change the cup in hand to ceramic."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "641f39026c89fffaf60a4f0f50304d7d",
+        "instruction": "Transform the clothing material into silk."
+    },
+    {
+        "task_type": "material_alter",
+        "key": "803f665220970a442a420afb826b6747",
+        "instruction": "Craft the outerwear from lambskin leather."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "76a4af36b318953c8054fdd706e7294f",
+        "instruction": "change the action of cat to jumping"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "caabd082c0ed1757df58db3eaea5ac73",
+        "instruction": "change the action of biplane to landing"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "41fcd0b5de39189a4fbf4eac28ce259a",
+        "instruction": "Change the bird's action to flapping its wings and flying high"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "f09044a354815af044038bf50708b58d",
+        "instruction": "change the action of the man to running"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "be4bb34c6d879f253a4b7c4f32fc333f",
+        "instruction": "make the action of the man to cheering"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "0a4769356f68ed88de0d0eb3aba89eb6",
+        "instruction": "Change the man's gesture to raising his hands"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "8175d438e57f213c80425595063d053a",
+        "instruction": "change the action of the horses to galloping"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "621c48b14baadc0c3947bc05857e91f4",
+        "instruction": "change the action of the birds to flying"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "72fc47119a7cd90ecdcbf073c3fb74be",
+        "instruction": "make the action of the woman to laughing"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "3bf8c501e7e338fe92879153ec038ede",
+        "instruction": "make the action of the plane to taking off"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "5e855293ac06b10ae7faeb4a675b18a6",
+        "instruction": "make the action of the child to laughing"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "06ec0c598cbbc8c9490395a98b88adac",
+        "instruction": "change the action of cat to sleeping"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "733441fbfc73dee8d4a74d2bde1bd931",
+        "instruction": "Change the person's movements to look forward"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "aefbfe530e2ce5323e5be6ea2575815e",
+        "instruction": "make the action of the man to kissing"
+    },
+    {
+        "task_type": "motion_change",
+        "key": "8296e86315751cdaa09c910c95b02c10",
+        "instruction": "Make the person in the image smile slightly without altering the original structure."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "1941828e44744f4cd248560b4b67529c",
+        "instruction": "Add a cherry-eating action without changing the original character."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "3d112cbeb258289dbbca3738ee92a8aa",
+        "instruction": "Animate the dog in the image."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "353cf97ec89d2e51932763ae7538c4cc",
+        "instruction": "Make the person in the image smile."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "65368cbdae17f7c44cd4d8d1271f0bdf",
+        "instruction": "Make the person in the image give a thumbs-up."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "fc228a38f175cad001bc8a409c76e63b",
+        "instruction": "Make the person in the image wave."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "73e34d4e31b308f26f3ade464bbd9a52",
+        "instruction": "Make the little girl in the image stick out her tongue."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "a6bd902e89f6b8576a02f2a0139a993b",
+        "instruction": "Make the two main subjects in the image hug."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "25a7bc668e846d7218e012af5295eba9",
+        "instruction": "Transform the image into one where the woman tilts her head."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "0d61bb72d05645cec8a4c2c62cdf7fe0",
+        "instruction": "Make the child pout."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "9b58419e6adadd4a367c699741e08f89",
+        "instruction": "Change the expression to a crying face."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "0a406290c07e7b1837c0f3bcddbeb8d2",
+        "instruction": "Generate an image of the character smiling based on this photo."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "cd627a9fe6dd079a1e692be90563c50c",
+        "instruction": "Make the person in the image make a funny face."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "f1a8ac0cd17e1138c22accdc095dfb04",
+        "instruction": "Using the same image, generate one where the girl is crying."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "715a72723f1a797640c35a4c7a4f8f51",
+        "instruction": "Change the person\u2019s expression to one of distress."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "2ca948c72ab289d2c86db037002baa95",
+        "instruction": "Make all the people in the image laugh."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "dd6be6e54c7662c78f607bd88a931caf",
+        "instruction": "Make the person in the photo dance."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "c5b82e3b142580940d3897a9f43b4139",
+        "instruction": "Modify the image to show the person picking their nose."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "1fbb9fae9fb272593a73203c8113f758",
+        "instruction": "Make the person jump."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "e648d94e8f66940befa13e34039be176",
+        "instruction": "Animate the cat in the image."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "9ce39582df9aaf3b21b39fb9627f7bb2",
+        "instruction": "Make the girl in the photo blow a kiss."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "028b9a3c540ac8eaeef11799524ec127",
+        "instruction": "Make the expression more sorrowful."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "991cdfa18e521e034d65a636900b09af",
+        "instruction": "Make the child in the image dance."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "df666978387df220cd714f7b2f80b673",
+        "instruction": "Make the people in the image smile happily."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "aa322dd5d83bd8e02afd3ad4a87d6a6a",
+        "instruction": "Create an animated version of the person in the image blinking and opening their mouth."
+    },
+    {
+        "task_type": "motion_change",
+        "key": "e9b3b27074575e7615723b7ff89de9a0",
+        "instruction": "Make the cat in the image run."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "ccffdca80bf93b14a3533eb46829300f",
+        "instruction": "Remove his beard"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "cac69629251b8ef6f51d793b6a3b07fa",
+        "instruction": "Make his nose more defined and his face slimmer"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "9b0d4782d50d550654d1daf53153524a",
+        "instruction": "Make him lose 15 pounds"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "1805a69d09b8d3637fe585f3c402ea2f",
+        "instruction": "Make him gain 20 pounds"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "0e38f5cee6a69fb6b1817b1685618e91",
+        "instruction": "Remove his abs and add more fat to his body"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "80e7583efc497acfddc6d6f34c1207c9",
+        "instruction": "Make him look sad"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "6ffe2a7e012e52694e1a07c00e7f44c5",
+        "instruction": "Change her curly hair to straight hair"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "58d48d76e4705b16a6f03337fc6397e8",
+        "instruction": "Make her look younger"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "de1c094bc7a28f273e560bacef9c2a5e",
+        "instruction": "Make her skin a bit darker, like after a sunbath"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "b125faa596111bb238ac9e908d67045b",
+        "instruction": "Remove his beard and wrinkles from his face"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "06fa0ee0788e219cae32f542a417ab70",
+        "instruction": "Make his beard longer"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "ea1de73c9c216ec0689eb650e51a5829",
+        "instruction": "Make him look very happy"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "3190e10334ec71222a324bf0b2e3a459",
+        "instruction": "Make him look very serious"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "67fd8d190cb31cc01f52c2ec8ead9896",
+        "instruction": "Make him look middle-aged"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "1bdf06dc53b7cc3c907b540dca7b4b53",
+        "instruction": "Make him look 10 years older"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "0d2a9e9966354dc8039aeee974c767c2",
+        "instruction": "Make him look stronger"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "e5db9a732c72acae1638371292c14220",
+        "instruction": "Make him look older"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "d7b1f377153a3e35db9020dc1a848c8a",
+        "instruction": "Dye her hair brown"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "9a7eea29db11c1f500838bee90653970",
+        "instruction": "Make him grow hair"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "1f1c9a1e6ce6899d91abcb9a67922758",
+        "instruction": "Make him look more handsome with sharper eyes"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "41d961b14b637889947080f1891f85ff",
+        "instruction": "Make him look less angry"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "fe220565cb0f22a44d1f0a81a132ce9f",
+        "instruction": "Make him look like he is crying a lot"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "918900e10cac886e4bdf4236efee15b9",
+        "instruction": "Make her look better"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "5968a24147a8564f74bd09104c4c032e",
+        "instruction": "Make him have more muscles and a stronger vibe"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "4c453fc6e3f8842296406dc7c8ad5ac4",
+        "instruction": "Make him more handsome"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "6022c9e5401a53028e3b0690cce7a9db",
+        "instruction": "Make him laugh heartily"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "4611d3319199a5c4b84ea1608f6eba29",
+        "instruction": "Make him look younger"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "f21e2f3585f8cddeab9d472375e92bac",
+        "instruction": "Make him grow long hair"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "2dd5f9c40a055007abcafbbdaf2be46b",
+        "instruction": "Make his skin smoother, no wrinkles"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "ba360f7380e2f080485af9bbe38bd4c6",
+        "instruction": "Make him lose 20 pounds"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "6cabdec52f6113e0a365332f323053b1",
+        "instruction": "Make me look like a handsome guy in this photo."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "9647d92cf8edeec8c3b68ecb6150f7c7",
+        "instruction": "Enhance the appearance."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "f0995ee97b33e6ca5effc808be8e4ac2",
+        "instruction": "Make the allergic reaction on my face look more severe."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "47e2e49cf8b662a7493ddad42334b6e1",
+        "instruction": "How can I fix these facial imperfections?"
+    },
+    {
+        "task_type": "ps_human",
+        "key": "cc7a45219bdfbaf01dc3348735c183d0",
+        "instruction": "Remove the eyeshadow and lipstick."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "c96ed4ce8d74381cce77516fa3c3b6b3",
+        "instruction": "Add abs to the original photo."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "ca9fc1fd8ffd6fdc77d694c5786a69db",
+        "instruction": "Make his nose higher."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "27a041f8cf96466d3fe99c2854600ed7",
+        "instruction": "Edit the eyes to look red and teary."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "84e1ecd02e31ff710caf92575973abb3",
+        "instruction": "Make it look better."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "c18b9ea3a82a132108bb19942258fae1",
+        "instruction": "Remove acne and blemishes from my face, slim down my nose and face."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "04f9da181ba94ebbb7b76206affdc4cc",
+        "instruction": "Give me a G-cup while keeping my face unchanged and maintaining the original proportions."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "f598b8339d28b4c0836da4341785e605",
+        "instruction": "Refine the chin in this photo."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "2898a98d82023e2e558488202dc231af",
+        "instruction": "Edit my face to remove spots, slim it down, and brighten the skin."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "697678d3816a0fcfc357a108ae47955a",
+        "instruction": "Enhance my nose."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "32d356cc309cfe3682305e2c3c2adfd9",
+        "instruction": "Without altering or beautifying anything else, just shape my eyebrows to suit me."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "089748fdcf4c407ac479c76e0f62f8f4",
+        "instruction": "Make my legs longer in the photo."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "6d71b1b0b6f8fb153cf031d29ba59129",
+        "instruction": "Draw her with a much larger chest."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "e3ec80bb14ae5d53e19a1d5efd5921a1",
+        "instruction": "Make me look 10 pounds thinner."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "d64299c7e5b6cda2e20b7fd0c577aba3",
+        "instruction": "Whiten my face and apply a better filter."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "2e6c9f632d7c9a434011c88cc1e3c8d8",
+        "instruction": "Add abs to this image."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "7160b6370ace4b0a89a408876b48c1c4",
+        "instruction": "Edit the image to give me visible abs."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "c0887ad7bc9f207f3acf198fc2a2e4aa",
+        "instruction": "Make my hair longer."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "535fc24a4f6446999ac202e6e2eab72c",
+        "instruction": "Transform the original photo into a youthful and stylish version."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "b6669ad585437d790d56c9d51812ce73",
+        "instruction": "Adjust my face size to be symmetrical, and make my eyes the same size."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "5681bb73bf53906dfe4e7376be42d981",
+        "instruction": "Make my eyes bigger."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "aa5b5375f7ead439732b0979fab353b6",
+        "instruction": "Generate a version where the girl on the right looks slimmer."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "038013b7852ce014b254effb307ec5de",
+        "instruction": "This is my photo\u2014please make me look more handsome."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "3b0f6ca611bfa2f2416bf7ade7f60811",
+        "instruction": "Feminize my appearance."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "38121c6cc4479c8a4fbd0d888bb79f1d",
+        "instruction": "Make me look more masculine."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "56287939cfa47505f0cc400430ae4131",
+        "instruction": "Enhance this photo to make me look better."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "c9101db419bbcd1b258ed367dc09b986",
+        "instruction": "Retouch this image."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "4b7e3f9099377e3823c1c3e0d924883a",
+        "instruction": "Make me look handsome."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "3547f6c2021822fb3f480595a44679bd",
+        "instruction": "Make me look as good as possible."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "e16b35649536eed0fecef4c7704b228b",
+        "instruction": "Make me look 20 years younger."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "f81d8419a96bac5878844b85e21a938c",
+        "instruction": "Make my face look better."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "8195e9e69612be9bae6cad135bb94840",
+        "instruction": "Change my face shape to a round one."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "d405f724329102f5171bdcc915177e35",
+        "instruction": "Transform me into a Korean-style handsome guy."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "2dd8b5fb8e22905ed49d87660eb82ee0",
+        "instruction": "Edit this photo\u2014slim the waist and lift the butt."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "ce9fa032e29c8f6418f4cab41e068fcb",
+        "instruction": "Make me look more attractive."
+    },
+    {
+        "task_type": "ps_human",
+        "key": "a50f15973f0f4fcf88c8badcab58e86a",
+        "instruction": "Generate my adult appearance."
+    },
+    {
+        "task_type": "style_change",
+        "key": "15f01f7d55ad4f8695218594277e451f",
+        "instruction": "Convert the image to a Japanese manga style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "4c14aafd852de6b46042af27c98c6a27",
+        "instruction": "Apply the art style of Hayao Miyazaki's animated films."
+    },
+    {
+        "task_type": "style_change",
+        "key": "fd82e6b33505ba16b6c64cfff4ea3895",
+        "instruction": "Switch to an American cartoon animation effect."
+    },
+    {
+        "task_type": "style_change",
+        "key": "c51e5e8de213d991bcab4513da06c885",
+        "instruction": "Render with Pixar Animation Studios' 3D texture."
+    },
+    {
+        "task_type": "style_change",
+        "key": "6b63968c28b15a0bb25b6f93056811c8",
+        "instruction": "Transform into a Japanese anime visual style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "9c72e227cbe037de86345d2d79652e5d",
+        "instruction": "Change the image style to a high-contrast look."
+    },
+    {
+        "task_type": "style_change",
+        "key": "74d28960183c3490877d0da05b4ced6b",
+        "instruction": "Replace the image style with a 3D effect."
+    },
+    {
+        "task_type": "style_change",
+        "key": "2c9c0664af586124f7fa0108419dc9b3",
+        "instruction": "Adjust the image style to a bubble-like aesthetic."
+    },
+    {
+        "task_type": "style_change",
+        "key": "5fb4494003bb1a55335de8b9ec954f29",
+        "instruction": "Add vintage film grain and faded effects."
+    },
+    {
+        "task_type": "style_change",
+        "key": "d124236c63ab27f157dd7ffdf6d9cc4b",
+        "instruction": "Simulate the texture of clay stop-motion animation."
+    },
+    {
+        "task_type": "style_change",
+        "key": "1484ee9ef9a7f142aff7856a0edb276b",
+        "instruction": "Present the brushstroke characteristics of digital painting."
+    },
+    {
+        "task_type": "style_change",
+        "key": "04a128c7a483127cf7ad491c56de17d5",
+        "instruction": "Replace the image style with fantasy art."
+    },
+    {
+        "task_type": "style_change",
+        "key": "d6ac5062a555a85235c762972d5277fe",
+        "instruction": "Change the image style to a Mondrian-inspired look."
+    },
+    {
+        "task_type": "style_change",
+        "key": "4e62777f17329aff2906ff86a217ccb6",
+        "instruction": "Adjust the image style to a watercolor effect."
+    },
+    {
+        "task_type": "style_change",
+        "key": "d99c96ce517e4588da92570b178e8906",
+        "instruction": "Modify the image style into line art."
+    },
+    {
+        "task_type": "style_change",
+        "key": "a69d50a3ae88a3405928ebd3f05d60eb",
+        "instruction": "Transform the image into a retro aesthetic."
+    },
+    {
+        "task_type": "style_change",
+        "key": "45d80a2eb5f3804b79cc274526e60c02",
+        "instruction": "Switch the image style to neon-punk."
+    },
+    {
+        "task_type": "style_change",
+        "key": "f1a9872a150e9dd0850744bd0effe17d",
+        "instruction": "Convert the image style to pixel art."
+    },
+    {
+        "task_type": "style_change",
+        "key": "53d3ea8751230795aaa6ce6bf85669dc",
+        "instruction": "Adjust the image style to a gothic theme."
+    },
+    {
+        "task_type": "style_change",
+        "key": "d3f8877981d10b5a003e6223531c71eb",
+        "instruction": "Use abstract color blocks and lines to express the composition."
+    },
+    {
+        "task_type": "style_change",
+        "key": "9a6b59107a07bbe528614eff11b697b9",
+        "instruction": "Turn it into a cartoon image."
+    },
+    {
+        "task_type": "style_change",
+        "key": "45a4db4e153c28c6a04bc2c642c0c12c",
+        "instruction": "Please transform this photo into a Cubist style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "c00a2045d8125220281c879fd556c528",
+        "instruction": "Convert it into a graffiti style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "739b6810796e2c0179073e600004b764",
+        "instruction": "Switch the image to a high-resolution Impressionist painting."
+    },
+    {
+        "task_type": "style_change",
+        "key": "af2db8f036e553f782d1ed6573c68fb7",
+        "instruction": "Transform this image into a Pointillist artwork."
+    },
+    {
+        "task_type": "style_change",
+        "key": "727fd5249ae60ae0279432babea49584",
+        "instruction": "Change it to a Pop Art style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "27e4b539c6355586fe2935d6a90bba61",
+        "instruction": "Adjust the image style to an oil painting with bold brushstrokes."
+    },
+    {
+        "task_type": "style_change",
+        "key": "22b24d3d01e3b64ec59ae5f8e3c170fa",
+        "instruction": "Turn this image into a steampunk aesthetic."
+    },
+    {
+        "task_type": "style_change",
+        "key": "9cf1146672c2b9e1d4ce37b9dbb3fbda",
+        "instruction": "Modify it into an Impressionist oil painting."
+    },
+    {
+        "task_type": "style_change",
+        "key": "a5f07e015eeb284665b72240e853baa5",
+        "instruction": "Transform it into an oil painting style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "23f17387da2ea2e6817c2204417195ff",
+        "instruction": "Change this image to a Pixar style with a background of a vibrant spring park while keeping the character unchanged."
+    },
+    {
+        "task_type": "style_change",
+        "key": "bd033dd036c1f2e6424ceb3fd9f90dbd",
+        "instruction": "Convert to a watercolor painting style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "f709057fa095f9cb9426f4c3cc783822",
+        "instruction": "Please change this photo into a *Genshin Impact* style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "41a20c339a3c73c6cc5200d03d7ff4a1",
+        "instruction": "Generate a Pixar-style animation with a cheerful spring background."
+    },
+    {
+        "task_type": "style_change",
+        "key": "9b7e39332a893401bdd50a09b75ecd3e",
+        "instruction": "Modify it into a digital illustration style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "f4dfe5ffe8cb955f41ac3858dd6ac5d7",
+        "instruction": "Generate a gothic-style image."
+    },
+    {
+        "task_type": "style_change",
+        "key": "5788cde5a601a266804107209de8ee4c",
+        "instruction": "Switch the image to a minimalist aesthetic."
+    },
+    {
+        "task_type": "style_change",
+        "key": "7327c91f9d675ec5e69712972f49a06c",
+        "instruction": "Recreate it in the style of Monet."
+    },
+    {
+        "task_type": "style_change",
+        "key": "a50fdf85f87b7a11acc92335eaba1b6c",
+        "instruction": "Generate a monochrome-style animation."
+    },
+    {
+        "task_type": "style_change",
+        "key": "1f08678913cf5274ac110ee34ef2b8d8",
+        "instruction": "Create an artwork in a tribal aesthetic."
+    },
+    {
+        "task_type": "style_change",
+        "key": "07fc2fa9b1bbee0e9e37421fe3a6576b",
+        "instruction": "Turn the image into an American comic style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "35825b1573a735192ee20541255a0e87",
+        "instruction": "Make it anime-style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "2b2bdf9401c83ea114677520a589e383",
+        "instruction": "Generate a collage-style artwork."
+    },
+    {
+        "task_type": "style_change",
+        "key": "508064bc4a75a2e2d065ee06ff93eb44",
+        "instruction": "Please change this image into a manga style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "acb15686bbb0df11a35eb9b6a8c9062a",
+        "instruction": "Edit this photo to have a Fuji-style aesthetic."
+    },
+    {
+        "task_type": "style_change",
+        "key": "8d7df9ad8365c7bb1196275184327d2d",
+        "instruction": "Create a dark-themed version."
+    },
+    {
+        "task_type": "style_change",
+        "key": "cd36d9862ef442202ea6d3ffc5b8e8dd",
+        "instruction": "Transform the buildings in the image into a colorful, cute, anime-style landscape full of blooming flowers."
+    },
+    {
+        "task_type": "style_change",
+        "key": "599dbcd5dd042cec90da287aa11414ce",
+        "instruction": "Convert this image into an anime style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "53eeb1cef5005f5e54b87b8e30c3a85b",
+        "instruction": "Generate a pixel-art avatar based on this girl's photo."
+    },
+    {
+        "task_type": "style_change",
+        "key": "84111b91ee328a9c2fc1cf7342b84480",
+        "instruction": "Generate an ink wash painting-style image."
+    },
+    {
+        "task_type": "style_change",
+        "key": "acda14bb5323b325128b624ecc6652c0",
+        "instruction": "Modify this image in a Ghibli style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "2928aac848e0c414823b1b4c2c144ad5",
+        "instruction": "Convert to an ink wash painting style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "ddf9a3b77759783bb6d2b96453f8454b",
+        "instruction": "Switch to a Ghibli style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "3a95a56fdbaed9acedd16d650dcc41ac",
+        "instruction": "Generate a Pixar-style animation."
+    },
+    {
+        "task_type": "style_change",
+        "key": "99ccd2da145b7d7ca7670e407cb3bef7",
+        "instruction": "Convert the young man and woman in the first image into chibi-style characters similar to those in the second image."
+    },
+    {
+        "task_type": "style_change",
+        "key": "af2400e4008497474a3ded8fbbb3acc0",
+        "instruction": "Transform it into a Ghibli style."
+    },
+    {
+        "task_type": "style_change",
+        "key": "1ae5cde224b986b5e4e9d5bdcf44321e",
+        "instruction": "Make it an oil painting."
+    },
+    {
+        "task_type": "style_change",
+        "key": "f50278651439a107a2ff7e1b6f76ff08",
+        "instruction": "Edit this image into a bright and sunny style for use as an avatar."
+    },
+    {
+        "task_type": "style_change",
+        "key": "1021ff6859a5be7b3955a1fc8d1a9431",
+        "instruction": "Generate a cyberpunk-style photo."
+    },
+    {
+        "task_type": "style_change",
+        "key": "ae112c98cae0bfd203af4da8ee3ad54f",
+        "instruction": "Redraw it as a chibi-style illustration."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "462493728c812ed7b9a46d35bd923d34",
+        "instruction": "add a book in her hand"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "25631c283bd12713900c693009b1c4ca",
+        "instruction": "add a poolside lounge chair"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "3d00688dfbae3a417d9fdb0599c31612",
+        "instruction": "add a spoon next to the bowl"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "cbb6a1442c20bc7d006fc52f57a7e069",
+        "instruction": "include a table with a plate"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "8a116404e2af4eb50871e06263c518b0",
+        "instruction": "add a bookshelf in the corner"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "7fa258492c40546a1412b2e24f283e5f",
+        "instruction": "add a flying baseball coming towards the player"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "ab8c8482e5621349ffcaf7b73a3898d6",
+        "instruction": "add a beautiful ring on the finger"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "b9c37aa4bbba0d3603d3d3d6b2472f44",
+        "instruction": "add a candle on top of the cake"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "92bb99012b775fec11f9c61eb22340e5",
+        "instruction": "add a palm tree behind him"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "41fa4cf4dabc709bc1a04b273b801471",
+        "instruction": "add a hot air balloon in the sky"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "82f0d5a60f6a14fcbf7a0828d93b2c42",
+        "instruction": "add a cat sitting in the basket"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "38e83bc17f011f6fe380618f5edc9af4",
+        "instruction": "add a butterfly fluttering around the cat"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "24365500c3f8cef08832d25e00ae03cb",
+        "instruction": "add a red cherry on top of pizza"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "6d36627582330fe77f4726604d362dc8",
+        "instruction": "include a dog running alongside"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "5792877c20ccb8c8dfa7a2e3ea570c86",
+        "instruction": "include a candle on top of the cake"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "d23b4b1af3a519ef6c3d5deb2ae171fd",
+        "instruction": "include a butterfly landing on its mane"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "4c2bf9769840edd7015a3cbea40f10cc",
+        "instruction": "add a tennis ball flying towards her"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "071bd732edfb657a3baf47a13477c0ff",
+        "instruction": "add a tennis ball next to the dog"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "c884913a9bec1ac33d16e85b252c39c5",
+        "instruction": "Add a running horse near the train"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "e9ac3ec18e91f8bf73b340de1c2e459e",
+        "instruction": "add a person standing next to the bus"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "91ab4a87f04b6e652fe4e0bfba31ddc3",
+        "instruction": "Add an image of Naruto on the left side."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "3cac5f0141378133b6c02c69bb7349fc",
+        "instruction": "Add a robot bird in the sky."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "853784745a3c52dcfd24cf3a8dba1f56",
+        "instruction": "Light the candle to enhance the candlelight."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "707d83474b3e137e378c02b23ee414ae",
+        "instruction": "Add a pair of sunglasses in a cool style."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "ba40f1be938b26d2ddec5cb966453720",
+        "instruction": "Can you Photoshop a girlfriend for me? Sitting alone is boring, and I\u2019ve already left space for her."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "f35092d58408ce805d5778fd13ad950c",
+        "instruction": "Can you Photoshop a boyfriend for me? I want a couple\u2019s photo."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "ab6798a5e2a8e04de9bdb02c9425d2a9",
+        "instruction": "Add more hair to the front, making it long and soft for a gentle look."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "3ec57ad1669a3841f18e151a487bc767",
+        "instruction": "Add glasses in an intellectual style, giving a high-knowledgeable vibe."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "9435ef3cbe961ecde654fdde42598cb1",
+        "instruction": "Place a wine glass in the hand."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "10d6161cc1bebeeb0d7c5cac99a3cafd",
+        "instruction": "Add a large diamond ring on the finger, making it abstract, exaggerated, and funny."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "794bc25fba24e9c7546c7ffed818fba1",
+        "instruction": "Can you add penguin eyes to this image?"
+    },
+    {
+        "task_type": "subject-add",
+        "key": "d211b4a29bbfc174b2ef48c6574c5dff",
+        "instruction": "Generate an image where a lit tent is added next to the appliances in the picture while keeping the original appliances intact."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "6a498187c524c7adb7a739413c24f185",
+        "instruction": "Add three persimmons with leaves in the bottom right corner of this painting."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "ec55ed4412ff3a74e6e4b42b21371fb1",
+        "instruction": "Add clothes to the person in the image, make their gaze slightly disdainful, and change their posture to a crossed-leg position."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "dd8355aceecda1bed1594a616b40cd11",
+        "instruction": "Add stockings."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "1f58ceef62aecf90fcca4f253c5a478b",
+        "instruction": "Add firearms to the character in the image, turning them into a comedic depiction of a robber, and change the background to a bank."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "720454d83c65f03eefe4cb6da5d706df",
+        "instruction": "Add a puppy to this picture leaning against the girl's legs."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "ae62baf786ccbe623b41109c0bda4add",
+        "instruction": "Add a beautiful woman to accompany the boyfriend in the image."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "30ecaf9734421b7085c536d7f9837ec7",
+        "instruction": "Add a young Chinese woman next to the character in the image, with a bright smile and a pure, natural look, without altering the original character."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "be980c50b5cdfb9ede40c6d71769d2c9",
+        "instruction": "Add a wool coat to the person in the image."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "abf17f7fd44b495e38da17423b1bbd49",
+        "instruction": "Add a woman with her back to the camera to the left of the man in white clothes."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "2155f844beb949faa389c83bd4173a6c",
+        "instruction": "Add a chair in the background."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "761a6bf01b28d3785d5ab04afa45e7a9",
+        "instruction": "Add a potted green plant to the right of the sofa."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "540034b428e3c61e8d5a59e3fbba46aa",
+        "instruction": "Add an elderly woman with gray hair on the right side of the image."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "0523f1c34d1e3312d85b938a7c329885",
+        "instruction": "Add a balloon decoration strip below the airplane."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "69a8b2a59f6d83aab9101d895bc0e10f",
+        "instruction": "Add a water bottle on the table."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "0fd3b576ec3f9873767eb7348c78ead2",
+        "instruction": "Add a smiling girl."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "5fe0c103a59eabd95012374edf3d298e",
+        "instruction": "Dress the girl in black shorts."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "bcb9d7a80eaf8a5f630cc78b6bce0b6c",
+        "instruction": "Add two small dogs sitting face-to-face in the foreground."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "0b54f659bd2b2ecd02c1070331cd0c92",
+        "instruction": "Add a groom to the left of the bride, with the two gazing into each other\u2019s eyes."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "db01713497b149ee87ed7ef66313f122",
+        "instruction": "Add a golden crystal glass ball."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "ee87afcee5619d39abcbc36cd87391d4",
+        "instruction": "Add a boy wearing headphones operating a laptop in front of the computer."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "4000f5cdc69f67b283228009f51133fa",
+        "instruction": "Add a blue feathered helmet."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "0ed1540807e373893280ce44287a9838",
+        "instruction": "Change the hair from a ponytail to naturally draping over the shoulders."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "30f6aa209359ab7d115d232b1313a047",
+        "instruction": "Add a face mask to the chef's face."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "cf2612adda4cc638132a60a2857a6cc5",
+        "instruction": "Add a disposable cup on the left side of the foreground."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "09329f999a34f60db2047904ffe6cf0b",
+        "instruction": "Add a black short-sleeved T-shirt to the upper body of the person."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "61e0b78dbfbf640f62447931c8c45a9a",
+        "instruction": "Add a painting to the easel."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "0f0d1e81bb1308e2bbc57ea3c32d5f31",
+        "instruction": "Add a guitar to the girl\u2019s hands and adjust her hand and arm positions to fit the guitar."
+    },
+    {
+        "task_type": "subject-add",
+        "key": "815fc87e5633ec77855c468746d08773",
+        "instruction": "Add a lit green desk lamp to the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "c2330eaa58378dd8d76989053fe27cdc",
+        "instruction": "remove the fedora on the bench"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "fc610a23a5c9ac5c4a3c2cc0386bc8d2",
+        "instruction": "remove the freight train"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "2d762cc12344718236b171a19417adf5",
+        "instruction": "remove the sign that measures height"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "ea887a20c2483ba77f0f0fdfabf83f34",
+        "instruction": "erase the stop sign"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "79e800c9187225a020bef26413014de3",
+        "instruction": "remove the dog getting a haircut"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "1b05dbce0dc0e981e4eb38b27c2c0167",
+        "instruction": "remove the stuffed animals"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "ca3ce49b08db0d75388197210fed5157",
+        "instruction": "remove the black hat"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "e0e6c00cd4573be9dd571854cf362d24",
+        "instruction": "remove the person wearing all white standing on their ski's"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "3d1bf910852585afdb6fe2a9c9b24d6b",
+        "instruction": "remove the motorcycle"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "6d3f5e90a64806a7b3170d71a6dd0fbe",
+        "instruction": "remove the peanuts"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "90f506d94854bce0e7cfe3d7f015c4b2",
+        "instruction": "remove the frisbee"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "fb492dc225f9ba92079731774b91ac8e",
+        "instruction": "remove the meat pie"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "834b9cd34b6c6c201ad42bb00eba10eb",
+        "instruction": "remove the pizza"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "856b6b373fe9f39644456d5810cb9042",
+        "instruction": "remove the skateboard"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "9e563953afc8bcce1d0ad908e47f8006",
+        "instruction": "remove the woman standing next to the lady in white."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "7bacd70f8819d2444bcf5e0676b14a67",
+        "instruction": "erase the zebra"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "e0f2fafb11805800995f38cb327d905b",
+        "instruction": "remove the umbrella"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "e5407a415cc85180f2decb76a9529b6e",
+        "instruction": "remove the woman"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "dd328e27b6f2b6871f6be99c414717a9",
+        "instruction": "delete the broccoli"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "5d9a5910b296328accc6701096c16a5b",
+        "instruction": "erase the knife on the cutting board"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "ae3bf75e9abe53ab8e24052ef129d1ef",
+        "instruction": "Remove the sword from the character\u2019s hand."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "bc8d567ee91ca1521adaa8d4a486851f",
+        "instruction": "Remove the bag near the character\u2019s hand."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "2afdc3f8ccc9191b4b5854a9c4042092",
+        "instruction": "Remove the bystanders; the background is cacti."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "202eccaba244927e87a17200a87e4406",
+        "instruction": "Remove the magic wand and stars."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "6e59f1430e90396b7e08cb869274c426",
+        "instruction": "Remove the white stockings."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "a9036279f412391d29bfd86fccd1606c",
+        "instruction": "Remove the person from the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "071cbc925ee5f3fcc234d72bf5fbe182",
+        "instruction": "Please remove the woman outside the car while keeping everything else intact, then re-output the image for me."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "39b5aeaeecceb845d41bc7beaf9319a3",
+        "instruction": "Remove the person in the middle of the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "dc1fb90b41f4c01c16cc351575bc9461",
+        "instruction": "Remove the beard from the person while keeping everything else unchanged."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "8e02b0e258dcb5c6af860af239ea35be",
+        "instruction": "Remove the clutter from the photo."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "be1f3d0f398433eaf3f9cf9a931402a3",
+        "instruction": "Remove all the people."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "1e62ce17d24426272c11bd47906afba7",
+        "instruction": "Remove the red section at the bottom of the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "cd5e2a6dd0f762849943fede284c4516",
+        "instruction": "Enhance this image by removing the distant power lines while maintaining a realistic style."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "b5729b790593f7065bf7ae2f7674c1e2",
+        "instruction": "Remove the bangs."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "1110b6bc43aa5a3037467f5833ece3c5",
+        "instruction": "Remove the snake pattern from the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "56b9020b542342972a3a796ee802ca95",
+        "instruction": "Remove the phone from the person\u2019s hand."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "ddb40f4b94e2f60fc92815cfd89546c7",
+        "instruction": "Remove the black railing."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "f9418062962373f7646b359d32c2526a",
+        "instruction": "Delete the man wearing a white robe."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "23663821d9be6aba1d8100daffdb15cb",
+        "instruction": "Remove the person from the top of the boat cabin."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "64c8ea3004fb830615591121c1cebe6a",
+        "instruction": "Remove the glasses."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "08a671d4c5067a5659ea84cded659fd8",
+        "instruction": "Delete the computer."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "8752867086a665d8889f8134703d92b0",
+        "instruction": "Remove the music stand and sheet music from the stage."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "99cc761cfc9689c2ffff606e41832371",
+        "instruction": "Remove the railing in the background."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "600884cc7c2be67d2ecf5517fea512c2",
+        "instruction": "Remove the bouquet from the left foreground."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "cf3daa2e86bcd3cc867204e5edb938bf",
+        "instruction": "Delete the pen from the woman\u2019s hand in the foreground."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "c59adebb1dc6ecf43d658c1a4b7674ee",
+        "instruction": "Remove the bicycle between the two people."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "fe511143bd74c0262075af599364dbcc",
+        "instruction": "Remove the girl inside the window."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "2ebb31e51f0de8bba7005352df7150b8",
+        "instruction": "Remove the person in the distance wearing red clothes and a green backpack."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "ce693a75c84f7c0f2975c6cc50f2af9e",
+        "instruction": "Remove the Christmas tree on the left side of the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "f5d8129b33eaf3adcaad19ba2d471529",
+        "instruction": "Remove the sticky notes next to the monitor."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "17f4fec8b5c096e4ee3e8f168f93d05d",
+        "instruction": "Delete the red headscarf."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "cdafebec5ad18102bb9f2f9eccac053f",
+        "instruction": "Remove the red dumbbell."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "774befadbd2459f532eb3e9bc2dca051",
+        "instruction": "Remove the two bottles of alcohol on the left side of the image."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "8d0bc807846ac304d0b02ac5588c646d",
+        "instruction": "Delete the white fence."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "8853ec3095105930363c6c8c988f55e6",
+        "instruction": "Remove the elderly man wearing glasses"
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "16e59a89f37b5603a41fc60e2912a325",
+        "instruction": "Delete the standing person wearing glasses."
+    },
+    {
+        "task_type": "subject-remove",
+        "key": "453c8005733dd2b902343f7577818c7b",
+        "instruction": "Remove the bracelets and wristbands from the woman\u2019s hand."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "e1f901ce70f0db3eff231690b35a5e6f",
+        "instruction": "Replace the dog with a robot."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "b3143e1ac75799da45f66d12b56cf911",
+        "instruction": "Replace the TV with a bookshelf."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "119d3796737244a5dafa7513b373f64d",
+        "instruction": "Replace the cat with a squirrel."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "9c6128cce6d1f80b7185c7427d3e30b8",
+        "instruction": "Replace the pizza with a croissant."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "906a0ffafbbf5f0dc51f01a4d2b7b7e3",
+        "instruction": "Replace the cat on the laptop with a robot."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "f1eb6e2131f2e664890e7e7a6c27efd5",
+        "instruction": "Replace the cat with a dog."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "b8b9b70b9e2bce018e5e0d2bad7293bc",
+        "instruction": "Replace the toilet with a bathtub."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "dcb09f6f95a11496ee03ea7c875ef481",
+        "instruction": "Replace the bear with a fox."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "02bc73fdbbb74f6ed7fd480b6b61abe8",
+        "instruction": "Replace the bus with a truck."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "6c5513204cc1970d65864e87f5c9444b",
+        "instruction": "Replace the dog with a rabbit."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "efffd701b3207dee94a8d7009bbc9c75",
+        "instruction": "Replace the school bus with a truck."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "99303b3de6bf596a47ecf83b25b08db5",
+        "instruction": "Replace the vase with a sculpture."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "1eaed2671a534749a7c6a02a3d3e5f82",
+        "instruction": "Replace the cat with a fish."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "a88fd018f656ea701330c3fc14c1e8d0",
+        "instruction": "Replace the bus with an ambulance."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "23b240c9ef94ecae6ad0b992b3d08034",
+        "instruction": "Replace the zebra with a giraffe."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "2d3bd0d5db244d8fc89c9348fcb07d19",
+        "instruction": "Replace the cake with a pie."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "d5f8ef8ebda32869bfc8b7fefc88f364",
+        "instruction": "Replace the bed with a sofa."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "7a6e67b7d9c028d3d1bbef91483c26a6",
+        "instruction": "Replace the elephant with a giraffe."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "469267bfc120943d28e93b6ecefe14af",
+        "instruction": "Replace the eagle with a parrot."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "7d15844945eb5e5dc00c219740f028d3",
+        "instruction": "Replace the baby with a puppy."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "ae3bf75e9abe53ab8e24052ef129d1ef",
+        "instruction": "Replace the sword in Sasuke\u2019s hand with a rainbow unicorn hammer."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "bc8d567ee91ca1521adaa8d4a486851f",
+        "instruction": "Replace the face in the picture with a blonde beauty."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "9d913d98a00d6b3a4088bdceb2232b89",
+        "instruction": "Change the cat\u2019s collar into a bell."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "038b15558b1082c59f0a92e4853554aa",
+        "instruction": "Replace the bracelet with a jade bangle."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "b3f022593999c27290201be31f9e6f1b",
+        "instruction": "Change the food into seafood paella."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "08ea4b4086ac3690f6aa0ab47d0da30f",
+        "instruction": "Swap the earring for one that looks less conspicuous."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "ab7edde74c02708a661f6861144cbe95",
+        "instruction": "Turn the rice into a hamburger and draw an avatar eating a burger."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "e5c8aea1b4db7ee5e173bcc122a4ba8f",
+        "instruction": "This is an ID photo\u2014please replace the clothing with a white dress shirt."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "2bf9fc7119ba64e9bb1579221e788885",
+        "instruction": "Give her a different outfit."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "50bf17e2335463ccb3511f5164ed1af0",
+        "instruction": "Replace the food in the pot with spicy hot pot."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "b049c18444079151e9be5a640f9fe552",
+        "instruction": "Change my hairstyle to a wolf-cut mullet."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "0051b688bcfc65a4fc1063488eb9da0c",
+        "instruction": "Turn the sleeves into ramen and chopped scallions."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "3de02fadd75720177fa70f42f743a48f",
+        "instruction": "Change the man's hairstyle to a textured fringe cut."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "b993cccb7c8b197175226e397a0f09a8",
+        "instruction": "Dress the person in the image in a Zhongshan suit."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "1a0f5ee01be70d234093e91bae2282d7",
+        "instruction": "Give me long hair\u2014shoulder-length or waist-length."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "70fa37d482c2e708435366323262de90",
+        "instruction": "Turn the tree branches in the image into a witch\u2019s magic wand."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "93e3bdd834cb2924864675b3dc5de9e5",
+        "instruction": "Extract the person from the photo and dress them in a police uniform."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "0a92bb3a2f79ce8f79a6818701b95efa",
+        "instruction": "Change the character into a male."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "e70f54aa5e32ff6a11a512a4b6ebc734",
+        "instruction": "Replace the person in the image with Spider-Man."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "a231523c745863eb34887202481d482b",
+        "instruction": "Keep the person in the image but replace the cat with a dinosaur."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "6d45407dd52ca631efd3095a6f84c8b2",
+        "instruction": "Replace the guitar in front of the fox with a can of Coca-Cola."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "9658ab0654630bdb7d190f3f85280793",
+        "instruction": "Swap the crystal in the child\u2019s hand for a glowing square box."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "645a7c81e22d496f62e8bbbd58ca309e",
+        "instruction": "Replace the woman in the center of the image with a black helicopter."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "41648ca74f9e782af1359397de7a6125",
+        "instruction": "Change the crown on the cat\u2019s head into a magician\u2019s hat."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "20766bfbcee8914213e479c5845a057f",
+        "instruction": "Replace the wolf with a standing bear, and have the bear hold a lightsaber with both paws."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "19e7dd610e2151dd4576490c7ece040f",
+        "instruction": "Swap the bouquet in the woman\u2019s hand for a bottle of whiskey."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "8e5ddf5d223b0e938f58da44752dbca7",
+        "instruction": "Replace the fruits in the colander with tomatoes."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "76fb2038377daf0ee1fe8efc57f7d6b3",
+        "instruction": "Turn the samurai sword in the person's right hand into an axe."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "47ee57134632cbbfd038acd9ae870779",
+        "instruction": "Replace the two children with a fire truck."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "38424c921a89c3192404da23d54ce90d",
+        "instruction": "Swap the brown teddy bear with a bag of \"Cricket\" chips."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "0064d30c8f40ddd94fa9bc564677498e",
+        "instruction": "Replace the person in the mirror wearing a white shirt with a wardrobe."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "a33f7ac94c028e30e9254363bb651331",
+        "instruction": "Turn the baby\u2019s balloon into an ice cream cone."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "92feefc5a6c868f8e36f262a7a89f866",
+        "instruction": "Replace the baby stroller with a large globe."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "f22a0046d07bf09f9e90b3eecb06e151",
+        "instruction": "Change the painting on the scroll in the man\u2019s hand to a treasure map."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "8d074f9906d22f1f4d48400fe47f74f0",
+        "instruction": "Replace the pencil in the hand of the boy wearing an orange-striped shirt with an egg."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "cef0d8358ad359678f9632380c3b5ac6",
+        "instruction": "Swap the two grapefruit slices for VR goggles."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "3e15c35b58cee82be47ee8d927704dde",
+        "instruction": "Replace the paintbrush in the foreground person's hand with a giraffe mask."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "13829304257def7287613210cc82d6eb",
+        "instruction": "Replace the green cup and its light-colored saucer on the table with a pen holder."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "619ba60ef621caf9f1412bfa7a3eb5c1",
+        "instruction": "Change the clothes of the girl on the left side of the image to a black-and-white striped dress."
+    },
+    {
+        "task_type": "subject-replace",
+        "key": "fb4ebcdc742e1eb13c99f8f56e3a0cdb",
+        "instruction": "Replace the laptop in front of the girl with a book."
+    },
+    {
+        "task_type": "text_change",
+        "key": "a8cd7b467259425ed1a369550b28340e",
+        "instruction": "Replace the text 'Google' with 'Goose'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "9083ce3121a3d62c3fe3527e874760e5",
+        "instruction": "Replace the text 'me' with 'he'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "680553ae15691f30c9f717b5eac38ee9",
+        "instruction": "Replace the text 'LONDON' with 'ENGLAND'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "de0dff21bb67b813d97dbe1709282a1f",
+        "instruction": "Replace the text 'THE' with 'BUT'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "a64d376914f2bed3b2383d9af0965dcb",
+        "instruction": "Replace the text 'DARK' with 'DUCK'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "9c5b7cba20568ccd142d8911e7a763c1",
+        "instruction": "Replace the text 'ORION' with 'OREO'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "9c626643de176f0b934842efe12893c1",
+        "instruction": "Replace the text 'Science' with 'Nature'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "58679ee9aa7080c0d51c33e71375689c",
+        "instruction": "Replace the text 'APEX' with 'CSGO'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "3bba48b36d85fb45365ee57c188b71ea",
+        "instruction": "Replace the text 'CS' with 'VALO' and replace 'GO' with 'RANT'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "6c106095dcb4224b3b3d74b4f89b8389",
+        "instruction": "Replace the text 'VALORANT' with 'APEX'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "e7e3e2de78380531a17b1edd36807135",
+        "instruction": "Replace the text 'IELTS' with 'TOFEL'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "ffb7319fe2b8f2d222fb4ef38575d0f7",
+        "instruction": "Replace the text 'TOFEL' with 'IELTS'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "0c8ea3779a6497c2b743c962a8231d1f",
+        "instruction": "Replace the text 'duolingo' with 'greenowl'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "4612dcee8805e9624abd52e616449ba5",
+        "instruction": "Remove the text 'FREE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "5e085566f105978483848cab2f3a7001",
+        "instruction": "Replace the text 'TRAIN' with 'PLANE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "89714e3ea9345ea5483ac6d5856915fe",
+        "instruction": "Replace the text 'Salmon' with 'Sandwich'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "b43f20f42dbb3e169fabf75289627f98",
+        "instruction": "Remove the text from the image"
+    },
+    {
+        "task_type": "text_change",
+        "key": "78ee992d292a3153df4d8d351f6256da",
+        "instruction": "Remove the text from the image"
+    },
+    {
+        "task_type": "text_change",
+        "key": "e3ca3edfa90133957ec703f6d54b293a",
+        "instruction": "Replace the text 'KONG' with 'JING'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "c3e2d59003688478213a86fcee494bad",
+        "instruction": "Replace the text 'lululemon' with 'lelolelol'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "729973fc58cfbf36b439f77a9f23a175",
+        "instruction": "Add 'SPRING' below the text '2025'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "0cf1208c4cfe6b460aaa6c4e01af30a3",
+        "instruction": "Replace the text 'NIPS' with 'CVPR'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "73c88cc5d9741cfbc0764304bbba00ed",
+        "instruction": "Replace the text 'WOOD' with 'LAND'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "0f7f956de6cdaff845d738075fa2fa16",
+        "instruction": "Replace the text 'SUMMER' with 'WINTER'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "853bc02c90873ac8838e53ee11fa5ec3",
+        "instruction": "Replace the text 'PIZZA' with 'PLAZA'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "5b8fa6ad16fa1c442f0cf33437c8b310",
+        "instruction": "Replace the text 'DARK' with 'MILK'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "9897da315582be46de990e313d8e4a9b",
+        "instruction": "Replace the text 'HELL'S' with 'HEAVEN'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "334a1052afdb33ad9aebdc24406c46be",
+        "instruction": "Replace the text 'BOWL' with 'FULL'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "7bdeb9f23a8c11688f33f968ee27be4d",
+        "instruction": "Replace the text 'PROJECT' with 'PROMPT'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "f9f802a2b603002b098e3e7590f45661",
+        "instruction": "Replace the text 'NATURE' with 'SCIENCE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "b4b77c91de77e4bd0abe2ca27853ce1f",
+        "instruction": "Replace the text 'TOES' with 'NIKE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "0139f41b56bc537daabf684856d2ddb5",
+        "instruction": "Replace the text 'SHEFFIELD' with 'EDINBURGH'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "65657376e859f54717af9ee796759dc7",
+        "instruction": "Replace the text 'DORIT' with 'DRINK'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "8ecdf91615e1599dd4a088d757fedd29",
+        "instruction": "Replace the text 'CLASSIC MOJITO' with 'BABY MILKSHAKE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "3e6dd180e9c8081cceae9fc8abbf9052",
+        "instruction": "Replace the text 'SEVEN' with 'EIGHT'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "c86d92a8647bd78f5b8e25ff05e45d03",
+        "instruction": "Add 'Written by' to the right of 'NANCY DOWD'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "d0c69c93397abe869ba14880d3933216",
+        "instruction": "Replace the text 'JACQUES' with 'QUEENS'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "140cbdcd2cc6adccb374b62d40f41b9f",
+        "instruction": "Replace the text 'McCONAUGHEY' with 'McDonald'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "6e8087c04fbf254fb063f1500135ea36",
+        "instruction": "Replace the text 'chicken' with 'beef'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "58d1612b7520a747c616519e94c8f48c",
+        "instruction": "Change the text '23' to '45'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "f58bb1fd98acc1888a7272d0d0f4f2a7",
+        "instruction": "Replace the text 'SPA' with 'Relaxation Oasis'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "a9ae1402abe1d2624b7fce054edd7313",
+        "instruction": "Change the text 'Bank' to 'Banks'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "ba7dd356656852097eeb86c78c1faae3",
+        "instruction": "Replace the text 'Ziel' with 'Porte'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "f00dfa62ea1474aeb985b5447dc8fa0c",
+        "instruction": "Change the text 'FAIRGROUNDS' to 'PARKWAY'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "131ed8c70ef386a4edf4faefe155a8c7",
+        "instruction": "Replace the text 'SNACK' with 'TREAT'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "ac80b138c5c796517a6fdc789a7d7c2b",
+        "instruction": "Change the text 'petit' to 'grand'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "92181ff38321335cfb22e96fefd03188",
+        "instruction": "Replace the text '32' with '33'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "5efb5e25b477ca8d0f98f7774cb28ce0",
+        "instruction": "Change the text 'COST' to 'FREE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "5052e9399738b1d713833bf3b1b55950",
+        "instruction": "Change the text 'hotwind' to 'cool breeze'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "e25b84ada0cfe0c12eaf82e0b7dbecf3",
+        "instruction": "Change the text 'ONTARIO' to 'ONTARO'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "7b61056fbc47ace12e3ae5568e0c67ed",
+        "instruction": "Replace the text'FERMENT' with 'delicious treats'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "11e198f3745e800957d19098cf29c99b",
+        "instruction": "Change the text '500' to '250'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "73fa218afee74ffe8cc7d1695cef644e",
+        "instruction": "Change the text 'SCHOOL' to 'COLLEGE'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "966bd852686133547ab7283bec3293ab",
+        "instruction": "Replace the text 'STOP' with 'Caution'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "079b25c601b74a2da8980461e0640324",
+        "instruction": "Replace the text 'BAR' with 'Beach'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "510f45e1134cf029ef152acee6aaf6dd",
+        "instruction": "Change the text 'ESTATE TACHEN' to 'Timeless Fashion'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "de1a98de20909a104b97fc444fff100d",
+        "instruction": "Change the text 'SNP' to 'Call me'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "bf5580adf9837959761bae65e343ff1f",
+        "instruction": "Change the text '10000' to '18000'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "99500eadb2f363c2e26fcb501972c29f",
+        "instruction": "Replace the text '95' with '123'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "365da3516f60dde11e8a362ceffceb38",
+        "instruction": "Little Yue, can you replace the character \"\u66f9\" with \"\u53f6\" inside?"
+    },
+    {
+        "task_type": "text_change",
+        "key": "680b385ed8595ff5e4bfdd9fc7c5bf1a",
+        "instruction": "Add the three characters \"\u4ff1\u4e50\u90e8\" to this image."
+    },
+    {
+        "task_type": "text_change",
+        "key": "be45c39b3bcc9d082051c13b5300dde1",
+        "instruction": "Help me insert the words \"\u65f6\u5149\u4e0e\u4f60\u5171\u5b88\u60c5\u957f\" into the image."
+    },
+    {
+        "task_type": "text_change",
+        "key": "d93126d2fa1e4d4a9ce9cc0cddee9826",
+        "instruction": "Remove the text."
+    },
+    {
+        "task_type": "text_change",
+        "key": "947855a8a1e0954deaa4dc826e9519db",
+        "instruction": "Replace the tattoo text in the image with \"\u6b64\u751f\u4e0d\u8d1f\u4f60\"."
+    },
+    {
+        "task_type": "text_change",
+        "key": "27dba5cccc5a6d4ca877b83eb2ca374e",
+        "instruction": "Based on this image, change the hidden \"New York\" text to \"ALEX\"."
+    },
+    {
+        "task_type": "text_change",
+        "key": "e206257f9c32db3dd3ad888865e3cefc",
+        "instruction": "Remove the text in the background."
+    },
+    {
+        "task_type": "text_change",
+        "key": "3a9853285c981f9ec42fae7c9ba938f8",
+        "instruction": "Can you change the text in the image to \"\u68a6\u79bb\u5f52\u65f6\"?"
+    },
+    {
+        "task_type": "text_change",
+        "key": "bdd77c99d54bdb14bcd48ee0ee3faafa",
+        "instruction": "Replace the two characters \"\u8bf8\u66a8\" with \"\u6c38\u5eb7\"."
+    },
+    {
+        "task_type": "text_change",
+        "key": "f684d93bdc97991873726762bec1d841",
+        "instruction": "Can you remove the white text from this image?"
+    },
+    {
+        "task_type": "text_change",
+        "key": "7b2f2dd979ca5149d4a6145bdfa64494",
+        "instruction": "I want to change the letters on this piece of clothing to \"DIOR\"."
+    },
+    {
+        "task_type": "text_change",
+        "key": "1bb0fbeaac87f6eff80e09d8fd409de1",
+        "instruction": "Replace the \"\u62db\u8d22\u8fdb\u5b9d\" characters inside the circle with \"\u8d22\u6e90\u5e7f\u8fdb\"."
+    },
+    {
+        "task_type": "text_change",
+        "key": "5b8717b2209b784940f388864d5520f3",
+        "instruction": "I need you to change \"2024\" to \"2025\" in this image and replace the \"\u9648\" character inside the topmost heart with \"\u534e\"."
+    },
+    {
+        "task_type": "text_change",
+        "key": "7eb55372802dfee7167a63e02728ca0e",
+        "instruction": "Modify this image directly, do not generate a new one. Add the four characters \"\u5f77\u5fa8\u4e4b\u5203\" on the left side."
+    },
+    {
+        "task_type": "text_change",
+        "key": "f148f938d38014e46b85664ffc617457",
+        "instruction": "Remove the text from the image."
+    },
+    {
+        "task_type": "text_change",
+        "key": "0ca8f7be9422a84221920fccc6df2c4c",
+        "instruction": "Add the four characters \"\u677e\u524d\u4e91\u9e64\" to this image in a calligraphy style."
+    },
+    {
+        "task_type": "text_change",
+        "key": "3a016977fd14367ffc324d12e965e961",
+        "instruction": "Describe this photo and replace the text with \"\u4eba\u751f\u9760\u81ea\u5df1\uff0c\u4e09\u5206\u5929\u6ce8\u5b9a\u4e03\u5206\u9760\u6253\u62fc\" in two lines."
+    },
+    {
+        "task_type": "text_change",
+        "key": "62173ca26266af1845db7de6227a2e92",
+        "instruction": "Remove the text and numbers below."
+    },
+    {
+        "task_type": "text_change",
+        "key": "8382cb3ebe2cfce4315f9ec944ee12c2",
+        "instruction": "Write the characters \"\u6df7\u6c8c\u7ec3\u5b9d\u51b3\" below this image."
+    },
+    {
+        "task_type": "text_change",
+        "key": "a095ed1661fa125363bf59a47d8e52e4",
+        "instruction": "Add the three characters \"\u82cd\u7a79\u51b3\" to this image."
+    },
+    {
+        "task_type": "text_change",
+        "key": "07c987a0a42790a9f5fed28a2bc6409e",
+        "instruction": "Help me change \"\u73b0\u6b63\u70ed\u64ad\u4e2d\" to \"2025\u6625\u8282\u4e0a\u6620\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "75ba6223b2ab4de7f35cc0653d1df7da",
+        "instruction": "Help me change the character after \"\u51b7\" to \"\u4e0d\u4e01\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "f4f263ee11d7db0e483e1c10973e7b22",
+        "instruction": "Help me change \"\u81f4\u9752\u6625\" to \"\u81f4\u5c11\u5e74\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "08fcf0e92aeea7e37931a6036a27174b",
+        "instruction": "Change \"\u8fd9\u4e48\u4efb\u6027\" to \"\u8fd9\u4e48\u4efb\u610f\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "8ed283fe0c51659c06fd1de14420b544",
+        "instruction": "Add \"\u8d85\u7ea7\u5927\" before \"\u63a2\u79d8\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "db250fc8f05da99e1e9e57eb3ecd3920",
+        "instruction": "Change \"\u5927\u8bdd\u897f\u6e38\" to \"\u795e\u8bdd\u61c2\u6e38\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "a2a41ebb84be1126248d9cf65d8ed078",
+        "instruction": "Help me change \"\u884c\u52a8\" to \"\u51fa\u51fb\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "11f41f16aebac2a07f24432b8cbeefd7",
+        "instruction": "Delete \"\u53e4\u5821\u60ca\u9b42\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "4165fe6296cc4e75c9055794e5a13a10",
+        "instruction": "Remove \"\u6500\u5ca9\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "b485856ffb2107eaf50b4b437dacbea3",
+        "instruction": "Change \"\u63a2\u5bfb\" to  \"\u627e\u5230\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "90c04ff64d248a824f0cd65936a99bf0",
+        "instruction": "Write \"\u62ac\u9ad880\u516c\u5206\" on the underline"
+    },
+    {
+        "task_type": "text_change",
+        "key": "ac11359a70c3950fce81d6c4a9665875",
+        "instruction": "Remove \"\u79d8\u5236\u9ebb\u9ebb\u9c7c\" "
+    },
+    {
+        "task_type": "text_change",
+        "key": "8155a4b0727c1a4176f5f70cc0810562",
+        "instruction": "Remove the text \"\u621a\u98ce\u86cb\u7cd5\" and rewrite as \"\u9e21\u86cb\u86cb\u7cd5\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "d9ea1c0d881af0ade68721357d453c64",
+        "instruction": "Write 'SMILE' on the blackboard"
+    },
+    {
+        "task_type": "text_change",
+        "key": "ba63cec563b66911faa74a1c3ba4850a",
+        "instruction": "Add 'Top 1' in the middle, with the '1' especially large"
+    },
+    {
+        "task_type": "text_change",
+        "key": "7d283f97ec3592b175588efbd534061a",
+        "instruction": "Change '2022' to '2024'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "7c7d40daf262d8e0df903af3e0917c03",
+        "instruction": "Remove 'copy chief from random house'"
+    },
+    {
+        "task_type": "text_change",
+        "key": "058a3b3c422dcefddb8deb2c61ded83d",
+        "instruction": "Remove the text and add  \"\u6211\u7231\u4f60\""
+    },
+    {
+        "task_type": "text_change",
+        "key": "7ccd6d8d72339d7c94560300dce346f4",
+        "instruction": "Add 'GAMES' in the center of the image"
+    },
+    {
+        "task_type": "text_change",
+        "key": "58cf4f4a16cd16ffef55c170804be136",
+        "instruction": "Write  \"\u6211\u4eec\u6b22\u8fce\u4f60\" in the bottom left corner"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "3549b73c635e7f5d67d728bd582daffd",
+        "instruction": "change the weather to snowstorm"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "8168e81061f790fb34c9f4c81ed34d90",
+        "instruction": "Apply an HDR filter to brighten the image."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "1db07f0d277222e32913bff2681faebb",
+        "instruction": "Make the image brighter."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "d83dad4db56f5c6c1270708a74311725",
+        "instruction": "change the weather to snowy"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "ad3ad5f80040286822ec035c8fcf6c0f",
+        "instruction": "change the time to nighttime"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "2c7d8b151daa5920c523e40d1dda0d5e",
+        "instruction": "change the weather to heavy rain"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "e6b1eb3b883e718a85581c0d36727f24",
+        "instruction": "Make the image brighter."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "b95f07c147ce5d8afd6556b1acd5a902",
+        "instruction": "change the time to night"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "2e77d56a387ce48d9467a73c128635c4",
+        "instruction": "make the weather snow"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "47e6851356aed262881f4af848b27b8b",
+        "instruction": "Add a background blur filter."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "ef5b74bc64af4113749e170f4624a1e4",
+        "instruction": "change the season to winter"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "b728006d225ca8acf59cb8bd958d79c4",
+        "instruction": "Make the image brighter."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "6878b2aaea42391eb6d9d5a004dfba5a",
+        "instruction": "Apply a suitable filter for this image."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "42ece5249116fbad305140e068b118b3",
+        "instruction": "change the weather to foggy"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "82713e857fa4a3972bd3bd560ad45d70",
+        "instruction": "change the weather to snow"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "eded7f39803839235a11c20fe72c67f5",
+        "instruction": "Restore and colorize this old photo in high definition."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "051ce492fd93f74add67a5fea2ec1f20",
+        "instruction": "change the time to prehistoric era"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "acd9a6d08c0a18ee251de9831251edf5",
+        "instruction": "change the weather to snow"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "7bfbebfb0521da039f7ec26aec330ec9",
+        "instruction": "change the weather to foggy"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "d231513192c28e8f14d79a41fd648e9a",
+        "instruction": "Apply a filter to make the image brighter."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "8907d6eacd7b91ee4cf8a157802a53a5",
+        "instruction": "Colorize this photo without altering the facial structure."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "7bea5378467e211452fb8289e7da71be",
+        "instruction": "Apply a suitable filter to this image."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "277a863acdd110cc9550f16da754a93d",
+        "instruction": "Enhance and colorize this photo to make the subject more vivid."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "1846b247da04c0fe6c63d8166e100a6a",
+        "instruction": "Restore and colorize this old photo in high definition."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "e7652e4858f7d1f3b86a0de28c6cb8c1",
+        "instruction": "Restore and colorize the image."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "f57ec87ccf7bc1788dfd5be1da4dbe7a",
+        "instruction": "My photo looks a bit yellowish; please adjust the color."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "9d26293b9cc3ffd9df59117abbd9783d",
+        "instruction": "Restore and colorize the image."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "4b0700347e2ea2aef8f27a2cc2b9c370",
+        "instruction": "Enhance it to super high quality."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "dbc15e88af0839a1b60801291c31b3c8",
+        "instruction": "Colorize the photo to make it clearer."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "5c01bd878c03ec2e5c6060f7a133b2f9",
+        "instruction": "Adjust the colors to make the image look brighter."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "c09e9a0c550da145d9afe12c543b0048",
+        "instruction": "Enhance the clarity of this photo."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "94ab9306a1ea70be534d9ef36f3a19b0",
+        "instruction": "Change the nighttime scene in the image to daytime."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "02f9043a04c5691315d5d690193c955e",
+        "instruction": "Apply an HDR filter to brighten the image."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "68afffd7d086ad91fb4d45d372418fea",
+        "instruction": "Make this image clearer."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "4167a37565e731478db17e138cbb6b8a",
+        "instruction": "Enhance the child\u2019s face in the image to make it sharper."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "3053a9287013dac68056dd7aefdced02",
+        "instruction": "Apply a filter adjustment."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "220cbf1b8bf55b56873b0aec63a1e6bc",
+        "instruction": "Improve the photo's clarity and apply beautification."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "cea51a1910ce86cd42a393ba7417daf3",
+        "instruction": "Enhance the image quality."
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "f4ecf30b68ba88536a28f899b87e5af1",
+        "instruction": "Can you restore this photo for me?"
+    },
+    {
+        "task_type": "tone_transfer",
+        "key": "2a52ea99c0051bff29020048a0daca28",
+        "instruction": "Adjust the color of this image."
+    }
+]

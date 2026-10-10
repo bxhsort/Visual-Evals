@@ -1,0 +1,11 @@
+qwen-vl-utils>=0.0.14
+Pillow>=10.0.0
+pandas>=2.0.0
+openpyxl>=3.1.0
+tqdm>=4.66.0
+huggingface_hub>=0.23.0
+
+# torch: install separately based on your CUDA version
+# See: https://pytorch.org/get-started/locally/
+
+ms-swift>=4.0.0
