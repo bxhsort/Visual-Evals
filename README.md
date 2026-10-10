@@ -4,7 +4,6 @@
 
 > **Evaluation usage:** See [EVAL_USAGE.txt](EVAL_USAGE.txt) for the current experiment layout,
 > GenEval prompt modes, environment activation, and coverage reports.
-> [DG2_EVAL.md](DG2_EVAL.md) describes benchmark assets and dependencies.
 
 <p align="center">
   <a href="https://bagel-ai.org/">

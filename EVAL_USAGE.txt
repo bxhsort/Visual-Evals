@@ -56,7 +56,7 @@ EXPERIMENT_NAME=editing_baseline TASK=imgedit bash eval_go.sh
 4. 配置与 thinking
 
 可复制新的 config/eval.env.example 为 config/eval.env，填写实验名与模型、设备等配置。
-本说明描述更新后的运行入口；原文档继续作为数据与依赖说明保留。
+本说明与代码一同更新，作为新的运行用法说明。
 生图阶段固定执行：
 source activate bagel
 export PATH=/opt/conda/envs/bagel/bin:$PATH
