@@ -21,7 +21,7 @@ INPUT_KEYS = {"METADATA_FILE", "GEDIT_DATASET_PATH", "DATA_ROOT", "RISE_DATA_JSO
               "LONGTEXTBENCH_METADATA_FILE_ZH", "GENERATION_IMAGE_ROOT", "BENCHMARK_ROOT",
               "WISE_DATA_ROOT", "INPUT_JSON_EN", "INPUT_JSON_CN"}
 METADATA_EXTENSIONS = {".json", ".jsonl", ".csv", ".tsv", ".txt", ".arrow", ".parquet"}
-MODEL_EXTENSIONS = {".safetensors", ".bin", ".pt", ".pth", ".json", ".pdmodel", ".pdiparams"}
+MODEL_EXTENSIONS = {".safetensors", ".bin", ".pt", ".pth", ".json", ".pdmodel", ".pdiparams", ".model"}
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif", ".tif", ".tiff"}
 GENERATION_KEYS = {"MODEL_PATH", "MODEL_NAME", "STEP_NAME", "IMAGE_SIZE", "CFG_SCALE", "CFG_NORM",
                    "NUM_STEPS", "NUM_TIMESTEPS", "NUM_IMAGES", "BATCH_SIZE", "MAX_LATENT_SIZE",
@@ -192,7 +192,7 @@ def prepare_experiment(benchmark, output_base, experiment_name, setting_label, c
     identities = {key: _path_identity(value) for key, value in config.items() if key in INPUT_KEYS}
     if config.get("MODEL_PATH"):
         identities["MODEL_PATH"] = _path_identity(config["MODEL_PATH"], model=True)
-    for key in ("QJUDGER_MODEL_PATH", "CVTG_CLIP_MODEL_PATH", "CVTG_AESTHETIC_MODEL_PATH", "CVTG_VQA_MODEL_PATH", "CVTG_VQA_VISION_MODEL_PATH", "CVTG_OCR_MODEL_ROOT"):
+    for key in ("QJUDGER_MODEL_PATH", "CVTG_CLIP_MODEL_PATH", "CVTG_AESTHETIC_MODEL_PATH", "CVTG_VQA_MODEL_PATH", "CVTG_VQA_VISION_MODEL_PATH", "CVTG_OCR_MODEL_ROOT", "CVTG_VQA_TOKENIZER_PATH"):
         if config.get(key):
             identities[key] = _path_identity(config[key], model=True)
     identity = {"schema_version": 1, "benchmark": benchmark, "experiment_name": experiment_name,

@@ -53,9 +53,16 @@ def require_ocr_models(value: str) -> dict:
     return {name: str(directory) for name, directory in directories.items()}
 
 
+def require_tokenizer(value: str) -> Path:
+    root = Path(value).expanduser().resolve()
+    for name in ("tokenizer_config.json", "special_tokens_map.json", "spiece.model"):
+        require_file(str(root / name), "CVTG VQA tokenizer")
+    return root
+
+
 def run_local_scorer(scorer, clip_path: Path, head_path: Path, scorer_args: list[str],
                      vqa_path: Path = None, vision_path: Path = None,
-                     ocr_model_dirs: dict = None):
+                     ocr_model_dirs: dict = None, tokenizer_path: Path = None):
     import clip
     import open_clip.factory as factory
     import torch
@@ -101,13 +108,17 @@ def run_local_scorer(scorer, clip_path: Path, head_path: Path, scorer_args: list
             patches.enter_context(patch.object(paddleocr, "PaddleOCR", local_paddle_ocr))
             for name, directory in ocr_model_dirs.items():
                 print(f"CVTG OCR {name}: {directory}", flush=True)
-        if vqa_path is not None:
+        if vqa_path is not None or tokenizer_path is not None:
             # t2v_metrics reads this registry during VQAScore construction.
-            # Preserve its tokenizer, conversation and separate vision model.
+            # Redirect file sources, preserving conversation and tokenizer options.
             from t2v_metrics.models.vqascore_models.clip_t5_model import CLIP_T5_MODELS
-            model_config = CLIP_T5_MODELS["clip-flant5-xxl"]["model"]
-            patches.enter_context(patch.dict(model_config, {"path": str(vqa_path)}))
-            print(f"CVTG VQA main weights: {vqa_path}", flush=True)
+            config = CLIP_T5_MODELS["clip-flant5-xxl"]
+            if vqa_path is not None:
+                patches.enter_context(patch.dict(config["model"], {"path": str(vqa_path)}))
+                print(f"CVTG VQA main weights: {vqa_path}", flush=True)
+            if tokenizer_path is not None:
+                patches.enter_context(patch.dict(config["tokenizer"], {"path": str(tokenizer_path)}))
+                print(f"CVTG VQA tokenizer: {tokenizer_path}", flush=True)
         if vision_path is not None:
             from t2v_metrics.models.vqascore_models.clip_t5.model.multimodal_encoder.clip_encoder import CLIPVisionTower
             original_vision_init = CLIPVisionTower.__init__
@@ -136,6 +147,7 @@ def main(argv=None):
     parser.add_argument("--vqa_model_path")
     parser.add_argument("--vqa_vision_model_path")
     parser.add_argument("--ocr_model_root")
+    parser.add_argument("--vqa_tokenizer_path")
     args, scorer_args = parser.parse_known_args(argv)
     # Validate before importing model libraries so missing local files cannot
     # silently fall back to online downloads or a zero aesthetic score.
@@ -147,6 +159,7 @@ def main(argv=None):
         vision_path = require_vqa_model(args.vqa_vision_model_path, "CVTG VQA vision")
         require_file(str(vision_path / "preprocessor_config.json"), "CVTG VQA vision preprocessor")
     ocr_model_dirs = require_ocr_models(args.ocr_model_root) if args.ocr_model_root else None
+    tokenizer_path = require_tokenizer(args.vqa_tokenizer_path) if args.vqa_tokenizer_path else None
     source = require_file(str(Path(args.textcrafter_root) / "unified_metrics_eval.py"), "TextCrafter scorer")
     sys.path.insert(0, str(source.parent))
     spec = importlib.util.spec_from_file_location("cvtg_official_metrics", source)
@@ -154,7 +167,7 @@ def main(argv=None):
     spec.loader.exec_module(scorer)
     run_local_scorer(scorer, clip_path, head_path, scorer_args,
                      vqa_path=vqa_path, vision_path=vision_path,
-                     ocr_model_dirs=ocr_model_dirs)
+                     ocr_model_dirs=ocr_model_dirs, tokenizer_path=tokenizer_path)
 
 
 if __name__ == "__main__":

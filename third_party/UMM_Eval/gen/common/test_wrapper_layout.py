@@ -169,6 +169,7 @@ def check_wrapper_paths():
                 for call in scorers:
                     if any(Path(arg).name=='local_metrics_eval.py' for arg in call['args']):
                         assert call['args'][call['args'].index('--vqa_model_path')+1]==forwarded['CVTG_VQA_MODEL_PATH'],call
+                        assert call['args'][call['args'].index('--vqa_tokenizer_path')+1]==forwarded['CVTG_VQA_TOKENIZER_PATH']==forwarded['CVTG_VQA_MODEL_PATH'],call
                         assert call['args'][call['args'].index('--vqa_vision_model_path')+1]==forwarded['CVTG_VQA_VISION_MODEL_PATH'],call
                         assert call['args'][call['args'].index('--ocr_model_root')+1]==str(fixture/'local-paddleocr'),call
             return calls

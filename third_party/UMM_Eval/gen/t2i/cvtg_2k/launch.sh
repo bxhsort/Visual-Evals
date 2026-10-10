@@ -19,6 +19,7 @@ TEXTCRAFTER_ROOT="${TEXTCRAFTER_ROOT:-${BENCH_DIR}/eval/TextCrafter_Eval}"
 CVTG_CLIP_MODEL_PATH="${CVTG_CLIP_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/ViT-L-14.pt}"
 CVTG_AESTHETIC_MODEL_PATH="${CVTG_AESTHETIC_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/sa_0_4_vit_l_14_linear.pth}"
 CVTG_VQA_MODEL_PATH="${CVTG_VQA_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-flant5-xxl}"
+CVTG_VQA_TOKENIZER_PATH="${CVTG_VQA_TOKENIZER_PATH:-${CVTG_VQA_MODEL_PATH}}"
 CVTG_VQA_VISION_MODEL_PATH="${CVTG_VQA_VISION_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/clip-vit-large-patch14-336}"
 CVTG_OCR_MODEL_ROOT="${CVTG_OCR_MODEL_ROOT:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/paddleocr}"
 HF_CACHE_DIR="${HF_CACHE_DIR:-${HF_HOME:-${REPO_ROOT}/../../../.cache/huggingface}}"
@@ -225,6 +226,7 @@ if (( RUN_EVAL != 0 )); then
     --clip_model_path "$CVTG_CLIP_MODEL_PATH" \
     --aesthetic_model_path "$CVTG_AESTHETIC_MODEL_PATH" \
     --vqa_model_path "$CVTG_VQA_MODEL_PATH" \
+    --vqa_tokenizer_path "$CVTG_VQA_TOKENIZER_PATH" \
     --vqa_vision_model_path "$CVTG_VQA_VISION_MODEL_PATH" \
     --ocr_model_root "$CVTG_OCR_MODEL_ROOT" \
     --benchmark_dir "$BENCHMARK_ROOT" \

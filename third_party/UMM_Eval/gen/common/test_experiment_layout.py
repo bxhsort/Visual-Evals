@@ -170,6 +170,18 @@ class ExperimentLayoutTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.prepare(config, benchmark="cvtg_2k")
 
+    def test_cvtg_tokenizer_vocabulary_change_rejects_old_scores(self):
+        root = self.base / "tokenizer"
+        root.mkdir()
+        vocabulary = root / "spiece.model"
+        vocabulary.write_bytes(b"original vocabulary")
+        config = dict(self.config, CVTG_VQA_TOKENIZER_PATH=str(root))
+        first = self.prepare(config, benchmark="cvtg_2k")
+        self.assertIn("spiece.model", first["identity"]["inputs"]["CVTG_VQA_TOKENIZER_PATH"]["files"])
+        vocabulary.write_bytes(b"modified vocabulary")
+        with self.assertRaises(ValueError):
+            self.prepare(config, benchmark="cvtg_2k")
+
     def test_edit_source_image_identity_invalidates_unchanged_metadata_cache(self):
         sources = self.base / "source_images"
         sources.mkdir()
