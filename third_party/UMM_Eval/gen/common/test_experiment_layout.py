@@ -141,6 +141,21 @@ class ExperimentLayoutTests(unittest.TestCase):
         self.assertNotEqual(changed_weights["fingerprint"], baseline["fingerprint"])
         self.assertNotEqual(changed_weights["results_root"], baseline["results_root"])
 
+    def test_cvtg_scorer_weight_changes_reject_old_scores(self):
+        for key in ("CVTG_CLIP_MODEL_PATH", "CVTG_AESTHETIC_MODEL_PATH"):
+            with self.subTest(key=key):
+                weights = self.base / (key + ".pt")
+                weights.write_bytes(b"original scorer weights")
+                config = dict(self.config, **{key: str(weights)})
+                first = self.prepare(config, benchmark="cvtg_2k", experiment=key)
+                self.assertIn(key, first["identity"]["inputs"])
+                manifest = Path(first["results_root"]) / "experiment_manifest.json"
+                original = manifest.read_bytes()
+                weights.write_bytes(b"changed and larger scorer weights")
+                with self.assertRaises(ValueError):
+                    self.prepare(config, benchmark="cvtg_2k", experiment=key)
+                self.assertEqual(manifest.read_bytes(), original)
+
     def test_edit_source_image_identity_invalidates_unchanged_metadata_cache(self):
         sources = self.base / "source_images"
         sources.mkdir()

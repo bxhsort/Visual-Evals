@@ -192,8 +192,9 @@ def prepare_experiment(benchmark, output_base, experiment_name, setting_label, c
     identities = {key: _path_identity(value) for key, value in config.items() if key in INPUT_KEYS}
     if config.get("MODEL_PATH"):
         identities["MODEL_PATH"] = _path_identity(config["MODEL_PATH"], model=True)
-    if config.get("QJUDGER_MODEL_PATH"):
-        identities["QJUDGER_MODEL_PATH"] = _path_identity(config["QJUDGER_MODEL_PATH"], model=True)
+    for key in ("QJUDGER_MODEL_PATH", "CVTG_CLIP_MODEL_PATH", "CVTG_AESTHETIC_MODEL_PATH"):
+        if config.get(key):
+            identities[key] = _path_identity(config[key], model=True)
     identity = {"schema_version": 1, "benchmark": benchmark, "experiment_name": experiment_name,
                 "config": config, "inputs": identities}
     # Different benchmarks share a setting folder when generation settings match.
