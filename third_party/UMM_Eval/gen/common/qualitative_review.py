@@ -153,24 +153,37 @@ def _main():
     ap.add_argument("--language", default=None,
                     help="narrow sampling to one language for language-partitioned benchmarks (e.g. oneigbench en|zh)")
     ap.add_argument("--output-subdir", default=None)
+    ap.add_argument("--experiment-name", default=None)
+    ap.add_argument("--setting-name", default=None)
+    ap.add_argument("--thinking", action="store_true")
+    ap.add_argument("--legacy-layout", action="store_true")
     args = ap.parse_args()
 
     results_root = args.results_root
     if results_root is None:
         if args.output_base is None:
             ap.error("either --results-root or --output-base is required")
+        if not args.legacy_layout and not (args.experiment_name and args.setting_name):
+            ap.error("new layout requires --experiment-name and --setting-name (or explicit --results-root)")
         results_root = output_paths.derive_output_root(
             bench=args.bench, output_base=args.output_base,
             model_name=args.model_name, step_name=args.step_name,
             image_size=args.image_size, cfg_scale=args.cfg_scale, cfg_norm=args.cfg_norm,
             txt_cfg=args.txt_cfg, img_cfg=args.img_cfg, cfg_renorm=args.cfg_renorm,
             timestep_shift=args.timestep_shift, mode=args.mode, output_subdir=args.output_subdir,
+            experiment_name=args.experiment_name, setting_name=args.setting_name, thinking=args.thinking,
         )
+
+    from collect_results import attach_experiment
+    context = attach_experiment({"benchmark": args.bench, "output_root": results_root})
+    if args.bench == "longtextbench" and os.path.isfile(os.path.join(results_root, "experiment_manifest.json")):
+        results_root = os.path.join(results_root, f"longtextbench_{args.language or args.mode}")
 
     record = review(args.bench, results_root, model_name=args.model_name,
                     step_name=args.step_name, samples=args.samples, model=args.model,
                     prefer_failures=not args.no_prefer_failures, dry_run=args.dry_run,
                     language=args.language)
+    record.update({key: value for key, value in context.items() if key not in {"benchmark", "output_root"}})
     payload = json.dumps(record, indent=2, ensure_ascii=False)
     print(payload)
     if args.out:

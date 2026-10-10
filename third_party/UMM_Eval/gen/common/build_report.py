@@ -21,14 +21,76 @@ def _fmt(v):
     return str(v)
 
 
+def _bench_label(record):
+    name = record["benchmark"]
+    if name == "geneval" and record.get("prompt_variant"):
+        name += f" ({record['prompt_variant']} prompt)"
+    if record.get("thinking"):
+        name += " [thinking]"
+    return name
+
+
+def _coverage_status(record):
+    if record.get("headline") is None:
+        return "无分数"
+    coverage = record.get("coverage")
+    if coverage is None:
+        return "分数已生成，覆盖率未核验"
+    if coverage.get("coverage_complete"):
+        return "已完成（覆盖率已核验）"
+    return "评测未完整完成或完整性未核验"
+
+
+def _coverage_counts(record):
+    coverage = record.get("coverage") or {}
+    counts = coverage.get("counts") or {}
+    if counts.get("expected") is None:
+        return "未知"
+    return f"{counts.get('valid_scored', 0)} / {counts['expected']}"
+
+
+def _md_cell(value):
+    return str(value if value is not None else "—").replace("|", "\\|").replace("\n", " ")
+
+
+def _coverage_section(collected):
+    lines = ["## 样本覆盖与异常提示", "",
+             "分数保留原 benchmark 算法；以下提示不修改分数、权重或分母。", ""]
+    from coverage_audit import STATUS_LABELS
+    for record in collected:
+        lines += [f"### {_md_cell(_bench_label(record))}", "", _coverage_status(record), ""]
+        if record.get("experiment_name"):
+            lines += [f"实验：{_md_cell(record['experiment_name'])}；setting：{_md_cell(record.get('setting_name'))}", ""]
+        coverage = record.get("coverage")
+        if coverage is None:
+            lines.append(record.get("coverage_warning") or "没有覆盖率证据，无法确认缺失数量和样本 ID。")
+            lines.append("")
+            continue
+        counts = coverage.get("counts") or {}
+        lines.append(f"应评 {_fmt(counts.get('expected'))}，有效评分 {_fmt(counts.get('valid_scored'))}；"
+                     f"缺图 {_fmt(counts.get('missing_image'))}，损坏 {_fmt(counts.get('corrupt_image'))}，"
+                     f"judge 失败 {_fmt(counts.get('judge_failed'))}，未评分/原因不明 {_fmt(counts.get('unscored'))}。")
+        lines += ["", *[f"- {_md_cell(w)}" for w in coverage.get("warnings", [])], ""]
+        anomalies = [row for row in coverage.get("samples", []) if row.get("status") != "scored"]
+        if anomalies:
+            lines += ["| 样本 ID | 类别 | 状态 | 图片路径 | 原因 |", "|---|---|---|---|---|"]
+            for row in anomalies:
+                lines.append("| " + " | ".join(_md_cell(v) for v in (
+                    row.get("sample_id"), row.get("category"), STATUS_LABELS.get(row.get("status"), "原因不明"),
+                    row.get("image_path"), row.get("reason")
+                )) + " |")
+            lines.append("")
+    return "\n".join(lines)
+
+
 def _scores_table(collected):
-    lines = ["## 1. Scores", "", "| Benchmark | Headline | Metric | Status |",
-             "|---|---|---|---|"]
+    lines = ["## 1. Scores", "", "| Benchmark | Headline | Metric | 有效评分 / 应评 | Status |",
+             "|---|---|---|---|---|"]
     for r in collected:
-        status = "ok" if r.get("complete") else "**incomplete**"
+        status = _coverage_status(r)
         lines.append(
-            f"| {r['benchmark']} | {_fmt(r.get('headline'))} | "
-            f"{r.get('headline_metric') or '—'} | {status} |"
+            f"| {_md_cell(_bench_label(r))} | {_fmt(r.get('headline'))} | "
+            f"{r.get('headline_metric') or '—'} | {_coverage_counts(r)} | {status} |"
         )
     lines.append("")
     # Per-benchmark sub-metrics
@@ -36,7 +98,7 @@ def _scores_table(collected):
         metrics = r.get("metrics") or {}
         if not metrics:
             continue
-        lines.append(f"<details><summary>{r['benchmark']} sub-metrics</summary>")
+        lines.append(f"<details><summary>{_md_cell(_bench_label(r))} sub-metrics</summary>")
         lines.append("")
         for k, v in metrics.items():
             lines.append(f"- `{k}`: {_fmt(v)}")
@@ -97,6 +159,7 @@ def render(collected, qualitative, run_config):
     parts = [f"# Eval Report", "",
              f"Model: `{model}`", ""]
     parts.append(_scores_table(collected))
+    parts.append(_coverage_section(collected))
     parts.append(_qualitative_section(qualitative))
     parts.append(_run_config_section(run_config))
     return "\n".join(parts).rstrip() + "\n"
@@ -148,15 +211,16 @@ _DIM_LABELS = {
 
 def _scores_table_html(collected):
     rows = ["<h2>一、点数</h2><table>"
-            "<tr><th>榜单</th><th>主指标</th><th>指标名</th><th>生成图数量</th><th>状态</th></tr>"]
+            "<tr><th>榜单</th><th>主指标</th><th>指标名</th><th>生成图数量</th><th>有效评分 / 应评</th><th>状态</th></tr>"]
     for r in collected:
-        ok = r.get("complete")
-        status = '<span class="ok">正常</span>' if ok else '<span class="bad">未完成</span>'
+        ok = (r.get("coverage") or {}).get("coverage_complete") and r.get("headline") is not None
+        status = f'<span class="{"ok" if ok else "bad"}">{_h(_coverage_status(r))}</span>'
         n_images = r.get("n_images")
         n_disp = _h(n_images) if n_images is not None else "—"
         rows.append(
-            f"<tr><td>{_h(r['benchmark'])}</td><td>{_h(_fmt(r.get('headline')))}</td>"
-            f"<td>{_h(r.get('headline_metric') or '—')}</td><td>{n_disp}</td><td>{status}</td></tr>"
+            f"<tr><td>{_h(_bench_label(r))}</td><td>{_h(_fmt(r.get('headline')))}</td>"
+            f"<td>{_h(r.get('headline_metric') or '—')}</td><td>{n_disp}</td>"
+            f"<td>{_h(_coverage_counts(r))}</td><td>{status}</td></tr>"
         )
     rows.append("</table>")
     rows.append('<p style="color:#555;font-size:.9em">「生成图数量」= 从输出目录实际统计的图片数，'
@@ -165,11 +229,43 @@ def _scores_table_html(collected):
         metrics = r.get("metrics") or {}
         if not metrics:
             continue
-        rows.append(f"<details><summary>{_h(r['benchmark'])} 子指标</summary><ul>")
+        rows.append(f"<details><summary>{_h(_bench_label(r))} 子指标</summary><ul>")
         for k, v in metrics.items():
             rows.append(f"<li><code>{_h(k)}</code>: {_h(_fmt(v))}</li>")
         rows.append("</ul></details>")
     return "\n".join(rows)
+
+
+def _coverage_html(collected):
+    from coverage_audit import STATUS_LABELS
+    out = ["<h2>样本覆盖与异常提示</h2>",
+           "<p>分数保留原 benchmark 算法；以下提示不修改分数、权重或分母。</p>"]
+    for record in collected:
+        out += [f"<h3>{_h(_bench_label(record))}</h3>", f"<p>{_h(_coverage_status(record))}</p>"]
+        if record.get("experiment_name"):
+            out.append(f"<p>实验：{_h(record['experiment_name'])}；setting：{_h(record.get('setting_name'))}</p>")
+        coverage = record.get("coverage")
+        if coverage is None:
+            out.append(f"<p>{_h(record.get('coverage_warning') or '没有覆盖率证据，无法确认缺失数量和样本 ID。')}</p>")
+            continue
+        counts = coverage.get("counts") or {}
+        out.append(f"<p>应评 {_h(_fmt(counts.get('expected')))}，有效评分 {_h(_fmt(counts.get('valid_scored')))}；"
+                   f"缺图 {_h(_fmt(counts.get('missing_image')))}，损坏 {_h(_fmt(counts.get('corrupt_image')))}，"
+                   f"judge 失败 {_h(_fmt(counts.get('judge_failed')))}，"
+                   f"未评分/原因不明 {_h(_fmt(counts.get('unscored')))}。</p>")
+        for warning in coverage.get("warnings", []):
+            out.append(f'<p class="bad">{_h(warning)}</p>')
+        anomalies = [row for row in coverage.get("samples", []) if row.get("status") != "scored"]
+        if anomalies:
+            out.append("<details open><summary>异常样本清单</summary><table>"
+                       "<tr><th>样本 ID</th><th>类别</th><th>状态</th><th>图片路径</th><th>原因</th></tr>")
+            for row in anomalies:
+                out.append("<tr>" + "".join(f"<td>{_h(v)}</td>" for v in (
+                    row.get("sample_id", ""), row.get("category", ""),
+                    STATUS_LABELS.get(row.get("status"), "原因不明"), row.get("image_path", ""), row.get("reason", "")
+                )) + "</tr>")
+            out.append("</table></details>")
+    return "\n".join(out)
 
 
 def _qualitative_html(qualitative):
@@ -232,6 +328,7 @@ def render_html(collected, qualitative, run_config):
         "<title>评测报告</title>", f"<style>{_CSS}</style></head><body>",
         "<h1>评测报告</h1>", f"<p>模型：<code>{_h(model)}</code></p>",
         _scores_table_html(collected),
+        _coverage_html(collected),
         _qualitative_html(qualitative),
         _run_config_html(run_config),
         "</body></html>",
@@ -261,6 +358,9 @@ def _main():
                     help="output format (default: inferred from --out extension)")
     args = ap.parse_args()
     collected = json.load(open(args.collected))
+    from collect_results import attach_coverage, attach_experiment
+    collected = [attach_coverage(attach_experiment(record), language=record.get("language") or
+                                record.get("metrics", {}).get("language") or "en") for record in collected]
     qualitative = json.load(open(args.qualitative)) if args.qualitative else []
     run_config = json.load(open(args.run_config))
     path = write_report(args.out, collected, qualitative, run_config, fmt=args.format)

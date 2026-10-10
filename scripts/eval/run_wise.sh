@@ -9,6 +9,9 @@ GPUS=8
 
 
 # generate images
+source activate bagel
+export PATH=/opt/conda/envs/bagel/bin:$PATH
+
 torchrun \
     --nnodes=1 \
     --node_rank=0 \
@@ -25,6 +28,8 @@ torchrun \
 
 
 # calculate score
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 python3 eval/gen/wise/gpt_eval_mp.py \
         --json_path eval/gen/wise/data/cultural_common_sense.json \
         --image_dir $output_path/images \

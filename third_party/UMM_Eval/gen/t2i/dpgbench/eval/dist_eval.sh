@@ -1,3 +1,5 @@
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 IMAGE_ROOT_PATH=$1
 RESOLUTION=$2
 PIC_NUM=${PIC_NUM:-4}

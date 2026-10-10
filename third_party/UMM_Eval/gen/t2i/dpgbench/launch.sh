@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-# DPG-Bench (t2i) — generation + local mPLUG VQA scoring. Conda hooks read unset vars, so no -u.
+# DPG-Bench (t2i) — generation + local mPLUG VQA scoring.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 
 MODEL_NAME="${MODEL_NAME:-model}"
@@ -144,6 +141,8 @@ if [[ -n "${RESUME:-}" ]]; then
 fi
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ "$LAUNCH_MODE" == "device_map" ]]; then
     export CUDA_VISIBLE_DEVICES
     unset RANK WORLD_SIZE LOCAL_RANK LOCAL_WORLD_SIZE MASTER_ADDR MASTER_PORT GROUP_RANK ROLE_RANK
@@ -206,7 +205,8 @@ fi
 
 if (( RUN_EVAL != 0 )); then
   EVAL_GPUS="${EVAL_GPUS:-$(count_visible_gpus "$CUDA_VISIBLE_DEVICES")}"
-  umm_conda_activate "${DPGBENCH_EVAL_ENV}"
+  source activate geneval
+  export PATH=/opt/conda/envs/geneval/bin:$PATH
   IMAGE_ROOT_PATH="$DPGBENCH_IMAGE_DIR"
   RESULT_PATH="${DPGBENCH_OUTPUT_DIR}/dpgbench_results.txt"
   EVAL_RESOLUTION="${RESIZE_TO:-$IMAGE_SIZE}"

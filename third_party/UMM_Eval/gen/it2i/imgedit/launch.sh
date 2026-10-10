@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-# ImgEdit (it2i) — image-editing generation + GPT-4o judge scoring. Conda hooks read unset vars, so no -u.
+# ImgEdit (it2i) — image-editing generation + GPT-4o judge scoring.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 
 MODEL_NAME="${MODEL_NAME:-model}"
@@ -154,6 +151,8 @@ if (( NODE_RANK < 0 || NODE_RANK >= NUM_NODES )); then
 fi
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ "$LAUNCH_MODE" == "device_map" ]]; then
     export CUDA_VISIBLE_DEVICES
     unset RANK WORLD_SIZE LOCAL_RANK LOCAL_WORLD_SIZE MASTER_ADDR MASTER_PORT GROUP_RANK ROLE_RANK
@@ -219,11 +218,12 @@ if [[ -n "$OUTPUT_PATH" ]]; then
 else
   RESULT_IMAGE_DIR="${OUTPUT_BASE}/${OUTPUT_FOLDER}/${MODEL_NAME}/${STEP_NAME}/${OUTPUT_SUBDIR}"
 fi
-RESULT_ROOT_DIR="$(dirname "$RESULT_IMAGE_DIR")"
+RESULT_ROOT_DIR="${RESULT_ROOT_DIR:-$(dirname "$RESULT_IMAGE_DIR")}"
 
 if (( RUN_EVAL != 0 )); then
   # API_KEY is optional: when empty, basic_bench.py resolves the key from api_key.yaml:token_hub_eval.
-  umm_conda_activate "${IMGEDIT_EVAL_ENV}"
+  source activate geneval
+  export PATH=/opt/conda/envs/geneval/bin:$PATH
 
   python "${IMGEDIT_ROOT}/basic_bench.py" \
     --result_img_folder "$RESULT_IMAGE_DIR" \

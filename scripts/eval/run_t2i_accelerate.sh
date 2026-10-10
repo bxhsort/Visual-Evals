@@ -6,12 +6,6 @@ set -eo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BAGEL_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 UMM_ROOT="${UMM_ROOT:-${BAGEL_ROOT}/third_party/UMM_Eval}"
-UMM_ENV_CONFIG="${UMM_ENV_CONFIG:-${UMM_ROOT}/config/conda_envs.env}"
-
-if [[ -f "$UMM_ENV_CONFIG" ]]; then
-  # shellcheck disable=SC1090
-  source "$UMM_ENV_CONFIG"
-fi
 
 BENCHMARK="${BENCHMARK:-${TASK:-geneval}}"
 MODEL_PATH="${MODEL_PATH:-${model_path:-}}"
@@ -23,15 +17,13 @@ RUN_GENERATION="${RUN_GENERATION:-1}"
 RUN_EVAL="${RUN_EVAL:-1}"
 FINALIZE_EVAL="${FINALIZE_EVAL:-0}"
 
-BAGEL_ENV="${BAGEL_ENV:-${BAGEL_ROOT}/.venv}"
-QIB_API_ENV="${QIB_API_ENV:-${GEN_ENV}}"
-
 IMAGE_SIZE="${IMAGE_SIZE:-}"
 NUM_STEPS="${NUM_STEPS:-50}"
 CFG_SCALE="${CFG_SCALE:-4.0}"
 TIMESTEP_SHIFT="${TIMESTEP_SHIFT:-3.0}"
 CFG_NORM="${CFG_NORM:-global}"
-BATCH_SIZE="${BATCH_SIZE:-4}"
+BATCH_SIZE="${BATCH_SIZE:-}"
+SEED="${SEED:-42}"
 NUM_IMAGES="${NUM_IMAGES:-}"
 MAX_LATENT_SIZE="${MAX_LATENT_SIZE:-}"
 MAX_MEMORY="${MAX_MEMORY:-80GiB}"
@@ -46,11 +38,9 @@ CVTG_SUBSETS="${CVTG_SUBSETS:-CVTG,CVTG-Style}"
 CVTG_AREAS="${CVTG_AREAS:-2,3,4,5}"
 BIZGENEVAL_DEFAULT_ASPECT_RATIO="${BIZGENEVAL_DEFAULT_ASPECT_RATIO:-1:1}"
 THINK_MODE="${THINK_MODE:-0}"
+GENEVAL_PROMPT_MODE="${GENEVAL_PROMPT_MODE:-long}"
 WISE_CATEGORIES="${WISE_CATEGORIES:-cultural_common_sense,natural_science,spatio-temporal_reasoning}"
-case "${THINK_MODE,,}" in
-  1|true|yes|on) WISE_SUBDIR="${WISE_SUBDIR:-wise_think}" ;;
-  *) WISE_SUBDIR="${WISE_SUBDIR:-wise_raw}" ;;
-esac
+WISE_SUBDIR="${WISE_SUBDIR:-${OUTPUT_SUBDIR:-wise_raw}}"
 
 QJUDGER_MODEL_PATH="${QJUDGER_MODEL_PATH:-${UMM_ROOT}/gen/t2i/qwenimagebench/eval/models/q_judger}"
 QJUDGER_BATCH_SIZE="${QJUDGER_BATCH_SIZE:-8}"
@@ -92,7 +82,7 @@ normalize_image_size() {
     if [[ "$width" != "$height" ]]; then echo "IMAGE_SIZE must be square, got: $raw_value" >&2; return 1; fi
     echo "$width"; return 0
   fi
-  case "${raw_value^^}" in
+  case "$(printf '%s' "$raw_value" | tr '[:lower:]' '[:upper:]')" in
     1K) echo "1024" ;;
     1.5K) echo "1536" ;;
     2K) echo "2048" ;;
@@ -132,23 +122,16 @@ print(output_paths.derive_t2i_root(sys.argv[1], sys.argv[2], sys.argv[3], sys.ar
 PY
 }
 
-activate_conda_env() {
-  local env_name="$1"
-  if [[ "$env_name" == /* && ! -d "$env_name" ]]; then
-    echo "Conda env path not found: $env_name"
-    echo "Set the matching *_EVAL_ENV variable or UMM_ENV_CONFIG to a valid config/conda_envs.env."
-    exit 1
-  fi
-  if [[ ! -f "$CONDA_SH" ]]; then
-    echo "CONDA_SH not found: $CONDA_SH"
-    exit 1
-  fi
-  # shellcheck disable=SC1090
-  source "$CONDA_SH"
-  conda activate "$env_name"
-}
-
 BENCHMARK="$(canonical_benchmark "$BENCHMARK")"
+case "$(printf '%s' "$THINK_MODE" | tr '[:upper:]' '[:lower:]')" in
+  1|true|yes|on)
+    THINK_MODE=1
+    echo "THINK_MODE=1 is unsupported by the current unified ${BENCHMARK} generator; no thinking experiment will be created." >&2
+    exit 1
+    ;;
+  0|false|no|off) THINK_MODE=0 ;;
+  *) echo "THINK_MODE must be 0/1 or false/true" >&2; exit 1 ;;
+esac
 if [[ -z "$IMAGE_SIZE" ]]; then
   IMAGE_SIZE="$(default_image_size_for_benchmark "$BENCHMARK")"
 else
@@ -160,7 +143,11 @@ fi
 
 case "$BENCHMARK" in
   geneval)
-    METADATA_FILE="${METADATA_FILE:-${BAGEL_ROOT}/eval/gen/geneval/prompts/evaluation_metadata_long.jsonl}"
+    case "$GENEVAL_PROMPT_MODE" in
+      short) METADATA_FILE="${GENEVAL_SHORT_METADATA_FILE:-${METADATA_FILE:-${BAGEL_ROOT}/eval/gen/geneval/prompts/evaluation_metadata.jsonl}}" ;;
+      long) METADATA_FILE="${GENEVAL_LONG_METADATA_FILE:-${METADATA_FILE:-${BAGEL_ROOT}/eval/gen/geneval/prompts/evaluation_metadata_long.jsonl}}" ;;
+      *) echo "A single wrapper run requires GENEVAL_PROMPT_MODE=short or long; use eval_t2i_go.sh for both." >&2; exit 1 ;;
+    esac
     NUM_IMAGES="${NUM_IMAGES:-4}"
     ;;
   dpgbench)
@@ -170,6 +157,16 @@ case "$BENCHMARK" in
   qwenimagebench)
     METADATA_FILE="${METADATA_FILE:-}"
     NUM_IMAGES="${NUM_IMAGES:-1}"
+    case "$QIB_EVAL_BACKEND" in local|api) ;; *) echo "QIB_EVAL_BACKEND must be local or api" >&2; exit 1 ;; esac
+    [[ " $QIB_LANGS " == *" en "* ]] || unset QIB_METADATA_FILE_EN
+    [[ " $QIB_LANGS " == *" zh "* ]] || unset QIB_METADATA_FILE_ZH
+    for mode in $QIB_LANGS; do
+      case "$mode" in
+        en) QIB_METADATA_FILE_EN="${QIB_METADATA_FILE_EN:-${UMM_ROOT}/gen/t2i/qwenimagebench/prompts/qwenimagebench_en.jsonl}" ;;
+        zh) QIB_METADATA_FILE_ZH="${QIB_METADATA_FILE_ZH:-${UMM_ROOT}/gen/t2i/qwenimagebench/prompts/qwenimagebench_zh.jsonl}" ;;
+        *) echo "Unsupported QIB_LANGS language: $mode" >&2; exit 1 ;;
+      esac
+    done
     ;;
   tiifbench)
     METADATA_FILE="${METADATA_FILE:-${TIIFBENCH_PROMPT_DIR}}"
@@ -178,6 +175,15 @@ case "$BENCHMARK" in
   longtextbench)
     METADATA_FILE="${METADATA_FILE:-}"
     NUM_IMAGES="${NUM_IMAGES:-1}"
+    [[ " $LONGTEXTBENCH_LANGS " == *" en "* ]] || unset LONGTEXTBENCH_METADATA_FILE_EN
+    [[ " $LONGTEXTBENCH_LANGS " == *" zh "* ]] || unset LONGTEXTBENCH_METADATA_FILE_ZH
+    for mode in $LONGTEXTBENCH_LANGS; do
+      case "$mode" in
+        en) LONGTEXTBENCH_METADATA_FILE_EN="${LONGTEXTBENCH_METADATA_FILE_EN:-${UMM_ROOT}/gen/t2i/longtextbench/eval/text_prompts.jsonl}" ;;
+        zh) LONGTEXTBENCH_METADATA_FILE_ZH="${LONGTEXTBENCH_METADATA_FILE_ZH:-${UMM_ROOT}/gen/t2i/longtextbench/eval/text_prompts_zh.jsonl}" ;;
+        *) echo "Unsupported LONGTEXTBENCH_LANGS language: $mode" >&2; exit 1 ;;
+      esac
+    done
     ;;
   cvtg_2k)
     METADATA_FILE="${METADATA_FILE:-${UMM_ROOT}/gen/t2i/cvtg_2k/eval/CVTG-2K}"
@@ -190,16 +196,14 @@ case "$BENCHMARK" in
   wise)
     METADATA_FILE="${METADATA_FILE:-${BAGEL_ROOT}/eval/gen/wise/final_data.json}"
     NUM_IMAGES="${NUM_IMAGES:-1}"
+    OUTPUT_SUBDIR="$WISE_SUBDIR"
     ;;
   bizgeneval)
     METADATA_FILE="${METADATA_FILE:-${UMM_ROOT}/gen/t2i/bizgeneval/eval/test.jsonl}"
     NUM_IMAGES="${NUM_IMAGES:-1}"
+    OUTPUT_SUBDIR="bizgeneval"
     ;;
 esac
-
-OUTPUT_ROOT="$(derive_t2i_root)"
-RESULT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
-LOG_DIR="${LOG_DIR:-${RESULT_DIR}/logs/${BENCHMARK}}"
 
 IFS=',' read -r -a GPUS <<< "$GPU_LIST"
 N_GPU="${#GPUS[@]}"
@@ -207,6 +211,184 @@ if (( N_GPU <= 0 )); then
   echo "No GPU was provided."
   exit 1
 fi
+if [[ "$SEED" != "42" ]]; then
+  echo "The current T2I generators use SEED=42; another SEED is unsupported." >&2
+  exit 1
+fi
+if [[ "$BENCHMARK" == "wise" ]]; then
+  BATCH_SIZE="${BATCH_SIZE:-1}"
+  if [[ "$NUM_IMAGES" != "1" ]]; then
+    echo "The current unified WISE generator saves one image per prompt; NUM_IMAGES=1 is required." >&2
+    exit 1
+  fi
+  if [[ ! "$BATCH_SIZE" =~ ^[1-9][0-9]*$ ]]; then
+    echo "BATCH_SIZE must be a positive integer." >&2
+    exit 1
+  fi
+  BATCH_SIZE=1
+  unset GENERATION_SHARDS
+elif [[ "$BENCHMARK" == "tiifbench" ]]; then
+  BATCH_SIZE="${BATCH_SIZE:-1}"
+  if [[ "$NUM_IMAGES" != "1" || "$BATCH_SIZE" != "1" ]]; then
+    echo "The current TIIFBench generator produces one image per description with BATCH_SIZE=1; NUM_IMAGES=1 is required." >&2
+    exit 1
+  fi
+  unset GENERATION_SHARDS
+else
+  BATCH_SIZE="${BATCH_SIZE:-4}"
+  if [[ ! "$BATCH_SIZE" =~ ^[1-9][0-9]*$ || ! "$NUM_IMAGES" =~ ^[1-9][0-9]*$ ]]; then
+    echo "BATCH_SIZE and NUM_IMAGES must be positive integers." >&2
+    exit 1
+  fi
+  if (( BATCH_SIZE > NUM_IMAGES )); then BATCH_SIZE="$NUM_IMAGES"; fi
+  unset GENERATION_SHARDS
+fi
+
+# Record only settings used by this benchmark. The shared helper adds the model,
+# prompt mode and thinking mode, and hashes the selected input paths separately.
+CFG_INTERVAL='[0,1.0]'
+CONFIG_KEYS="IMAGE_SIZE CFG_SCALE CFG_NORM NUM_STEPS NUM_IMAGES BATCH_SIZE MAX_LATENT_SIZE TIMESTEP_SHIFT SEED CFG_INTERVAL"
+CONFIG_KEYS+=" TARGET_INDICES"
+case "$BENCHMARK" in
+  geneval) CONFIG_KEYS+=" METADATA_FILE" ;;
+  dpgbench)
+    EVAL_BACKBONE=mplug
+    CONFIG_KEYS+=" METADATA_FILE TARGET_PROMPT_IDS EVAL_BACKBONE"
+    ;;
+  qwenimagebench)
+    CONFIG_KEYS+=" QIB_LANGS QIB_METADATA_FILE_EN QIB_METADATA_FILE_ZH TARGET_PROMPT_IDS QIB_EVAL_BACKEND"
+    if [[ "$QIB_EVAL_BACKEND" == "api" ]]; then
+      INPUT_JSON_en="${INPUT_JSON_en:-${QIB_API_LOCAL_BENCH_ROOT}/data_en.json}"
+      INPUT_JSON_cn="${INPUT_JSON_cn:-${QIB_API_LOCAL_BENCH_ROOT}/data_cn.json}"
+      CONFIG_KEYS+=" QIB_API_ROOT QIB_API_LOCAL_BENCH_ROOT QIB_DIM_MODE QIB_REWARD_TIMEOUT QIB_REWARD_MAX_RETRIES QIB_REWARD_IMAGE_SOURCE QIB_REWARD_BASE_URL QIB_REWARD_BASE_URLS REWARD_BASE_URL REWARD_BASE_URLS"
+      if [[ " $QIB_LANGS " == *" en "* ]]; then CONFIG_KEYS+=" INPUT_JSON_en"; fi
+      if [[ " $QIB_LANGS " == *" zh "* ]]; then CONFIG_KEYS+=" INPUT_JSON_cn"; fi
+    else
+      CONFIG_KEYS+=" QJUDGER_MODEL_PATH QJUDGER_BATCH_SIZE QJUDGER_MAX_NEW_TOKENS"
+    fi
+    ;;
+  tiifbench)
+    CONFIG_KEYS+=" METADATA_FILE TIIFBENCH_SPLIT TIIFBENCH_SPECIFIC_FILE TIIFBENCH_EVAL_PROMPT_DIR TIIFBENCH_EVAL_MODEL TIIFBENCH_EVAL_BASE_URL TIIFBENCH_API_VERSION"
+    ;;
+  longtextbench)
+    TEXTBENCH_ROOT="${TEXTBENCH_ROOT:-${UMM_ROOT}/gen/t2i/longtextbench/eval}"
+    CONFIG_KEYS+=" LONGTEXTBENCH_LANGS LONGTEXTBENCH_METADATA_FILE_EN LONGTEXTBENCH_METADATA_FILE_ZH TARGET_PROMPT_IDS TEXTBENCH_ROOT RESIZE_TO"
+    ;;
+  cvtg_2k)
+    TEXTCRAFTER_ROOT="${TEXTCRAFTER_ROOT:-${UMM_ROOT}/gen/t2i/cvtg_2k/eval/TextCrafter_Eval}"
+    CONFIG_KEYS+=" METADATA_FILE CVTG_SUBSETS CVTG_AREAS TARGET_KEYS TEXTCRAFTER_ROOT RESIZE_TO"
+    ;;
+  oneigbench)
+    GRID_ROWS="${GRID_ROWS:-2}"
+    GRID_COLS="${GRID_COLS:-2}"
+    ONEIGBENCH_EVAL_EXECUTOR="${ONEIGBENCH_EVAL_EXECUTOR:-auto}"
+    ONEIGBENCH_API_EVAL="${ONEIGBENCH_API_EVAL:-0}"
+    CONFIG_KEYS+=" METADATA_FILE ONEIGBENCH_LANGS GRID_ROWS GRID_COLS ONEIGBENCH_EVAL_EXECUTOR ONEIGBENCH_API_EVAL RESIZE_TO"
+    ;;
+  wise)
+    WISE_DATA_ROOT="${WISE_DATA_ROOT:-${UMM_ROOT}/gen/t2i/wise/eval/data}"
+    EVAL_MODEL="${EVAL_MODEL:-gpt-4o}"
+    EVAL_BASE_URL="${EVAL_BASE_URL:-${EVAL_API_BASE_URL:-${OPENAI_BASE_URL:-https://tokenhub.sensetime.com/v1}}}"
+    CONFIG_KEYS+=" METADATA_FILE WISE_SUBDIR WISE_CATEGORIES WISE_DATA_ROOT EVAL_MODEL EVAL_BASE_URL RESIZE_TO"
+    ;;
+  bizgeneval)
+    JUDGE_MODEL="${JUDGE_MODEL:-gemini-3.1-pro-preview}"
+    JUDGE_API_BASE="${JUDGE_API_BASE:-${EVAL_API_BASE_URL:-${OPENAI_BASE_URL:-https://tokenhub.sensetime.com/v1}}}"
+    CONFIG_KEYS+=" METADATA_FILE TARGET_PROMPT_IDS BIZGENEVAL_DEFAULT_ASPECT_RATIO JUDGE_MODEL JUDGE_API_BASE EVAL_MAX_ITEMS"
+    ;;
+esac
+CONFIG_ARGS=()
+for config_key in $CONFIG_KEYS; do
+  if [[ -n "${!config_key:-}" ]]; then CONFIG_ARGS+=("${config_key}=${!config_key}"); fi
+done
+DG2_EFFECTIVE_CONFIG_JSON="$(python - "${CONFIG_ARGS[@]}" <<'PY'
+import json, sys
+print(json.dumps({key.upper(): value for key, value in (item.split('=', 1) for item in sys.argv[1:])}))
+PY
+)"
+
+OUTPUT_ROOT="$(derive_t2i_root)"
+if [[ "$BENCHMARK" == "geneval" ]]; then
+  OUTPUT_ROOT="${OUTPUT_ROOT}_prompt_${GENEVAL_PROMPT_MODE}"
+fi
+source "${SCRIPT_DIR}/experiment_layout.sh"
+dg2_prepare_experiment "$BENCHMARK" "$OUTPUT_ROOT"
+RESULT_DIR="$DG2_RESULT_DIR"
+LOG_DIR="${LOG_DIR:-${RESULT_DIR}/logs/${BENCHMARK}}"
+
+source "${SCRIPT_DIR}/coverage_report.sh"
+dg2_write_coverage_reports() {
+  local mode metadata image_dir judge_dir audit_root upper
+  local audit_args=(--bench "$BENCHMARK" --num-images "$NUM_IMAGES" --model-name "$MODEL_NAME")
+  [[ -n "$TARGET_INDICES" ]] && audit_args+=(--target-indices "$TARGET_INDICES")
+  [[ -n "$TARGET_PROMPT_IDS" ]] && audit_args+=(--target-prompt-ids "$TARGET_PROMPT_IDS")
+  [[ -n "$TARGET_KEYS" ]] && audit_args+=(--target-keys "$TARGET_KEYS")
+  case "$BENCHMARK" in
+    qwenimagebench)
+      for mode in $QIB_LANGS; do
+        metadata="${QIB_METADATA_FILE_EN:-}"
+        [[ "$mode" == "zh" ]] && metadata="$QIB_METADATA_FILE_ZH"
+        image_dir="${RESULT_DIR}/qwenimagebench_${mode}/samples"
+        judge_dir="${RESULT_DIR}/qwenimagebench_${mode}/eval"
+        [[ "$QIB_EVAL_BACKEND" == "api" ]] && judge_dir="${RESULT_DIR}/qwenimagebench_${mode}/eval_api"
+        dg2_run_coverage_audit "${audit_args[@]}" --results-root "$RESULT_DIR" --language "$mode" \
+      --metadata-file "${COVERAGE_METADATA_FILE:-$metadata}" --image-dir "${COVERAGE_IMAGE_DIR:-$image_dir}" \
+      --judge-root "${COVERAGE_JUDGE_ROOT:-$judge_dir}"
+      done
+      ;;
+    longtextbench)
+      for mode in $LONGTEXTBENCH_LANGS; do
+        metadata="${LONGTEXTBENCH_METADATA_FILE_EN:-}"
+        [[ "$mode" == "zh" ]] && metadata="$LONGTEXTBENCH_METADATA_FILE_ZH"
+        audit_root="${RESULT_DIR}/longtextbench_${mode}"
+        dg2_run_coverage_audit "${audit_args[@]}" --results-root "$audit_root" --language "$mode" \
+      --metadata-file "${COVERAGE_METADATA_FILE:-$metadata}" --image-dir "${COVERAGE_IMAGE_DIR:-${audit_root}/samples}" \
+      --judge-root "${COVERAGE_JUDGE_ROOT:-${audit_root}/eval}"
+      done
+      ;;
+    oneigbench)
+      for mode in $ONEIGBENCH_LANGS; do
+        upper="$(printf '%s' "$mode" | tr '[:lower:]' '[:upper:]')"
+        dg2_run_coverage_audit "${audit_args[@]}" --results-root "$RESULT_DIR" --language "$mode" \
+      --metadata-file "${COVERAGE_METADATA_FILE:-$METADATA_FILE}" \
+      --image-dir "${COVERAGE_IMAGE_DIR:-${RESULT_DIR}/OneIGBench-$upper}" \
+      --judge-root "${COVERAGE_JUDGE_ROOT:-${RESULT_DIR}/oneigbench-${upper}_results}"
+      done
+      ;;
+    *)
+      metadata="$METADATA_FILE"
+      judge_dir="$RESULT_DIR"
+      case "$BENCHMARK" in
+        geneval) image_dir="${RESULT_DIR}/gen_eval" ;;
+        dpgbench) image_dir="${RESULT_DIR}/dpgbench" ;;
+        cvtg_2k)
+          image_dir="${RESULT_DIR}/CVTG"
+          audit_args+=(--cvtg-subsets "$CVTG_SUBSETS" --cvtg-areas "$CVTG_AREAS")
+          ;;
+        tiifbench)
+          image_dir="${RESULT_DIR}/TIIFBench-${TIIFBENCH_SPLIT}"
+          judge_dir="${RESULT_DIR}/tiifbench-${TIIFBENCH_SPLIT}_results/eval_json"
+          audit_args+=(--split "$TIIFBENCH_SPLIT")
+          [[ -n "$TIIFBENCH_SPECIFIC_FILE" ]] && audit_args+=(--tiifbench-specific-file "$TIIFBENCH_SPECIFIC_FILE")
+          ;;
+        wise)
+          mode="raw"
+          case "$(printf '%s' "$THINK_MODE" | tr '[:upper:]' '[:lower:]')" in 1|true|yes|on) mode="think" ;; esac
+          image_dir="${RESULT_DIR}/${OUTPUT_SUBDIR:-wise_${mode}}"
+          ;;
+        bizgeneval)
+          image_dir="${RESULT_DIR}/${OUTPUT_SUBDIR:-bizgeneval}"
+          judge_dir="${image_dir}_eval"
+          ;;
+      esac
+      dg2_run_coverage_audit "${audit_args[@]}" --results-root "$RESULT_DIR" \
+      --metadata-file "${COVERAGE_METADATA_FILE:-$metadata}" --image-dir "${COVERAGE_IMAGE_DIR:-$image_dir}" \
+      --judge-root "${COVERAGE_JUDGE_ROOT:-$judge_dir}"
+      ;;
+  esac
+}
+dg2_install_coverage_trap
+
 
 export PYTHONPATH="${BAGEL_ROOT}:${UMM_ROOT}/gen/common:${PYTHONPATH:-}"
 mkdir -p "$RESULT_DIR" "$LOG_DIR"
@@ -225,16 +407,14 @@ run_generation_one() {
   local mode="$1"
   local metadata_file="$METADATA_FILE"
   if [[ "$BENCHMARK" == "qwenimagebench" ]]; then
-    metadata_file="${UMM_ROOT}/gen/t2i/qwenimagebench/prompts/qwenimagebench_${mode}.jsonl"
-  fi
-  if [[ "$BENCHMARK" == "tiifbench" ]]; then
-    metadata_file="${TIIFBENCH_PROMPT_DIR}"
+    metadata_file="${QIB_METADATA_FILE_EN:-}"
+    [[ "$mode" == "zh" ]] && metadata_file="$QIB_METADATA_FILE_ZH"
   fi
   if [[ "$BENCHMARK" == "longtextbench" ]]; then
     if [[ "$mode" == "zh" ]]; then
-      metadata_file="${UMM_ROOT}/gen/t2i/longtextbench/eval/text_prompts_zh.jsonl"
+      metadata_file="$LONGTEXTBENCH_METADATA_FILE_ZH"
     else
-      metadata_file="${UMM_ROOT}/gen/t2i/longtextbench/eval/text_prompts.jsonl"
+      metadata_file="$LONGTEXTBENCH_METADATA_FILE_EN"
     fi
   fi
   if [[ ! -f "$metadata_file" ]]; then
@@ -242,11 +422,6 @@ run_generation_one() {
       echo "Metadata file/dir not found: $metadata_file"
       exit 1
     fi
-  fi
-
-  if [[ -f "${BAGEL_ENV}/bin/activate" ]]; then
-    # shellcheck disable=SC1091
-    source "${BAGEL_ENV}/bin/activate"
   fi
 
   local extra_args=()
@@ -382,6 +557,8 @@ PY
 }
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   case "$BENCHMARK" in
     qwenimagebench)
       for mode in $QIB_LANGS; do run_generation_one "$mode"; done
@@ -404,22 +581,24 @@ fi
 if (( RUN_EVAL != 0 )); then
   case "$BENCHMARK" in
     geneval)
-      activate_conda_env "$GENEVAL_EVAL_ENV"
+      source activate geneval
+      export PATH=/opt/conda/envs/geneval/bin:$PATH
       cd "${UMM_ROOT}/gen/t2i/geneval/eval"
       env -i \
-        PATH="$CONDA_PREFIX/bin:/usr/bin:/bin" \
-        LD_LIBRARY_PATH="${CONDA_PREFIX}/lib" \
-        CONDA_PREFIX="$CONDA_PREFIX" \
+        PATH="$PATH" \
+        LD_LIBRARY_PATH="/opt/conda/envs/geneval/lib" \
+        CONDA_PREFIX="/opt/conda/envs/geneval" \
         PYTHONNOUSERSITE=1 \
         HOME="$HOME" \
-        "$CONDA_PREFIX/bin/python" evaluation/evaluate_images.py \
+        "/opt/conda/envs/geneval/bin/python" evaluation/evaluate_images.py \
         "${RESULT_DIR}/gen_eval" \
         --outfile "${RESULT_DIR}/results_geneval.jsonl" \
         --model-path "models"
       python evaluation/summary_scores.py "${RESULT_DIR}/results_geneval.jsonl" | tee "${RESULT_DIR}/summary_geneval.txt"
       ;;
     dpgbench)
-      activate_conda_env "$DPGBENCH_EVAL_ENV"
+      source activate geneval
+      export PATH=/opt/conda/envs/geneval/bin:$PATH
       cd "${UMM_ROOT}/gen/t2i/dpgbench/eval"
       EVAL_GPUS="${EVAL_GPUS:-${N_GPU}}"
       accelerate launch --num_machines 1 --num_processes "$EVAL_GPUS" --multi_gpu --mixed_precision "fp16" --main_process_port "$((MASTER_PORT + 100))" \
@@ -431,6 +610,8 @@ if (( RUN_EVAL != 0 )); then
         --vqa-model mplug
       ;;
     qwenimagebench)
+      source activate geneval
+      export PATH=/opt/conda/envs/geneval/bin:$PATH
       if [[ "$QIB_EVAL_BACKEND" == "api" ]]; then
         if [[ -z "$QIB_API_ROOT" || ! -f "${QIB_API_ROOT}/api_eval.py" ]]; then
           echo "QIB_API_ROOT must contain api_eval.py when QIB_EVAL_BACKEND=api"
@@ -444,7 +625,6 @@ if (( RUN_EVAL != 0 )); then
           echo "QIB_REWARD_BASE_URL/QIB_REWARD_BASE_URLS is required when QIB_EVAL_BACKEND=api"
           exit 1
         fi
-        activate_conda_env "$QIB_API_ENV"
         API_SUMMARY_ARGS=()
         for mode in $QIB_LANGS; do
           api_lang="$mode"
@@ -476,7 +656,6 @@ if (( RUN_EVAL != 0 )); then
         done
         write_qib_api_summary "${API_SUMMARY_ARGS[@]}"
       else
-        activate_conda_env "$QWENIMAGEBENCH_EVAL_ENV"
         export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
         IFS=',' read -r -a JUDGE_GPUS <<< "$GPU_LIST"
         NSHARDS="${QJUDGER_NUM_SHARDS:-${#JUDGE_GPUS[@]}}"
@@ -542,7 +721,8 @@ if (( RUN_EVAL != 0 )); then
         echo "TIIFBENCH_EVAL_PROMPT_DIR not found: $TIIFBENCH_EVAL_PROMPT_DIR"
         exit 1
       fi
-      activate_conda_env "$TIIFBENCH_EVAL_ENV"
+      source activate geneval
+      export PATH=/opt/conda/envs/geneval/bin:$PATH
       export PYTHONPATH="${UMM_ROOT}/gen/common:${PYTHONPATH:-}"
       IMAGE_DIR="${RESULT_DIR}/TIIFBench-${TIIFBENCH_SPLIT}"
       RESULTS_DIR="${RESULT_DIR}/tiifbench-${TIIFBENCH_SPLIT}_results"
@@ -565,16 +745,20 @@ if (( RUN_EVAL != 0 )); then
       ;;
     longtextbench)
       for mode in $LONGTEXTBENCH_LANGS; do
+        metadata="${LONGTEXTBENCH_METADATA_FILE_EN:-}"
+        [[ "$mode" == "zh" ]] && metadata="$LONGTEXTBENCH_METADATA_FILE_ZH"
         RUN_GENERATION=0 RUN_EVAL=1 \
+        RESULT_ROOT_DIR="$RESULT_DIR" RESULT_DIR="$RESULT_DIR" DATA_PATH="$metadata" \
         OUTPUT_FOLDER="$OUTPUT_BASE" MODEL_NAME="$MODEL_NAME" STEP_NAME="$STEP_NAME" \
         IMAGE_SIZE="$IMAGE_SIZE" CFG_SCALE="$CFG_SCALE" CFG_NORM="$CFG_NORM" \
-        TIMESTEP_SHIFT="$TIMESTEP_SHIFT" MODE="$mode" \
+        TIMESTEP_SHIFT="$TIMESTEP_SHIFT" MODE="$mode" OUTPUT_SUBDIR="longtextbench_${mode}" TEXTBENCH_ROOT="$TEXTBENCH_ROOT" \
         TARGET_PROMPT_IDS="$TARGET_PROMPT_IDS" \
         bash "${UMM_ROOT}/gen/t2i/longtextbench/launch.sh"
       done
       ;;
     cvtg_2k)
       RUN_GENERATION=0 RUN_EVAL=1 \
+      RESULT_ROOT_DIR="$RESULT_DIR" BENCHMARK_ROOT="$METADATA_FILE" TEXTCRAFTER_ROOT="$TEXTCRAFTER_ROOT" \
       OUTPUT_FOLDER="$OUTPUT_BASE" MODEL_NAME="$MODEL_NAME" STEP_NAME="$STEP_NAME" \
       IMAGE_SIZE="$IMAGE_SIZE" CFG_SCALE="$CFG_SCALE" CFG_NORM="$CFG_NORM" \
       TIMESTEP_SHIFT="$TIMESTEP_SHIFT" CVTG_SUBSETS="$CVTG_SUBSETS" CVTG_AREAS="$CVTG_AREAS" \
@@ -584,25 +768,30 @@ if (( RUN_EVAL != 0 )); then
     oneigbench)
       for mode in $ONEIGBENCH_LANGS; do
         RUN_GENERATION=0 RUN_EVAL=1 \
+        RESULT_ROOT_DIR="$RESULT_DIR" RESULT_DIR="$RESULT_DIR" ONEIG_BENCH_ROOT="$METADATA_FILE" \
         OUTPUT_FOLDER="$OUTPUT_BASE" MODEL_NAME="$MODEL_NAME" STEP_NAME="$STEP_NAME" \
         IMAGE_SIZE="$IMAGE_SIZE" CFG_SCALE="$CFG_SCALE" CFG_NORM="$CFG_NORM" \
-        TIMESTEP_SHIFT="$TIMESTEP_SHIFT" LANGUAGE="$mode" \
+        TIMESTEP_SHIFT="$TIMESTEP_SHIFT" LANGUAGE="$mode" GRID_ROWS="$GRID_ROWS" GRID_COLS="$GRID_COLS" \
+        ONEIGBENCH_EVAL_EXECUTOR="$ONEIGBENCH_EVAL_EXECUTOR" ONEIGBENCH_API_EVAL="$ONEIGBENCH_API_EVAL" \
         bash "${UMM_ROOT}/gen/t2i/oneigbench/launch.sh"
       done
       ;;
     wise)
       RUN_GENERATION=0 RUN_EVAL=1 \
+      RESULT_ROOT_DIR="$RESULT_DIR" RESULT_DIR="$RESULT_DIR" \
       OUTPUT_FOLDER="$OUTPUT_BASE" MODEL_NAME="$MODEL_NAME" STEP_NAME="$STEP_NAME" \
       IMAGE_SIZE="$IMAGE_SIZE" CFG_SCALE="$CFG_SCALE" CFG_NORM="$CFG_NORM" \
-      TIMESTEP_SHIFT="$TIMESTEP_SHIFT" THINK_MODE="$THINK_MODE" \
-      CATEGORIES="$WISE_CATEGORIES" API_KEY="$API_KEY" \
+      TIMESTEP_SHIFT="$TIMESTEP_SHIFT" THINK_MODE="$THINK_MODE" OUTPUT_SUBDIR="$OUTPUT_SUBDIR" \
+      CATEGORIES="$WISE_CATEGORIES" WISE_DATA_ROOT="$WISE_DATA_ROOT" EVAL_MODEL="$EVAL_MODEL" EVAL_BASE_URL="$EVAL_BASE_URL" API_KEY="$API_KEY" \
       bash "${UMM_ROOT}/gen/t2i/wise/launch.sh"
       ;;
     bizgeneval)
       RUN_GENERATION=0 RUN_EVAL=1 \
+      RESULT_ROOT_DIR="$RESULT_DIR" RESULT_DIR="$RESULT_DIR" DATA_PATH="$METADATA_FILE" \
       OUTPUT_FOLDER="$OUTPUT_BASE" MODEL_NAME="$MODEL_NAME" STEP_NAME="$STEP_NAME" \
       IMAGE_SIZE="$IMAGE_SIZE" CFG_SCALE="$CFG_SCALE" CFG_NORM="$CFG_NORM" \
-      TIMESTEP_SHIFT="$TIMESTEP_SHIFT" TARGET_PROMPT_IDS="$TARGET_PROMPT_IDS" \
+      TIMESTEP_SHIFT="$TIMESTEP_SHIFT" TARGET_PROMPT_IDS="$TARGET_PROMPT_IDS" OUTPUT_SUBDIR="$OUTPUT_SUBDIR" \
+      JUDGE_MODEL="$JUDGE_MODEL" JUDGE_API_BASE="$JUDGE_API_BASE" \
       JUDGE_API_KEY="$API_KEY" \
       bash "${UMM_ROOT}/gen/t2i/bizgeneval/launch.sh"
       ;;

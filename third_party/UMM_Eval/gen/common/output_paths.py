@@ -1,26 +1,17 @@
-"""Single source of truth for benchmark output-root derivation.
+"""Shared setting labels and benchmark result paths.
 
-Each ``gen/**/launch.sh`` computes the directory its generated images and score
-files land in from the sampling knobs (a ``build_output_root`` / ``build_output_folder``
-heredoc). That logic is duplicated in the launcher and in ``inference.py``; a result
-collector needs to recompute the *same* path to find the scores. This module is the one
-place that derivation lives, kept byte-for-byte compatible with the launcher heredocs.
+Active DG2 wrappers use OUTPUT_BASE/EXPERIMENT_NAME/SETTING_NAME/BENCHMARK,
+with a _thinking suffix on the benchmark when generation actually enables it.
+experiment_layout prepares the full setting name and verifies local cache identity.
+The derive_t2i_root and derive_it2i_folder functions retain the readable setting
+labels used by generation and official evaluator adapters.
 
-t2i (geneval, dpgbench, longtextbench):
-    eval_output[cfg<g>]_<size>[_ts<g>][_noshift][_<cfg_norm>]
-it2i (imgedit, geditbench):
-    eval_output_edit[_<size>]_txtcfg<txt>_imgcfg<img>[_ts<g>][_noshift][_<cfg_renorm>]
-
-The *results root* returned by :func:`derive_output_root` is the directory the scorer
-writes into — for t2i geneval/dpgbench ``<base>/<root>/<model>/<step>``, longtextbench
-appends ``/<subdir>``, and it2i imgedit/geditbench use ``<base>/<folder>/<model>/<step>``
-(the parent of the per-subdir image dir, matching ``RESULT_ROOT_DIR`` in those launchers).
-
-Usable as a library (``derive_output_root(...)``) or a CLI:
-
+For a current result, use the exact setting from the launcher or manifest:
     python output_paths.py --bench geneval --output-base /abs/outputs \
-        --model-name m --step-name s --image-size 512 --cfg-scale 4.0 \
-        --timestep-shift 3.0 --cfg-norm global
+        --experiment-name baseline --setting-name <full-setting-folder>
+
+The old model/step layout remains available explicitly through --legacy-layout
+for reading historical results; active wrappers do not fall back to it.
 """
 
 from __future__ import annotations
@@ -28,6 +19,8 @@ from __future__ import annotations
 import argparse
 import math
 import os
+
+from experiment_layout import derive_experiment_root
 
 # bench -> task family + default OUTPUT_SUBDIR + whether the subdir is part of the
 # results root. Mirrors the launchers' OUTPUT_SUBDIR defaults.
@@ -47,6 +40,7 @@ BENCHMARKS = {
     "bizgeneval": {"family": "t2i", "subdir": None, "subdir_in_root": False},
     "igbench": {"family": "t2i", "subdir": "igbench", "subdir_in_root": True},
     "rise": {"family": "it2i", "subdir": "rise_{mode}", "subdir_in_root": False},
+    "editcompass": {"family": "it2i", "subdir": None, "subdir_in_root": False},
 }
 
 
@@ -140,6 +134,9 @@ def derive_output_root(
     # longtextbench
     mode="en",
     output_subdir=None,
+    experiment_name=None,
+    setting_name=None,
+    thinking=False,
 ):
     """Return the directory the scorer writes into for ``bench``.
 
@@ -147,6 +144,10 @@ def derive_output_root(
     """
     if bench not in BENCHMARKS:
         raise ValueError(f"unknown benchmark {bench!r}; known: {sorted(BENCHMARKS)}")
+    if experiment_name is not None or setting_name is not None:
+        if not experiment_name or not setting_name:
+            raise ValueError("New layout requires both experiment_name and the full setting_name printed by the launcher")
+        return derive_experiment_root(output_base, experiment_name, setting_name, bench, thinking)
     spec = BENCHMARKS[bench]
 
     if spec["family"] == "t2i":
@@ -181,7 +182,13 @@ def _main() -> None:
     ap.add_argument("--timestep-shift", default="3.0")
     ap.add_argument("--mode", default="en")
     ap.add_argument("--output-subdir", default=None)
+    ap.add_argument("--experiment-name", default=None)
+    ap.add_argument("--setting-name", default=None, help="Full setting folder name from the launcher/manifest")
+    ap.add_argument("--thinking", action="store_true")
+    ap.add_argument("--legacy-layout", action="store_true", help="Explicitly derive a pre-experiment-layout path")
     args = ap.parse_args()
+    if not args.legacy_layout and not (args.experiment_name and args.setting_name):
+        ap.error("use --experiment-name and --setting-name; old paths require explicit --legacy-layout")
 
     print(
         derive_output_root(
@@ -198,6 +205,7 @@ def _main() -> None:
             timestep_shift=args.timestep_shift,
             mode=args.mode,
             output_subdir=args.output_subdir,
+            experiment_name=args.experiment_name, setting_name=args.setting_name, thinking=args.thinking,
         )
     )
 

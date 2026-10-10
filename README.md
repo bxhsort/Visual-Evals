@@ -2,8 +2,9 @@
   <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/nuhojubrps/banner.png" alt="BAGEL" width="480"/>
 </p>
 
-> **DG2 evaluation setup:** See [DG2_EVAL.md](DG2_EVAL.md) for the supported
-> benchmarks, required assets, installation steps, and one-click launchers.
+> **Evaluation usage:** See [EVAL_USAGE.txt](EVAL_USAGE.txt) for the current experiment layout,
+> GenEval prompt modes, environment activation, and coverage reports.
+> [DG2_EVAL.md](DG2_EVAL.md) describes benchmark assets and dependencies.
 
 <p align="center">
   <a href="https://bagel-ai.org/">

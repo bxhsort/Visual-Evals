@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 # TIIF-Bench (t2i) — generation + gpt-4o (tokenhub) VLM-judge scoring.
-# Conda hooks read unset vars, so no -u.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 export CUBLAS_WORKSPACE_CONFIG="${CUBLAS_WORKSPACE_CONFIG:-:4096:8}"
 export TRANSFORMERS_VERBOSITY=error
@@ -90,6 +86,8 @@ IMAGE_DIR="${RESULT_ROOT}/${BENCH_NAME}"
 RESULTS_DIR="${RESULT_ROOT}/tiifbench-${TIIFBENCH_SPLIT}_results"
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ -z "$MODEL_PATH" ]]; then
     echo "MODEL_PATH is required for generation."
     exit 1
@@ -132,7 +130,8 @@ fi
 
 # API_KEY is optional: the patched scorer resolves it from env API_KEY or
 # api_key.yaml:token_hub_eval (via gen/common/eval_api_key.py) when not passed.
-umm_conda_activate "${TIIFBENCH_EVAL_ENV:-${GEN_ENV}}"
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 cd "$TIIF_BENCH_ROOT"
 
 mkdir -p "$RESULTS_DIR"

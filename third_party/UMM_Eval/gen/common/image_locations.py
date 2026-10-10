@@ -21,8 +21,8 @@ BENCH_IMAGE_GLOBS = {
     "cvtg_2k":       ["CVTG/*/*/*.png"],
     "tiifbench":     ["TIIFBench-*/*/*/*/*.png"],
     "oneigbench":    ["OneIGBench-*/*/*/*.webp"],
-    "imgedit":       ["imgedit/*.png"],
-    "geditbench":    ["gedit_bench/*/*/*.png"],
+    "imgedit":       ["bagel/*.png", "imgedit/*.png"],
+    "geditbench":    ["gen_image/fullset/*/*/*.png", "gedit_bench/*/*/*.png"],
 }
 
 
@@ -30,7 +30,7 @@ BENCH_IMAGE_GLOBS = {
 # glob so e.g. oneigbench-zh samples only the ZH images (not EN+ZH).
 LANG_GLOBS = {
     "oneigbench": ["OneIGBench-{lang_upper}/*/*/*.webp"],
-    "geditbench": ["gedit_bench/*/{lang}/*.png"],
+    "geditbench": ["gen_image/fullset/*/{lang}/*.png", "gedit_bench/*/{lang}/*.png"],
 }
 
 
@@ -51,7 +51,8 @@ def list_images(bench, results_root, language=None):
         paths.extend(glob.glob(os.path.join(results_root, pattern)))
     # absolute so dedup against the (absolute) failure-selector paths is reliable even
     # when results_root is relative.
-    return sorted({os.path.abspath(p) for p in paths})
+    return sorted({os.path.abspath(p) for p in paths
+                   if not (bench == "geditbench" and os.path.basename(p).endswith("_SRCIMG.png"))})
 
 
 def _failures_geneval(results_root):

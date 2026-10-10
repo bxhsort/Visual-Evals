@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 # WISE (t2i) — world-knowledge reasoning generation + GPT judge (gpt-4o via tokenhub).
-# Conda hooks read unset vars, so no -u.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 
 is_truthy() {
-  case "${1,,}" in
+  case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
     1|true|t|yes|y|on)
       return 0
       ;;
@@ -156,11 +152,17 @@ fi
 
 mkdir -p "$OUTPUT_BASE"
 cd "$OUTPUT_BASE"
-OUTPUT_ROOT="$(build_output_root)"
-WISE_RESULT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
+RESULT_ROOT_DIR="${RESULT_ROOT_DIR:-${RESULT_DIR:-}}"
+if [[ -z "$RESULT_ROOT_DIR" ]]; then
+  OUTPUT_ROOT="$(build_output_root)"
+  RESULT_ROOT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
+fi
+WISE_RESULT_DIR="$RESULT_ROOT_DIR"
 WISE_IMAGE_DIR="${WISE_RESULT_DIR}/${OUTPUT_SUBDIR}"
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ "$LAUNCH_MODE" == "device_map" ]]; then
     export CUDA_VISIBLE_DEVICES
     unset RANK WORLD_SIZE LOCAL_RANK LOCAL_WORLD_SIZE MASTER_ADDR MASTER_PORT GROUP_RANK ROLE_RANK
@@ -234,7 +236,8 @@ if (( NUM_NODES > 1 )) && (( NODE_RANK != 0 )); then
 fi
 
 # ---- GPT judge (gpt-4o via tokenhub) + WiScore aggregation ----
-umm_conda_activate "${WISEBENCH_EVAL_ENV:-$GEN_ENV}"
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 IFS=',' read -r -a CATEGORY_LIST <<< "$CATEGORIES"
 SCORE_FILES=()
 

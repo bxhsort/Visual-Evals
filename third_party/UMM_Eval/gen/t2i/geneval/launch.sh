@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-# GenEval (t2i) — generation + local mmdet/CLIP scoring. Conda hooks read unset vars, so no -u.
+# GenEval (t2i) — generation + local mmdet/CLIP scoring.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 # export CUBLAS_WORKSPACE_CONFIG=:4096:8
 
@@ -121,6 +118,8 @@ OUTPUT_ROOT="$(build_output_root)"
 GENEVAL_OUTPUT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ "$LAUNCH_MODE" == "device_map" ]]; then
     export CUDA_VISIBLE_DEVICES
     unset RANK WORLD_SIZE LOCAL_RANK LOCAL_WORLD_SIZE MASTER_ADDR MASTER_PORT GROUP_RANK ROLE_RANK
@@ -186,15 +185,16 @@ if [[ -n "$RESIZE_TO" ]]; then
 fi
 
 if (( RUN_EVAL != 0 )); then
-  umm_conda_activate "${GENEVAL_EVAL_ENV}"
+  source activate geneval
+  export PATH=/opt/conda/envs/geneval/bin:$PATH
   cd "${BENCH_DIR}/eval"
   env -i \
-    PATH="$CONDA_PREFIX/bin:/usr/bin:/bin" \
-    LD_LIBRARY_PATH="$CONDA_PREFIX/lib" \
-    CONDA_PREFIX="$CONDA_PREFIX" \
+    PATH="$PATH" \
+    LD_LIBRARY_PATH="/opt/conda/envs/geneval/lib" \
+    CONDA_PREFIX="/opt/conda/envs/geneval" \
     PYTHONNOUSERSITE=1 \
     HOME="$HOME" \
-    "$CONDA_PREFIX/bin/python" evaluation/evaluate_images.py \
+    "/opt/conda/envs/geneval/bin/python" evaluation/evaluate_images.py \
     "${GENEVAL_OUTPUT_DIR}/gen_eval" \
     --outfile "${GENEVAL_OUTPUT_DIR}/results_geneval.jsonl" \
     --model-path "/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/hdd/geneval/model/"

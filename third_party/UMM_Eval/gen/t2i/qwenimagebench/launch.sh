@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Qwen-Image-Bench (t2i) — generation (EN+ZH) + local Q-Judger (ms-swift) scoring.
-# Conda hooks read unset vars, so no -u.
 set -eo pipefail
 
 QIB_BENCH_DIR_OVERRIDE="${QIB_BENCH_DIR_OVERRIDE:-}"
@@ -11,12 +10,7 @@ else
 fi
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
-# Activate a python env up front so top-level helpers (build_output_root -> output_paths)
-# work even on eval-only runs. The per-stage functions re-activate GEN_ENV / the judge env.
-umm_conda_activate "${GEN_ENV}"
 
 MODEL_NAME="${MODEL_NAME:-model}"
 STEP_NAME="${STEP_NAME:-step}"
@@ -59,7 +53,7 @@ QIB_LANGS="${QIB_LANGS//,/ }"
 # in inference.py (t2i_generate think_mode).
 THINK_MODE="${THINK_MODE:-false}"
 THINK_SUFFIX=""
-case "${THINK_MODE,,}" in 1|true|on|yes) THINK_SUFFIX="_think";; esac
+case "$(printf '%s' "$THINK_MODE" | tr '[:upper:]' '[:lower:]')" in 1|true|on|yes) THINK_SUFFIX="_think";; esac
 
 # Q-Judger (local ms-swift) knobs.
 QJUDGER_MODEL_PATH="${QJUDGER_MODEL_PATH:-${BENCH_DIR}/eval/models/q_judger}"
@@ -105,7 +99,8 @@ OUTPUT_ROOT="$(build_output_root)"
 
 run_generation_for_lang() {
   local QIB_MODE="$1"
-  umm_conda_activate "${GEN_ENV}"
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   local OUTPUT_SUBDIR="qwenimagebench_${QIB_MODE}${THINK_SUFFIX}"
   local DATA_PATH="${DATA_ROOT}/qwenimagebench_${QIB_MODE}.jsonl"
   local LOG_DIR="${OUTPUT_BASE}/logs/qwenimagebench_worker_logs/${MODEL_NAME}/${STEP_NAME}/node_${NODE_RANK}/${QIB_MODE}${THINK_SUFFIX}"
@@ -223,7 +218,6 @@ sync_judge_phase() {
 
 run_eval_for_lang() {
   local QIB_MODE="$1"
-  umm_conda_activate "${QWENIMAGEBENCH_EVAL_ENV}"
   # Reduce fragmentation OOMs for the per-card model replica (qwen3_5 gated-delta-rule attn).
   export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
   local OUTPUT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}/qwenimagebench_${QIB_MODE}${THINK_SUFFIX}"
@@ -299,6 +293,9 @@ if (( RUN_GENERATION != 0 )); then
 fi
 
 if (( RUN_EVAL == 0 )); then exit 0; fi
+
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 
 # ---- eval (all requested languages on every node) then node-0 bilingual aggregate ----
 AGG_ARGS=()

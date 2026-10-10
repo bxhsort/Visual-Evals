@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 # CVTG-2K (t2i) — generation + local TextCrafter scoring (PaddleOCR / CLIP / VQA / aesthetic).
-# No API judge. Conda hooks read unset vars, so no -u.
+# No API judge.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 export CUBLAS_WORKSPACE_CONFIG="${CUBLAS_WORKSPACE_CONFIG:-:4096:8}"
 
@@ -140,11 +137,17 @@ fi
 
 mkdir -p "$OUTPUT_BASE"
 cd "$OUTPUT_BASE"
-OUTPUT_ROOT="$(build_output_root)"
-RESULT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}/CVTG"
-RESULT_FILE="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}/CVTG_results.json"
+RESULT_ROOT_DIR="${RESULT_ROOT_DIR:-${RESULT_DIR:-}}"
+if [[ -z "$RESULT_ROOT_DIR" ]]; then
+  OUTPUT_ROOT="$(build_output_root)"
+  RESULT_ROOT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
+fi
+RESULT_DIR="${RESULT_ROOT_DIR}/CVTG"
+RESULT_FILE="${RESULT_ROOT_DIR}/CVTG_results.json"
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ "$LAUNCH_MODE" == "device_map" ]]; then
     export CUDA_VISIBLE_DEVICES
     unset RANK WORLD_SIZE LOCAL_RANK LOCAL_WORLD_SIZE MASTER_ADDR MASTER_PORT GROUP_RANK ROLE_RANK
@@ -228,7 +231,8 @@ if (( RUN_EVAL != 0 )); then
   fi
 
   EVAL_GPUS="${EVAL_GPUS:-$(count_visible_gpus "$CUDA_VISIBLE_DEVICES")}"
-  umm_conda_activate "${CVTG_2K_EVAL_ENV}"
+  source activate geneval
+  export PATH=/opt/conda/envs/geneval/bin:$PATH
   cd "$TEXTCRAFTER_ROOT"
   TRANSFORMERS_VERBOSITY=error torchrun --nproc_per_node="$EVAL_GPUS" unified_metrics_eval.py \
     --benchmark_dir "$BENCHMARK_ROOT" \

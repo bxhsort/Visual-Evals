@@ -23,18 +23,6 @@ Notes:
 EOF
 }
 
-safe_conda_activate() {
-  local had_nounset=0
-  case $- in
-    *u*) had_nounset=1 ;;
-  esac
-  set +u
-  conda activate "$1"
-  if (( had_nounset != 0 )); then
-    set -u
-  fi
-}
-
 split_rise_data() {
   local json_path="$1"
   local split_dir="$2"
@@ -163,7 +151,6 @@ RISE_ROOT="${RISE_ROOT:-${SCRIPT_DIR}}"
 RISE_EVAL_ROOT="${RISE_EVAL_ROOT:-${RISE_ROOT}}"
 RISE_DATA_JSON="${RISE_DATA_JSON:-${RISE_ROOT}/data/datav2_total_w_subtask.json}"
 RISE_INPUT_ROOT="${RISE_INPUT_ROOT:-${RISE_ROOT}/data}"
-EVAL_ENV="${EVAL_ENV:-${RISE_EVAL_ENV:-${GEN_ENV:-}}}"
 FINAL_PREFIX="${RISE_PREFIX:-$(basename "$RESULT_IMAGE_DIR")}"
 NUM_SLICES="${NUM_SLICES:-8}"
 TOTAL_NPROC="${RISE_NPROC:-${EVAL_NUM_PROCESSES:-96}}"
@@ -215,14 +202,8 @@ fi
 
 mkdir -p "$SLICE_ROOT" "$LOG_DIR"
 
-if [[ -z "${CONDA_SH:-}" ]] && command -v conda >/dev/null 2>&1; then
-  CONDA_SH="$(conda info --base)/etc/profile.d/conda.sh"
-fi
-[[ -n "$EVAL_ENV" ]] || { echo "EVAL_ENV or RISE_EVAL_ENV is required"; exit 1; }
-[[ -f "${CONDA_SH:-}" ]] || { echo "CONDA_SH is required"; exit 1; }
-# shellcheck disable=SC1090
-source "$CONDA_SH"
-safe_conda_activate "$EVAL_ENV"
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 cd "$RISE_EVAL_ROOT"
 
 SLICE_RUN_TAG="$(python - "$JUDGE_MODEL_NOTE" "$NUM_SLICES" "$TARGET_INDICES" "$FINAL_PREFIX" <<'PY'

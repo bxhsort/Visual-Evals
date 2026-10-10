@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # run this script at the root of the project folder
+source activate bagel
+export PATH=/opt/conda/envs/bagel/bin:$PATH
+
 pip install httpx==0.23.0
 pip install openai==1.87.0
 pip install datasets
@@ -45,6 +48,8 @@ echo "Image Generation Done"
 # # ---------------------
 # #    GPT Evaluation
 # # ---------------------
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 cd eval/gen/gedit
 python test_gedit_score.py --save_path "$OUTPUT_DIR" --azure_endpoint "$AZURE_ENDPOINT" --gpt_keys "$AZURE_OPENAI_KEY"  --max_workers "$N_GPT_PARALLEL"
 echo "Evaluation Done"

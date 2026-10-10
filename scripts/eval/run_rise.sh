@@ -9,6 +9,9 @@ GPUS=8
 
 
 # generate images
+source activate bagel
+export PATH=/opt/conda/envs/bagel/bin:$PATH
+
 torchrun \
     --nnodes=1 \
     --node_rank=0 \
@@ -24,6 +27,8 @@ torchrun \
 
 
 # calculate score
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 python ./eval/gen/rise/gpt_eval.py \
     --data ./eval/gen/rise/data/datav2_total_w_subtask.json \
     --input ./eval/gen/rise/data \

@@ -249,15 +249,77 @@ def collect(bench, results_root, *, model_name="model", step_name="step", langua
     if bench not in _ADAPTERS:
         raise ValueError(f"unknown benchmark {bench!r}; known: {sorted(_ADAPTERS)}")
     adapter = _ADAPTERS[bench]
+    # Native language folders live inside the managed benchmark leaf.
+    if bench == "longtextbench" and os.path.isfile(os.path.join(results_root, "experiment_manifest.json")):
+        results_root = os.path.join(results_root, f"longtextbench_{language}")
     if bench in ("geditbench", "oneigbench"):
         headline, hmetric, metrics, raw_files = adapter(results_root, language=language)
     elif bench == "tiifbench":
         headline, hmetric, metrics, raw_files = adapter(results_root, split=split)
     else:
         headline, hmetric, metrics, raw_files = adapter(results_root)
-    return _result(bench, results_root, model_name, step_name,
-                   headline=headline, headline_metric=hmetric,
-                   metrics=metrics, raw_files=raw_files)
+    record = _result(bench, results_root, model_name, step_name,
+                     headline=headline, headline_metric=hmetric,
+                     metrics=metrics, raw_files=raw_files)
+    record["language"] = language
+    record = attach_experiment(record)
+    return attach_coverage(record, language=language)
+
+
+def attach_experiment(record):
+    """Read exact local experiment identity; never discover another setting's scores."""
+    from pathlib import Path
+    record = dict(record)
+    root = Path(record.get("output_root", "")).resolve()
+    for candidate in (root, *list(root.parents)[:3]):
+        path = candidate / "experiment_manifest.json"
+        if not path.is_file():
+            continue
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            identity = manifest["identity"]
+            if not isinstance(identity, dict) or not isinstance(identity.get("config"), dict):
+                raise ValueError("invalid experiment identity structure")
+            if identity["benchmark"] != record["benchmark"]:
+                raise ValueError("experiment manifest benchmark does not match requested result")
+            record["experiment_name"] = identity["experiment_name"]
+            record["setting_name"] = manifest["setting_name"]
+            record["thinking"] = identity["config"].get("THINK_MODE", False)
+            if record["benchmark"] == "geneval":
+                record["prompt_variant"] = identity["config"].get("GENEVAL_PROMPT_MODE", "long")
+            record["experiment_manifest"] = str(path)
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            record["experiment_warning"] = f"实验身份未核验：{exc}"
+        break
+    return record
+
+
+def attach_coverage(record, language="en"):
+    """Attach the exact language's diagnostic; preserve score and legacy complete flag.
+
+    The report distinguishes score availability from verified sample coverage.
+    No coverage file means unknown completeness, not zero missing samples.
+    """
+    record = dict(record)
+    if "coverage" in record:
+        return record
+    path = os.path.join(record.get("output_root", ""),
+                        f"coverage_{record['benchmark']}_{language}.json")
+    record["coverage"] = None
+    record["score_available"] = record.get("headline") is not None
+    if os.path.isfile(path):
+        try:
+            with open(path, encoding="utf-8") as handle:
+                coverage = json.load(handle)
+            if not isinstance(coverage, dict) or not isinstance(coverage.get("counts"), dict) or not isinstance(coverage.get("samples"), list):
+                raise ValueError("invalid coverage report structure")
+            if coverage.get("benchmark") != record["benchmark"] or coverage.get("language") != language:
+                raise ValueError("coverage benchmark/language does not match requested result")
+            record["coverage"] = coverage
+            record["raw_files"] = list(record.get("raw_files", [])) + [path]
+        except (OSError, ValueError, TypeError) as exc:
+            record["coverage_warning"] = f"覆盖率文件不可用：{exc}"
+    return record
 
 
 def _main():
@@ -280,6 +342,10 @@ def _main():
     ap.add_argument("--timestep-shift", default="3.0")
     ap.add_argument("--mode", default="en")
     ap.add_argument("--output-subdir", default=None)
+    ap.add_argument("--experiment-name", default=None)
+    ap.add_argument("--setting-name", default=None, help="Exact full setting name from the launcher/manifest")
+    ap.add_argument("--thinking", action="store_true")
+    ap.add_argument("--legacy-layout", action="store_true", help="Read an explicitly requested old directory layout")
     ap.add_argument("--out", default=None, help="write the JSON record here too")
     args = ap.parse_args()
 
@@ -287,12 +353,15 @@ def _main():
     if results_root is None:
         if args.output_base is None:
             ap.error("either --results-root or --output-base is required")
+        if not args.legacy_layout and not (args.experiment_name and args.setting_name):
+            ap.error("new layout requires --experiment-name and --setting-name (or explicit --results-root)")
         results_root = output_paths.derive_output_root(
             bench=args.bench, output_base=args.output_base,
             model_name=args.model_name, step_name=args.step_name,
             image_size=args.image_size, cfg_scale=args.cfg_scale, cfg_norm=args.cfg_norm,
             txt_cfg=args.txt_cfg, img_cfg=args.img_cfg, cfg_renorm=args.cfg_renorm,
             timestep_shift=args.timestep_shift, mode=args.mode, output_subdir=args.output_subdir,
+            experiment_name=args.experiment_name, setting_name=args.setting_name, thinking=args.thinking,
         )
 
     record = collect(args.bench, results_root, model_name=args.model_name,

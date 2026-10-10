@@ -9,6 +9,9 @@ GPUS=8
 
 
 # generate images
+source activate bagel
+export PATH=/opt/conda/envs/bagel/bin:$PATH
+
 torchrun \
     --nnodes=1 \
     --node_rank=0 \
@@ -23,6 +26,8 @@ torchrun \
 
 
 # calculate score
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 python ./eval/gen/imgedit/basic_bench.py \
     --result_img_folder $output_path/bagel \
     --edit_json ./eval/gen/imgedit/Benchmark/singleturn/singleturn.json \

@@ -3,17 +3,14 @@
 # Pure API (CPU) work: generate en+zh images into the standard t2i output layout so the
 # local Q-Judger eval path (srun_eval.sh qwenimagebench RUN_GENERATION=0 RUN_EVAL=1
 # MODEL_NAME=<model> STEP_NAME=<step>) can score them afterwards on a GPU node.
-# Multi-process API requests; resumable. Conda hooks read unset vars, so no -u.
+# Multi-process API requests; resumable.
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-# Generation needs openai + yaml + PIL + requests (NOT ms-swift) — default to the tokenhub env.
-SOTA_GEN_ENV="${SOTA_GEN_ENV:-${GEN_ENV}}"
-umm_conda_activate "${SOTA_GEN_ENV}"
+source activate bagel
+export PATH=/opt/conda/envs/bagel/bin:$PATH
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 
 MODEL_NAME="${SOTA_MODEL_NAME:-gpt-image-2}"

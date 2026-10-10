@@ -1,0 +1,84 @@
+Visual-Evals 实验目录与 GenEval prompt 使用说明
+
+代码目录：Visual-Evals 仓库根目录
+
+1. 实验目录
+
+OUTPUT_BASE / EXPERIMENT_NAME / setting / benchmark
+实际启用 thinking 时，最后一层是 benchmark_thinking。
+
+EXPERIMENT_NAME 由你填写，必填，不能包含路径分隔符。
+setting 保留原来的 cfg、分辨率、时间偏移等标签，加入步数、图片数和生成配置短标识。
+相同生成配置的 benchmark 可以在同一 setting 下成为并列目录。
+GenEval 的第二层额外标明 prompt_short 或 prompt_long。
+benchmark 内部仍可包含官方格式要求的语言、样本和评分子目录。
+
+2. GenEval 两种 prompt
+
+原始简洁 prompt：
+EXPERIMENT_NAME=prompt_compare TASK=geneval GENEVAL_PROMPT_MODE=short bash eval_t2i_go.sh
+
+已有 PE 长 prompt（默认模式）：
+EXPERIMENT_NAME=prompt_compare TASK=geneval GENEVAL_PROMPT_MODE=long bash eval_t2i_go.sh
+
+两种分别运行一次：
+EXPERIMENT_NAME=prompt_compare TASK=geneval GENEVAL_PROMPT_MODE=both bash eval_t2i_go.sh
+
+两份文件分别是：
+eval/gen/geneval/prompts/evaluation_metadata.jsonl
+eval/gen/geneval/prompts/evaluation_metadata_long.jsonl
+
+两份文件均含 553 个对齐样本，原评分条件相同，prompt 文本不同。
+两种模式分开保存图片、评分和覆盖报告，综合报告注明 prompt 版本。
+自定义两份文件使用 GENEVAL_SHORT_METADATA_FILE 和 GENEVAL_LONG_METADATA_FILE。
+both 模式不接受一个 METADATA_FILE，以免两次实际使用同一份文件。
+
+3. 续跑与缓存
+
+每个 benchmark 根目录保存 experiment_manifest.json。
+生成参数或模型身份变化时，使用新的 setting 目录。
+同一生成 setting 下，数据、样本范围或 judge 配置与原清单冲突时，拒绝使用旧文件；请换一个 EXPERIMENT_NAME。
+同配置续跑允许复用；只生图和只评分的执行开关不改变目录。
+统一生图脚本按样本稳定索引播种；生成器、播种方式、裁剪和采样参数都会记录到实验清单。
+小型 metadata 按内容核对；权重、Arrow 文件和输入图片按路径、大小与修改时间核对。
+旧 OUTPUT_PATH / OUTPUT_DIR 等覆盖参数会提示改用 OUTPUT_BASE。
+新入口不会自动去旧的 setting/model/step 目录找图片或分数。
+
+只生图：
+EXPERIMENT_NAME=prompt_compare TASK=geneval GENEVAL_PROMPT_MODE=short RUN_GENERATION=1 RUN_EVAL=0 bash eval_t2i_go.sh
+
+只评分（其余配置保持一致）：
+EXPERIMENT_NAME=prompt_compare TASK=geneval GENEVAL_PROMPT_MODE=short RUN_GENERATION=0 RUN_EVAL=1 bash eval_t2i_go.sh
+
+编辑示例：
+EXPERIMENT_NAME=editing_baseline TASK=imgedit bash eval_go.sh
+
+4. 配置与 thinking
+
+可复制新的 config/eval.env.example 为 config/eval.env，填写实验名与模型、设备等配置。
+本说明描述更新后的运行入口；原文档继续作为数据与依赖说明保留。
+生图阶段固定执行：
+source activate bagel
+export PATH=/opt/conda/envs/bagel/bin:$PATH
+
+各 benchmark 评分阶段默认执行：
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
+
+所有 benchmark 评分默认使用 geneval；后续可按你提供的名称单独调整。
+已移除从 UMM_ENV_CONFIG、conda_envs.env、BAGEL_ENV、GEN_ENV 或 *_EVAL_ENV 提取及激活环境的逻辑。
+只评分时不再先激活生图环境。
+API key 继续由 shell 或任务平台提供。
+
+现有 ImgEdit、GEdit、RISE、EditCompass 支持真实 thinking，THINK_MODE=1 时使用 _thinking 后缀。
+当前统一 T2I 生成器（包括 WISE）不支持 thinking，指定时会明确报错。
+ImgEdit、GEdit、RISE 保留统一编辑生成器和 TARGET_INDICES 样本筛选。WISE 保留统一 T2I 生成器、WISE_SUBDIR 与 WISE_CATEGORIES。
+实际生效的固定参数会如实记录；生成器不支持的修改会明确报错。
+
+5. 报告
+
+上一轮加入的覆盖报告继续保留，显示应评、有效评分、缺图、judge 失败和异常样本。
+大多数 coverage 文件位于当前 benchmark 根目录，LongText 位于其语言子目录。
+手动收集结果时使用入口打印的完整 --results-root，或指定 --output-base、--experiment-name、--setting-name；thinking 结果追加 --thinking。
+读历史 model/step 布局需要显式 --legacy-layout。
+官方评分算法未改。

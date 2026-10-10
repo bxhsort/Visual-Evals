@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 # OneIG-Bench (t2i, EN/ZH) — generation + local multi-metric scoring
-# (alignment / text / diversity / style / reasoning). Conda hooks read unset vars, so no -u.
+# (alignment / text / diversity / style / reasoning).
 set -eo pipefail
 
 BENCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${BENCH_DIR}/../../.." && pwd)"
 
-source "${REPO_ROOT}/config/conda_envs.env"
-source "${CONDA_SH}"
-umm_conda_activate "${GEN_ENV}"
 export PYTHONPATH="${REPO_ROOT}/gen/common:${PYTHONPATH:-}"
 export CUBLAS_WORKSPACE_CONFIG="${CUBLAS_WORKSPACE_CONFIG:-:4096:8}"
 
@@ -88,7 +85,7 @@ count_visible_gpus() {
 }
 
 is_truthy() {
-  case "${1,,}" in
+  case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
     1|true|t|yes|y|on) return 0 ;;
     *) return 1 ;;
   esac
@@ -142,13 +139,19 @@ if (( NODE_RANK < 0 || NODE_RANK >= NUM_NODES )); then
 fi
 
 mkdir -p "$OUTPUT_BASE"
-OUTPUT_ROOT="$(build_output_root)"
-RESULT_ROOT="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
+RESULT_ROOT_DIR="${RESULT_ROOT_DIR:-${RESULT_DIR:-}}"
+if [[ -z "$RESULT_ROOT_DIR" ]]; then
+  OUTPUT_ROOT="$(build_output_root)"
+  RESULT_ROOT_DIR="${OUTPUT_BASE}/${OUTPUT_ROOT}/${MODEL_NAME}/${STEP_NAME}"
+fi
+RESULT_ROOT="$RESULT_ROOT_DIR"
 IMAGE_DIR="${RESULT_ROOT}/${BENCH_SUBDIR}"
 RESULTS_DIR="${RESULT_ROOT}/${RESULTS_SUBDIR}"
 IMAGE_GRID="${GRID_ROWS},${GRID_COLS}"
 
 if (( RUN_GENERATION != 0 )); then
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ -z "$MODEL_PATH" ]]; then
     echo "MODEL_PATH is required for generation."
     exit 1
@@ -252,7 +255,8 @@ if (( NUM_NODES > 1 )) && (( NODE_RANK != 0 )); then
   exit 0
 fi
 
-umm_conda_activate "${ONEIGBENCH_EVAL_ENV}"
+source activate geneval
+export PATH=/opt/conda/envs/geneval/bin:$PATH
 cd "$ONEIG_BENCH_ROOT"
 export PYTHONPATH="${ONEIGBENCH_PATCHES_DIR}:${PYTHONPATH:-}"
 

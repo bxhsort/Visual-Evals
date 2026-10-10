@@ -12,10 +12,12 @@ data_example
 .venv/
 .conda/
 .cache/
-models/
+/models/
 outputs/
 offload_*/
 config/eval.env
 config/assets.env
 *.tar.gz
 *.tar.zst
+*.env
+*.log

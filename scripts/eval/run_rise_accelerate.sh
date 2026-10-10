@@ -11,10 +11,17 @@ MODEL_PATH="${MODEL_PATH:-${model_path:-}}"
 MODEL_NAME="${MODEL_NAME:-bagel}"
 STEP_NAME="${STEP_NAME:-$(basename "${MODEL_PATH:-step}")}"
 OUTPUT_BASE="${OUTPUT_BASE:-${BAGEL_ROOT}/outputs}"
+for legacy_output in RESULT_DIR RESULT_ROOT_DIR OUTPUT_PATH output_path OUTPUT_DIR output_dir OUTPUT_ROOT OUTPUT_SUBDIR OUTPUT_FOLDER RISE_OUTPUT_BASE; do
+  if [[ -n "${!legacy_output:-}" ]]; then
+    echo "${legacy_output} bypasses the experiment layout; use OUTPUT_BASE and EXPERIMENT_NAME instead." >&2
+    exit 1
+  fi
+done
 GPU_LIST="${GPU_LIST:-${CUDA_VISIBLE_DEVICES:-0,1,2,3,4,5,6,7}}"
 RUN_GENERATION="${RUN_GENERATION:-1}"
 RUN_EVAL="${RUN_EVAL:-1}"
 THINK_MODE="${THINK_MODE:-0}"
+TARGET_INDICES="${TARGET_INDICES:-}"
 
 TXT_CFG="${TXT_CFG:-4.0}"
 IMG_CFG="${IMG_CFG:-2.0}"
@@ -25,7 +32,6 @@ MIN_IMAGE_SIZE="${MIN_IMAGE_SIZE:-512}"
 NUM_STEPS="${NUM_STEPS:-50}"
 MAX_LATENT_SIZE="${MAX_LATENT_SIZE:-64}"
 MAX_MEMORY="${MAX_MEMORY:-80GiB}"
-BAGEL_ENV="${BAGEL_ENV:-${BAGEL_ROOT}/.venv}"
 
 RISE_DATA_DIR="${RISE_DATA_DIR:-${UMM_ROOT}/gen/it2i/rise/eval/data}"
 RISE_DATA_JSON="${RISE_DATA_JSON:-${RISE_DATA_DIR}/datav2_total_w_subtask.json}"
@@ -45,7 +51,7 @@ if [[ ! -f "$RISE_DATA_JSON" ]]; then
   exit 1
 fi
 
-case "${THINK_MODE,,}" in
+case "$(printf '%s' "$THINK_MODE" | tr '[:upper:]' '[:lower:]')" in
   1|true|yes|on)
     MODE_SUFFIX="think"
     THINK_ARGS=(--think)
@@ -55,16 +61,41 @@ case "${THINK_MODE,,}" in
     THINK_ARGS=()
     ;;
 esac
-OUTPUT_SUBDIR="${OUTPUT_SUBDIR:-rise_${MODE_SUFFIX}}"
-
-OUTPUT_FOLDER="$(PYTHONPATH="${UMM_ROOT}/gen/common:${PYTHONPATH:-}" python - "$TXT_CFG" "$IMG_CFG" "$CFG_RENORM" "$TIMESTEP_SHIFT" "$IMAGE_SIZE" <<'PY'
+IFS=',' read -r -a GPUS <<< "$GPU_LIST"
+N_GPU="${#GPUS[@]}"
+GENERATION_SHARDS="$N_GPU"
+DG2_EFFECTIVE_CONFIG_JSON="$(python - "$TXT_CFG" "$IMG_CFG" "$CFG_RENORM" "$TIMESTEP_SHIFT" \
+    "$IMAGE_SIZE" "$MIN_IMAGE_SIZE" "$NUM_STEPS" "$MAX_LATENT_SIZE" "$GENERATION_SHARDS" \
+    "$RISE_DATA_JSON" "$RISE_INPUT_ROOT" "${JUDGE_MODEL:-gpt-4o}" "$TARGET_INDICES" <<'PY'
+import json, sys
+txt, img, renorm, shift, size, minimum, steps, latent, shards, metadata, images, judge, target = sys.argv[1:]
+print(json.dumps(dict(TXT_CFG=float(txt), IMG_CFG=float(img), CFG_RENORM=renorm,
+    CFG_TYPE="serial_text_img", CFG_INTERVAL=[0, 1], TIMESTEP_SHIFT=float(shift),
+    IMAGE_SIZE=int(size), MIN_IMAGE_SIZE=int(minimum), NUM_STEPS=int(steps),
+    MAX_LATENT_SIZE=int(latent), SEED=42, SEED_STRATEGY="base_plus_stable_index",
+    MAX_LENGTH=2048, TEMPERATURE=0.3, CROP_BBOX=True, GENERATOR="gen_images_mp_it2i.py",
+    GENERATION_SHARDS=int(shards), RISE_DATA_JSON=metadata, IMAGE_ROOT=images,
+    JUDGE_MODEL=judge, TARGET_INDICES=target)))
+PY
+)"
+SETTING_LABEL="$(PYTHONPATH="${UMM_ROOT}/gen/common:${PYTHONPATH:-}" python - "$TXT_CFG" "$IMG_CFG" "$CFG_RENORM" "$TIMESTEP_SHIFT" "$IMAGE_SIZE" <<'PY'
 import sys
 import output_paths
 print(output_paths.derive_it2i_folder(*sys.argv[1:]))
 PY
 )"
-RESULT_DIR="${OUTPUT_BASE}/${OUTPUT_FOLDER}/${MODEL_NAME}/${STEP_NAME}/${OUTPUT_SUBDIR}"
+source "${SCRIPT_DIR}/experiment_layout.sh"
+dg2_prepare_experiment rise "$SETTING_LABEL"
+RESULT_DIR="$DG2_RESULT_DIR"
 LOG_DIR="${LOG_DIR:-${RESULT_DIR}/logs}"
+
+source "${SCRIPT_DIR}/coverage_report.sh"
+dg2_write_coverage_reports() {
+  dg2_run_coverage_audit --bench rise --results-root "$RESULT_DIR" --model-name "$MODEL_NAME" \
+      --metadata-file "${COVERAGE_METADATA_FILE:-$RISE_DATA_JSON}" \
+      --image-dir "${COVERAGE_IMAGE_DIR:-$RESULT_DIR}" --judge-root "${COVERAGE_JUDGE_ROOT:-$RESULT_DIR}"
+}
+dg2_install_coverage_trap
 
 IFS=',' read -r -a GPUS <<< "$GPU_LIST"
 N_GPU="${#GPUS[@]}"
@@ -81,10 +112,8 @@ echo "[bagel-rise] result_dir=${RESULT_DIR}"
 echo "[bagel-rise] gpu_list=${GPU_LIST} think_mode=${THINK_MODE}"
 
 if (( RUN_GENERATION != 0 )); then
-  if [[ -f "${BAGEL_ENV}/bin/activate" ]]; then
-    # shellcheck disable=SC1091
-    source "${BAGEL_ENV}/bin/activate"
-  fi
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   pids=()
   for idx in "${!GPUS[@]}"; do
     gpu="${GPUS[$idx]}"
@@ -132,9 +161,13 @@ if (( RUN_GENERATION != 0 )); then
 fi
 
 if (( RUN_EVAL != 0 )); then
+  source activate geneval
+  export PATH=/opt/conda/envs/geneval/bin:$PATH
   RUN_GENERATION=0 RUN_EVAL=1 \
   MODEL_NAME="$MODEL_NAME" STEP_NAME="$STEP_NAME" OUTPUT_BASE="$OUTPUT_BASE" \
-  OUTPUT_FOLDER="$OUTPUT_FOLDER" OUTPUT_SUBDIR="$OUTPUT_SUBDIR" \
+  OUTPUT_PATH="$RESULT_DIR" RESULT_ROOT_DIR="$RESULT_DIR" LOG_DIR="$LOG_DIR" \
+  RISE_PREFIX="rise_${MODE_SUFFIX}" \
+  JUDGE_MODEL="${JUDGE_MODEL:-gpt-4o}" \
   TXT_CFG="$TXT_CFG" IMG_CFG="$IMG_CFG" CFG_RENORM="$CFG_RENORM" \
   TIMESTEP_SHIFT="$TIMESTEP_SHIFT" IMAGE_SIZE="$IMAGE_SIZE" THINK_MODE="$THINK_MODE" \
   RISE_DATA_DIR="$RISE_DATA_DIR" RISE_DATA_JSON="$RISE_DATA_JSON" RISE_INPUT_ROOT="$RISE_INPUT_ROOT" \
