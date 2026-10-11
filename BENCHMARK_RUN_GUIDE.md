@@ -25,7 +25,7 @@
 | CVTG-2K | textcrafter_eval | 本地 OCR、CLIP、VQA、美学评分 |
 | OneIG-Bench | bagel | 本地多模型评分 |
 | TIIF-Bench、WISE、BizGenEval | geneval | API judge |
-| QwenImageBench | geneval | 默认本地 Q-Judger |
+| QwenImageBench | qjudger | 默认本地 Q-Judger |
 | ImgEdit、RISE、EditCompass | geneval | API judge |
 | GEdit-Bench | bagel | 默认 GPT-4.1 API / VIEScore |
 
@@ -170,6 +170,21 @@ RUN_GENERATION=0 RUN_EVAL=1 bash eval_t2i_go.sh
 ```
 
 上面命令面向新实验布局。此前旧目录的图片需要单独使用第三方入口，并明确设置 `RESULT_ROOT_DIR` 和 `OUTPUT_FOLDER`；不要把旧目录参数混入顶层入口。
+
+## Qwen-Image-Bench
+
+### 生图
+
+环境：bagel。默认 1024、中英文 `en zh`、每个 prompt 1 张图；中英文各 1,000 个 prompt，共 2,000 张图片。命令无需填写 `NUM_IMAGES`，生图阶段不加载 Q-Judger。
+
+```bash
+cd /inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/DG2
+EXPERIMENT_NAME=baseline TASK=qwenimagebench GPU_LIST="0,1,2,3,4,5,6,7" \
+QIB_LANGS="en zh" QWENIMAGEBENCH_IMAGE_SIZE=1024 \
+RUN_GENERATION=1 RUN_EVAL=0 bash eval_t2i_go.sh
+```
+
+将 `baseline` 替换为实际实验名称。只生成英文时设置 `QIB_LANGS=en`，只生成中文时设置 `QIB_LANGS=zh`。图片分别保存在实验目录下的 `qwenimagebench_en/samples/<ID>.png` 和 `qwenimagebench_zh/samples/<ID>.png`。
 
 ## TIIF-Bench
 

@@ -294,8 +294,8 @@ fi
 
 if (( RUN_EVAL == 0 )); then exit 0; fi
 
-source activate geneval
-export PATH=/opt/conda/envs/geneval/bin:$PATH
+source activate qjudger
+export PATH=/opt/conda/envs/qjudger/bin:$PATH
 
 # ---- eval (all requested languages on every node) then node-0 bilingual aggregate ----
 AGG_ARGS=()

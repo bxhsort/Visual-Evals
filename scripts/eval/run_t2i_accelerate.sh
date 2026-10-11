@@ -617,8 +617,8 @@ if (( RUN_EVAL != 0 )); then
         --vqa-model mplug
       ;;
     qwenimagebench)
-      source activate geneval
-      export PATH=/opt/conda/envs/geneval/bin:$PATH
+      source activate qjudger
+      export PATH=/opt/conda/envs/qjudger/bin:$PATH
       if [[ "$QIB_EVAL_BACKEND" == "api" ]]; then
         if [[ -z "$QIB_API_ROOT" || ! -f "${QIB_API_ROOT}/api_eval.py" ]]; then
           echo "QIB_API_ROOT must contain api_eval.py when QIB_EVAL_BACKEND=api"
