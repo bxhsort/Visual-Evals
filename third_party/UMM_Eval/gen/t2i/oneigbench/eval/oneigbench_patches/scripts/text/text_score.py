@@ -65,13 +65,7 @@ def main():
     parallel_ctx = ParallelContext(args)
     cache_dir = get_cache_dir(args, formatted_time, parallel_ctx.rank)
 
-    _default_qwen_path = os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__),
-            "../../../OneIG-Benchmark/models/Qwen/Qwen2.5-VL-7B-Instruct",
-        )
-    )
-    influencer = Qwen2_5VLBatchInferencer(os.environ.get("QWEN_VL_MODEL_PATH", _default_qwen_path))
+    influencer = Qwen2_5VLBatchInferencer()
 
     if args.mode == "EN":
         text_csv_path = "scripts/text/text_content.csv"

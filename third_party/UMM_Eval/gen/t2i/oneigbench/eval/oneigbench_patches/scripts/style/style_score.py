@@ -63,9 +63,8 @@ def main():
     style_csv_path = "scripts/style/style.csv"
     df = pd.read_csv(style_csv_path, dtype=str)
     
-    CSD_Encoder = CSDStyleEmbedding(model_path="scripts/style/models/checkpoint.pth")
-    # SE_Encoder = SEStyleEmbedding(pretrained_path="xingpng/OneIG-StyleEncoder")
-    SE_Encoder = SEStyleEmbedding(pretrained_path="./models/xingpng/OneIG-StyleEncoder")
+    CSD_Encoder = CSDStyleEmbedding()
+    SE_Encoder = SEStyleEmbedding()
 
     CSD_embed_pt = "scripts/style/CSD_embed.pt"
     CSD_ref = move_ref_dict_to_device(

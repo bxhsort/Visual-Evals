@@ -10,16 +10,18 @@ from transformers import (AutoModel, AutoProcessor, AutoTokenizer, AutoConfig,
                             CLIPImageProcessor, CLIPVisionModelWithProjection)
 from qwen_vl_utils import process_vision_info
 from scripts.utils.distributed import resolve_device
+from scripts.utils.model_paths import csd_model_path, local_model_path, qwen_model_path
 
 torch.manual_seed(42) 
 torch.cuda.manual_seed_all(42)
 
 class Qwen2_5VLBatchInferencer:
-    def __init__(self, model_path: str = "./models/Qwen/Qwen2.5-VL-7B-Instruct", 
+    def __init__(self, model_path: str = None,
                     device: str = None,
                     dtype=torch.bfloat16, 
                     use_flash_attention: bool = True):
         
+        model_path = qwen_model_path(model_path)
         attn_impl = "flash_attention_2" if use_flash_attention else "eager"
         self.device = resolve_device(device)
         
@@ -96,7 +98,8 @@ class Qwen2_5VLBatchInferencer:
     
 
 class CSDStyleEmbedding:
-    def __init__(self, model_path: str = "scripts/style/models/checkpoint.pth", device: str = None):
+    def __init__(self, model_path: str = None, device: str = None):
+        model_path = csd_model_path(model_path)
         self.device = resolve_device(device)
         self.model = self._load_model(model_path).to(self.device)
         self.preprocess = transforms.Compose([
@@ -113,7 +116,7 @@ class CSDStyleEmbedding:
       
         from scripts.utils.CSD_config import CSD_CLIP, convert_state_dict
       
-        model = CSD_CLIP("vit_large", "default")
+        model = CSD_CLIP("vit_large", "default", model_path=local_model_path("ViT-L-14.pt"))
         checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
         state_dict = convert_state_dict(checkpoint['model_state_dict'])
         model.load_state_dict(state_dict, strict=False)
@@ -128,11 +131,11 @@ class CSDStyleEmbedding:
 
 
 class SEStyleEmbedding:
-    # def __init__(self, pretrained_path: str = "xingpng/OneIG-StyleEncoder", device: str = "cuda", dtype=torch.bfloat16):
-    def __init__(self, pretrained_path: str = "./models/xingpng/OneIG-StyleEncoder", device: str = None, dtype=torch.bfloat16):
+    def __init__(self, pretrained_path: str = None, device: str = None, dtype=torch.bfloat16):
+        pretrained_path = local_model_path("OneIG-StyleEncoder", pretrained_path)
         self.device = resolve_device(device)
         self.dtype = dtype
-        self.image_encoder = CLIPVisionModelWithProjection.from_pretrained(pretrained_path)
+        self.image_encoder = CLIPVisionModelWithProjection.from_pretrained(pretrained_path, local_files_only=True)
         self.image_encoder.to(self.device, dtype=self.dtype)
         self.image_encoder.eval()
         self.processor = CLIPImageProcessor()
@@ -152,32 +155,32 @@ class SEStyleEmbedding:
 
 
 class LLM2CLIP:
-    # def __init__(self, processor_model="openai/clip-vit-large-patch14-336", 
-    #              model_name="microsoft/LLM2CLIP-Openai-L-14-336", 
-    #              llm_model_name="microsoft/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned", 
-    #              device='cuda'):
-    def __init__(self, processor_model="./models/clip-vit-large-patch14-336", 
-                model_name="./models/LLM2CLIP-Openai-L-14-336", 
-                llm_model_name="./models/LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned", 
+    def __init__(self, processor_model=None,
+                model_name=None,
+                llm_model_name=None,
                 device=None):
+        processor_model = local_model_path("clip-vit-large-patch14-336", processor_model)
+        model_name = local_model_path("LLM2CLIP-Openai-L-14-336", model_name)
+        llm_model_name = local_model_path("LLM2CLIP-Llama-3-8B-Instruct-CC-Finetuned", llm_model_name)
         device = resolve_device(device)
         # Initialize processor and models
-        self.processor = CLIPImageProcessor.from_pretrained(processor_model)
+        self.processor = CLIPImageProcessor.from_pretrained(processor_model, local_files_only=True)
 
         self.model = AutoModel.from_pretrained(
             model_name, 
             torch_dtype=torch.bfloat16,
-            trust_remote_code=True
+            trust_remote_code=True,
+            local_files_only=True,
         ).to(device).eval()
 
         self.llm_model_name = llm_model_name
         self.config = AutoConfig.from_pretrained(
-            self.llm_model_name, trust_remote_code=True
+            self.llm_model_name, trust_remote_code=True, local_files_only=True
         )
         self.llm_model = AutoModel.from_pretrained(
-            self.llm_model_name, torch_dtype=torch.bfloat16, config=self.config, trust_remote_code=True,attn_implementation="flash_attention_2"
+            self.llm_model_name, torch_dtype=torch.bfloat16, config=self.config, trust_remote_code=True,attn_implementation="flash_attention_2", local_files_only=True
         )
-        self.tokenizer = AutoTokenizer.from_pretrained(self.llm_model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.llm_model_name, local_files_only=True)
         
         # self.llm_model.config._name_or_path = 'meta-llama/Meta-Llama-3-8B-Instruct'  # Workaround for LLM2VEC
         self.llm_model.config._name_or_path = './models/Meta-Llama-3-8B-Instruct'  # Workaround for LLM2VEC

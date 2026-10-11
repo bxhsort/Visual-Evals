@@ -62,7 +62,7 @@ def main():
     parallel_ctx = ParallelContext(args)
     
     cache_dir = get_cache_dir(args, formatted_time, parallel_ctx.rank)
-    inferencer = Qwen2_5VLBatchInferencer("./models/Qwen/Qwen2.5-VL-7B-Instruct")
+    inferencer = Qwen2_5VLBatchInferencer()
 
     question_dependency_dir = "scripts/alignment"
     

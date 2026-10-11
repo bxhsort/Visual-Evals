@@ -11,6 +11,7 @@ import torchvision
 torchvision.disable_beta_transforms_warning()
 from dreamsim import dreamsim
 from scripts.utils.distributed import resolve_device
+from scripts.utils.model_paths import dreamsim_model_path
 
 import datetime
 current_time = datetime.datetime.now()
@@ -45,7 +46,10 @@ def main():
     
     cache_dir = get_cache_dir(args, formatted_time, parallel_ctx.rank)
     device = resolve_device()
-    model, preprocess = dreamsim(pretrained=True, device=str(device))
+    model, preprocess = dreamsim(
+        pretrained=True, device=str(device),
+        cache_dir=dreamsim_model_path(), dreamsim_type="ensemble",
+    )
     
     diversity_score_csv = get_output_csv_path(args, f"diversity_score_{args.mode}_{formatted_time}.csv")
     diversity_prompt_score_csv = get_output_csv_path(args, f"diversity_prompt_score_{args.mode}_{formatted_time}.csv")
