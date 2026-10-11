@@ -56,7 +56,7 @@ THINK_SUFFIX=""
 case "$(printf '%s' "$THINK_MODE" | tr '[:upper:]' '[:lower:]')" in 1|true|on|yes) THINK_SUFFIX="_think";; esac
 
 # Q-Judger (local ms-swift) knobs.
-QJUDGER_MODEL_PATH="${QJUDGER_MODEL_PATH:-${BENCH_DIR}/eval/models/q_judger}"
+QJUDGER_MODEL_PATH="${QJUDGER_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/Qwen-Image-Bench}"
 # Per-replica batch. Data-parallel judge puts ONE full ~54G model on each card, leaving
 # only ~26G headroom. 24 OOMs; 12 is the conservative first step above the old value of 8.
 # judge.py automatically halves a dimension's batch and retries after a CUDA OOM.

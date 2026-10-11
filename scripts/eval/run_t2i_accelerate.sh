@@ -42,7 +42,7 @@ GENEVAL_PROMPT_MODE="${GENEVAL_PROMPT_MODE:-long}"
 WISE_CATEGORIES="${WISE_CATEGORIES:-cultural_common_sense,natural_science,spatio-temporal_reasoning}"
 WISE_SUBDIR="${WISE_SUBDIR:-${OUTPUT_SUBDIR:-wise_raw}}"
 
-QJUDGER_MODEL_PATH="${QJUDGER_MODEL_PATH:-${UMM_ROOT}/gen/t2i/qwenimagebench/eval/models/q_judger}"
+QJUDGER_MODEL_PATH="${QJUDGER_MODEL_PATH:-/inspire/hdd3/project/agent-driven-world-model/wangdianyi-240107110022/qb-lim/BXH/DG2-Eval/ckpt/Qwen-Image-Bench}"
 QJUDGER_BATCH_SIZE="${QJUDGER_BATCH_SIZE:-8}"
 QJUDGER_MAX_NEW_TOKENS="${QJUDGER_MAX_NEW_TOKENS:-4096}"
 QJUDGER_NUM_SHARDS="${QJUDGER_NUM_SHARDS:-}"
