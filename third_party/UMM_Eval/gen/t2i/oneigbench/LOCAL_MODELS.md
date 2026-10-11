@@ -22,6 +22,9 @@ alignment 和 text 共用以下 Qwen 权重：
 /inspire/hdd3/project/agent-driven-world-model/public/models/public_models/Qwen/Qwen2.5-VL-7B-Instruct
 ```
 
+生图和评测统一使用 `bagel` 环境，启动时只激活一次；仅评测时也使用 `bagel`。
+评测阶段不再切换到 `geneval`。`bagel` 需要具备 OneIG 各项评测依赖。
+
 路径已作为默认值写入代码，原来的生图和评测启动命令无需额外设置这些路径。
 其他机器可用 `ONEIG_CKPT_ROOT` 覆盖 checkpoint 根目录。Qwen 路径优先采用
 `QWEN_VL_MODEL_PATH`，其次采用 LongTextBench 的 `QWEN_OCR_MODEL_PATH`，最后采用上述公共路径。

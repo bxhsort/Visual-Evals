@@ -149,9 +149,12 @@ IMAGE_DIR="${RESULT_ROOT}/${BENCH_SUBDIR}"
 RESULTS_DIR="${RESULT_ROOT}/${RESULTS_SUBDIR}"
 IMAGE_GRID="${GRID_ROWS},${GRID_COLS}"
 
-if (( RUN_GENERATION != 0 )); then
+if (( RUN_GENERATION != 0 || RUN_EVAL != 0 )); then
   source activate bagel
   export PATH=/opt/conda/envs/bagel/bin:$PATH
+fi
+
+if (( RUN_GENERATION != 0 )); then
   if [[ -z "$MODEL_PATH" ]]; then
     echo "MODEL_PATH is required for generation."
     exit 1
@@ -255,8 +258,6 @@ if (( NUM_NODES > 1 )) && (( NODE_RANK != 0 )); then
   exit 0
 fi
 
-source activate geneval
-export PATH=/opt/conda/envs/geneval/bin:$PATH
 cd "$ONEIG_BENCH_ROOT"
 export PYTHONPATH="${ONEIGBENCH_PATCHES_DIR}:${PYTHONPATH:-}"
 
