@@ -2,6 +2,7 @@ import os
 import glob
 import json
 import argparse
+import re
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -96,6 +97,22 @@ def split_list(x, n):
     return [x[i * k + min(i, m):(i + 1) * k + min(i + 1, m)] for i in range(n)]
 
 
+def sample_image_files(sample_dir):
+    files = sorted(glob.glob(os.path.join(sample_dir, '*.png')))
+    repeated_ids = set()
+    for path in files:
+        match = re.fullmatch(r'(\d+)_(\d+)\.png', os.path.basename(path))
+        if match:
+            repeated_ids.add(int(match[1]))
+    # Preserve legacy-only runs without scoring the old first image a fifth time.
+    selected = []
+    for path in files:
+        legacy = re.fullmatch(r'(\d+)_sample\.png', os.path.basename(path))
+        if not legacy or int(legacy[1]) not in repeated_ids:
+            selected.append(path)
+    return selected
+
+
 def main(args):
     # Setup PyTorch:
     torch.set_grad_enabled(False)
@@ -114,7 +131,7 @@ def main(args):
     print(f"Total {len(prompts)} prompts loaded from {prompt_file}.")
 
     data = []
-    for image_file in sorted(glob.glob(f'{args.sample_dir}/*.png')):
+    for image_file in sample_image_files(args.sample_dir):
         fname = image_file.split('/')[-1]
         if '_' in fname:
             prompt_id = int(fname.split('_')[0])

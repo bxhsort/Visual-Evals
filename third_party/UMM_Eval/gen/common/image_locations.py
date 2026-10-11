@@ -17,7 +17,7 @@ BENCH_IMAGE_GLOBS = {
     "geneval":       ["gen_eval/*/samples/*.png"],
     "geneval2":      ["samples/*.png"],
     "dpgbench":      ["dpgbench/*.png"],
-    "longtextbench": ["samples/*_sample.png"],          # results root already includes longtextbench_<mode>
+    "longtextbench": ["samples/*.png"],               # includes prompt_repeat and legacy single-image results
     "cvtg_2k":       ["CVTG/*/*/*.png"],
     "tiifbench":     ["TIIFBench-*/*/*/*/*.png"],
     "oneigbench":    ["OneIGBench-*/*/*/*.webp"],

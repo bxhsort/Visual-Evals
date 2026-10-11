@@ -164,7 +164,7 @@ class NEOT2IInferenceEngine:
         timestep_shift=1.0,
         image_size=(256, 256),
         num_steps=50,
-        batch_size=1,
+        batch_size=4,
         micro_batch_size=1,
         output_grid_size=None,
         return_expert_usage=False,
@@ -263,7 +263,7 @@ if __name__ == "__main__":
     parser.add_argument("--cfg_scale", "--cfg", dest="cfg_scale", type=float, default=4.0)
     parser.add_argument("--timestep_shift", type=float, default=3.0)
     parser.add_argument("--cfg_norm", type=str, default="global")
-    parser.add_argument("--batch_size", type=int, default=1)
+    parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument("--micro_batch_size", type=int, default=1)
     parser.add_argument("--device_map", type=str, default=None)
     parser.add_argument("--max_memory_per_gpu_gb", type=int, default=None)
@@ -383,7 +383,8 @@ if __name__ == "__main__":
             expert_usage = None
 
         grid_image.save(os.path.join(grid_output_dir, f"{prompt_id}_grid.png"))
-        images[0].save(os.path.join(samples_output_dir, f"{prompt_id}_sample.png"))
+        for repeat_id, image in enumerate(images, start=1):
+            image.save(os.path.join(samples_output_dir, f"{prompt_id}_{repeat_id}.png"))
 
         if expert_usage is not None:
             expert_usage_root = (

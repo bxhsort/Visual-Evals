@@ -142,6 +142,39 @@ class CoverageReportTest(unittest.TestCase):
         self.assertEqual(statuses["one"], "scored")
         self.assertEqual(statuses["two"], "judge_failed")
 
+    def test_longtext_counts_each_repeat_and_does_not_expand_one_judgment(self):
+        meta = self.root / "prompts.jsonl"
+        meta.write_text('{"prompt_id":0,"category":"sign"}\n{"prompt_id":1,"category":"poster"}\n')
+        for repeat in range(1, 5):
+            self.image(f"samples/0_{repeat}.png")
+        scored = dict(prompt_id=0, image=str(self.root / "samples/0_1.png"), text_accuray=0)
+        result = self.root / "eval/results.jsonl"
+        result.parent.mkdir()
+        result.write_text(json.dumps(scored) + "\n" + json.dumps(scored) + "\n")
+        record = coverage_audit.audit("longtextbench", self.root, metadata_file=str(meta), num_images=4)
+        self.assertEqual(record["counts"]["expected"], 8)
+        self.assertEqual(record["counts"]["valid_scored"], 1)
+        self.assertEqual(record["counts"]["missing_image"], 4)
+        self.assertFalse(record["coverage_complete"])
+        statuses = {row["sample_id"]: row["status"] for row in record["samples"]}
+        self.assertEqual(statuses["0_1"], "scored")
+        self.assertEqual(statuses["0_2"], "unscored")
+
+    def test_longtext_legacy_single_image_cannot_cover_four_repeats(self):
+        meta = self.root / "prompts.jsonl"
+        meta.write_text('{"prompt_id":0,"category":"sign"}\n')
+        image = self.image("samples/0_sample.png")
+        result = self.root / "eval/results.jsonl"
+        result.parent.mkdir()
+        result.write_text(json.dumps(dict(prompt_id=0, image=image, text_accuray=1)) + "\n")
+        record = coverage_audit.audit("longtextbench", self.root, metadata_file=str(meta), num_images=4)
+        self.assertEqual(record["counts"]["expected"], 4)
+        self.assertEqual(record["counts"]["valid_scored"], 0)
+        self.assertEqual(record["counts"]["missing_image"], 4)
+        legacy = coverage_audit.audit("longtextbench", self.root, metadata_file=str(meta), num_images=1)
+        self.assertEqual(legacy["counts"]["expected"], 1)
+        self.assertEqual(legacy["counts"]["valid_scored"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

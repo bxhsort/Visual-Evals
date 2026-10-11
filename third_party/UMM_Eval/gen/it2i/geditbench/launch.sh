@@ -273,8 +273,8 @@ if (( RUN_EVAL != 0 )); then
   ensure_eval_inputs_exist
   build_eval_devices "$EVAL_CUDA_VISIBLE_DEVICES"
 
-  source activate geneval
-  export PATH=/opt/conda/envs/geneval/bin:$PATH
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   cd "$GEDIT_EVAL_ROOT"
   # run_gedit_score.py reads the GEdit-Bench dataset from this env (defaults to the original path otherwise).
   export GEDIT_DATASET_PATH="$DATASET_PATH"

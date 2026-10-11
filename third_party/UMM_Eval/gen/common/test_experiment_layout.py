@@ -272,6 +272,13 @@ class ExperimentLayoutTests(unittest.TestCase):
         equivalent = self.prepare(dict(config, MAX_LENGTH="2048"), benchmark="oneigbench")
         self.assertEqual(first["fingerprint"], equivalent["fingerprint"])
 
+    def test_longtext_repeat_format_cannot_reuse_first_image_only_cache(self):
+        config = dict(self.config, NUM_IMAGES=4)
+        first = self.prepare(config, benchmark="longtextbench")
+        repeated = self.prepare(dict(config, SAMPLE_FORMAT="prompt_repeat_v1"), benchmark="longtextbench")
+        self.assertNotEqual(first["fingerprint"], repeated["fingerprint"])
+        self.assertNotEqual(first["results_root"], repeated["results_root"])
+
     def test_wise_selected_stable_index_coverage_matches_generated_image_and_judgment(self):
         metadata = self.base / "wise.json"
         metadata.write_text(json.dumps([

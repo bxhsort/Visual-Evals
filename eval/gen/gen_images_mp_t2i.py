@@ -380,7 +380,9 @@ def output_paths_for_sample(args, sample, stable_index):
         root = os.path.join(args.output_dir, f"longtextbench_{args.mode}")
         paths = [
             os.path.join(root, "grids", f"{prompt_id}_grid.png"),
-            os.path.join(root, "samples", f"{prompt_id}_sample.png"),
+        ] + [
+            os.path.join(root, "samples", f"{prompt_id}_{repeat_id}.png")
+            for repeat_id in range(1, args.num_images + 1)
         ]
         return root, root, paths
     if benchmark == "cvtg_2k":
@@ -662,7 +664,8 @@ def main():
             grid_cols = min(2, args.num_images)
             grid_rows = math.ceil(args.num_images / grid_cols)
             atomic_save(make_grid(images, args.resolution, grid_rows, grid_cols), output_paths[0])
-            atomic_save(images[0], output_paths[1])
+            for image, path in zip(images, output_paths[1:]):
+                atomic_save(image, path)
         elif args.benchmark in {"cvtg_2k", "bizgeneval", "wise"}:
             atomic_save(images[0], output_paths[0])
 

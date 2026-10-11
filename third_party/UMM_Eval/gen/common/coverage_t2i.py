@@ -272,7 +272,13 @@ def build_samples(bench, root: Path, **options):
                 elif bench == "dpgbench":
                     add(rec["id"], "all", images / f"{rec['id']}.png")
                 elif bench == "longtextbench":
-                    add(rec["prompt_id"], rec.get("category"), images / f"{rec['prompt_id']}_sample.png")
+                    for repeat_id in range(1, n + 1):
+                        sid = f"{int(rec['prompt_id'])}_{repeat_id}"
+                        path = images / f"{sid}.png"
+                        legacy = images / f"{int(rec['prompt_id'])}_sample.png"
+                        if n == 1 and not path.is_file() and legacy.is_file():
+                            path = legacy
+                        add(sid, rec.get("category"), path)
                 elif bench == "oneigbench":
                     cat = ONEIG[rec["category"]]
                     add(f"{cat}_{rec['id']}", cat, images / cat / model / f"{rec['id']}.webp", dataset_id=str(rec["id"]))
@@ -313,9 +319,17 @@ def _judgments(bench, root, judges, images, langroot, lang, model, index, warnin
     elif bench == "longtextbench":
         folder = judges if judges != root else langroot / "eval"
         for rec in _records(folder / "results.jsonl", warnings):
-            sid = str(rec.get("prompt_id", ""))
-            if sid in index:
-                _mark(index[sid], rec, _number(rec.get("text_accuray")))
+            match = re.fullmatch(r"(\d+)_(\d+)\.png", Path(str(rec.get("image", ""))).name)
+            if match:
+                sid = f"{int(match[1])}_{int(match[2])}"
+                if sid in index and str(rec.get("prompt_id", "")) in (match[1], str(int(match[1]))):
+                    _mark(index[sid], rec, _number(rec.get("text_accuray")))
+            else:
+                # Legacy single-image results must never certify four repeats.
+                sid = f"{rec.get('prompt_id', '')}_1"
+                row = index.get(sid)
+                if row and Path(row["image_path"]).name.endswith("_sample.png"):
+                    _mark(row, rec, _number(rec.get("text_accuray")))
     elif bench == "wise":
         paths = sorted(judges.glob(f"*_scores_results_{images.name}.jsonl"))
         if not paths:

@@ -166,8 +166,8 @@ if (( RUN_GENERATION != 0 )); then
 fi
 
 if (( RUN_EVAL != 0 )); then
-  source activate geneval
-  export PATH=/opt/conda/envs/geneval/bin:$PATH
+  source activate bagel
+  export PATH=/opt/conda/envs/bagel/bin:$PATH
   if [[ -n "${openai_api_key:-}" ]]; then
     export API_KEY="${openai_api_key}"
   else
